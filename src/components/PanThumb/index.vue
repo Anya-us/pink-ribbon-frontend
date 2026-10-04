@@ -93,7 +93,7 @@ export default {
   margin: 0 60px;
   padding: 22px 0 0 0;
   height: 85px;
-  font-family: 'Open Sans', Arial, sans-serif;
+  font-family: inherit;
   text-shadow: 0 0 1px #fff, 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
@@ -121,7 +121,7 @@ export default {
   letter-spacing: 1px;
   padding-top: 24px;
   margin: 7px auto 0;
-  font-family: 'Open Sans', Arial, sans-serif;
+  font-family: inherit;
   opacity: 0;
   transition: transform 0.3s ease-in-out 0.2s, opacity 0.3s ease-in-out 0.2s, background 0.2s linear 0s;
   transform: translateX(60px) rotate(90deg);

@@ -4,13 +4,18 @@
 @import './element-ui.scss';
 @import './sidebar.scss';
 @import './btn.scss';
+@import './clinical.scss';
 
 body {
   height: 100%;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+  font-family: var(--font-family-ui);
+}
+
+button, input, optgroup, select, textarea {
+  font-family: inherit;
 }
 
 label {
@@ -40,21 +45,12 @@ html {
   padding: 4px 0;
 }
 
-a:focus,
-a:active {
-  outline: none;
-}
-
 a,
 a:focus,
 a:hover {
   cursor: pointer;
   color: inherit;
   text-decoration: none;
-}
-
-div:focus {
-  outline: none;
 }
 
 .fr {
@@ -104,7 +100,7 @@ aside {
   display: block;
   line-height: 32px;
   font-size: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: inherit;
   color: #2c3e50;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

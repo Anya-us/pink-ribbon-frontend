@@ -1,0 +1,454 @@
+{
+  "date": "2026-10-04",
+  "origin": "http://127.0.0.1:19527",
+  "menuRoots": [
+    "/",
+    "/patients",
+    "/screening",
+    "/review",
+    "/followup",
+    "/patient",
+    "/region"
+  ],
+  "routeChecks": [
+    {
+      "path": "/dashboard",
+      "title": "诊疗工作台",
+      "passed": true,
+      "checks": [
+        {
+          "heading": "诊疗工作台",
+          "legacyText": false,
+          "path": "/dashboard",
+          "patient": "",
+          "phase": "direct"
+        },
+        {
+          "heading": "诊疗工作台",
+          "legacyText": false,
+          "path": "/dashboard",
+          "patient": "",
+          "phase": "reload"
+        }
+      ]
+    },
+    {
+      "path": "/patients/index",
+      "title": "患者档案",
+      "passed": true,
+      "checks": [
+        {
+          "heading": "患者档案",
+          "legacyText": false,
+          "path": "/patients/index?patientId=DR-202610-004&examinationId=EX-202610-004",
+          "patient": "赵＊ 男 · 67 岁DR-202610-004 · EX-202610-0042026-10-01 · 眼科门诊（演示）",
+          "phase": "direct"
+        },
+        {
+          "heading": "患者档案",
+          "legacyText": false,
+          "path": "/patients/index?patientId=DR-202610-004&examinationId=EX-202610-004",
+          "patient": "赵＊ 男 · 67 岁DR-202610-004 · EX-202610-0042026-10-01 · 眼科门诊（演示）",
+          "phase": "reload"
+        }
+      ]
+    },
+    {
+      "path": "/screening/intake",
+      "title": "影像与数据采集",
+      "passed": true,
+      "checks": [
+        {
+          "heading": "影像与数据采集",
+          "legacyText": false,
+          "path": "/screening/intake?patientId=DR-202610-002&examinationId=EX-202610-002",
+          "patient": "林＊ 女 · 64 岁DR-202610-002 · EX-202610-0022026-10-02 · 城南社区筛查点（演示）",
+          "phase": "direct"
+        },
+        {
+          "heading": "影像与数据采集",
+          "legacyText": false,
+          "path": "/screening/intake?patientId=DR-202610-002&examinationId=EX-202610-002",
+          "patient": "林＊ 女 · 64 岁DR-202610-002 · EX-202610-0022026-10-02 · 城南社区筛查点（演示）",
+          "phase": "reload"
+        }
+      ]
+    },
+    {
+      "path": "/screening/consensus",
+      "title": "质控与共识草稿",
+      "passed": true,
+      "checks": [
+        {
+          "heading": "质控与共识草稿",
+          "legacyText": false,
+          "path": "/screening/consensus?patientId=DR-202610-004&examinationId=EX-202610-004",
+          "patient": "赵＊ 男 · 67 岁DR-202610-004 · EX-202610-0042026-10-01 · 眼科门诊（演示）",
+          "phase": "direct"
+        },
+        {
+          "heading": "质控与共识草稿",
+          "legacyText": false,
+          "path": "/screening/consensus?patientId=DR-202610-004&examinationId=EX-202610-004",
+          "patient": "赵＊ 男 · 67 岁DR-202610-004 · EX-202610-0042026-10-01 · 眼科门诊（演示）",
+          "phase": "reload"
+        }
+      ]
+    },
+    {
+      "path": "/screening/evidence",
+      "title": "双眼分级与证据",
+      "passed": true,
+      "checks": [
+        {
+          "heading": "双眼分级与证据",
+          "legacyText": false,
+          "path": "/screening/evidence?patientId=DR-202610-004&examinationId=EX-202610-004",
+          "patient": "赵＊ 男 · 67 岁DR-202610-004 · EX-202610-0042026-10-01 · 眼科门诊（演示）",
+          "phase": "direct"
+        },
+        {
+          "heading": "双眼分级与证据",
+          "legacyText": false,
+          "path": "/screening/evidence?patientId=DR-202610-004&examinationId=EX-202610-004",
+          "patient": "赵＊ 男 · 67 岁DR-202610-004 · EX-202610-0042026-10-01 · 眼科门诊（演示）",
+          "phase": "reload"
+        }
+      ]
+    },
+    {
+      "path": "/review/index",
+      "title": "医生审核",
+      "passed": true,
+      "checks": [
+        {
+          "heading": "医生审核",
+          "legacyText": false,
+          "path": "/review/index?patientId=DR-202610-004&examinationId=EX-202610-004",
+          "patient": "赵＊ 男 · 67 岁DR-202610-004 · EX-202610-0042026-10-01 · 眼科门诊（演示）",
+          "phase": "direct"
+        },
+        {
+          "heading": "医生审核",
+          "legacyText": false,
+          "path": "/review/index?patientId=DR-202610-004&examinationId=EX-202610-004",
+          "patient": "赵＊ 男 · 67 岁DR-202610-004 · EX-202610-0042026-10-01 · 眼科门诊（演示）",
+          "phase": "reload"
+        }
+      ]
+    },
+    {
+      "path": "/followup/index",
+      "title": "转诊与随访",
+      "passed": true,
+      "checks": [
+        {
+          "heading": "转诊与随访",
+          "legacyText": false,
+          "path": "/followup/index?patientId=DR-202610-005&examinationId=EX-202610-005",
+          "patient": "周＊ 男 · 49 岁DR-202610-005 · EX-202610-0052026-09-30 · 城南社区筛查点（演示）",
+          "phase": "direct"
+        },
+        {
+          "heading": "转诊与随访",
+          "legacyText": false,
+          "path": "/followup/index?patientId=DR-202610-005&examinationId=EX-202610-005",
+          "patient": "周＊ 男 · 49 岁DR-202610-005 · EX-202610-0052026-09-30 · 城南社区筛查点（演示）",
+          "phase": "reload"
+        }
+      ]
+    },
+    {
+      "path": "/patient/index",
+      "title": "患者服务",
+      "passed": true,
+      "checks": [
+        {
+          "heading": "患者服务",
+          "legacyText": false,
+          "path": "/patient/index?patientId=DR-202610-005&examinationId=EX-202610-005",
+          "patient": "周＊ 男 · 49 岁DR-202610-005 · EX-202610-0052026-09-30 · 城南社区筛查点（演示）",
+          "phase": "direct"
+        },
+        {
+          "heading": "患者服务",
+          "legacyText": false,
+          "path": "/patient/index?patientId=DR-202610-005&examinationId=EX-202610-005",
+          "patient": "周＊ 男 · 49 岁DR-202610-005 · EX-202610-0052026-09-30 · 城南社区筛查点（演示）",
+          "phase": "reload"
+        }
+      ]
+    },
+    {
+      "path": "/region/index",
+      "title": "区域看板",
+      "passed": true,
+      "checks": [
+        {
+          "heading": "区域看板",
+          "legacyText": false,
+          "path": "/region/index",
+          "patient": "",
+          "phase": "direct"
+        },
+        {
+          "heading": "区域看板",
+          "legacyText": false,
+          "path": "/region/index",
+          "patient": "",
+          "phase": "reload"
+        }
+      ]
+    },
+    {
+      "path": "/patient/help",
+      "title": "眼健康助手",
+      "passed": true,
+      "checks": [
+        {
+          "heading": "眼健康助手",
+          "legacyText": false,
+          "path": "/patient/help?patientId=DR-202610-005&examinationId=EX-202610-005",
+          "patient": "",
+          "phase": "direct"
+        },
+        {
+          "heading": "眼健康助手",
+          "legacyText": false,
+          "path": "/patient/help?patientId=DR-202610-005&examinationId=EX-202610-005",
+          "patient": "",
+          "phase": "reload"
+        }
+      ]
+    }
+  ],
+  "contextChecks": {
+    "patientSwitch": {
+      "passed": true,
+      "patientId": "DR-202610-003",
+      "examinationId": "EX-202610-003",
+      "samePageUrlUpdated": true,
+      "reloadPreserved": true
+    },
+    "historicalExamination": {
+      "passed": true,
+      "examinationId": "EX-202607-001",
+      "cfpPresent": false,
+      "octPresent": false,
+      "signedReportPresent": true
+    },
+    "legacyRedirect": {
+      "passed": true,
+      "from": "/prediction/assess",
+      "to": "/screening/consensus",
+      "patientId": "DR-202610-003",
+      "examinationId": "EX-202610-003"
+    },
+    "invalidIds": {
+      "passed": true,
+      "unknownPatientRedirect": "/404",
+      "mismatchedPatientExaminationRedirect": "/404"
+    },
+    "loginRedirect": {
+      "passed": true,
+      "redirect": "/review/index?patientId=DR-202610-004&examinationId=EX-202610-004",
+      "restored": [
+        {
+          "case": "login-restores-context",
+          "hash": "#/review/index?patientId=DR-202610-004&examinationId=EX-202610-004",
+          "patient": "赵＊ 男 · 67 岁\n\nDR-202610-004 · EX-202610-004\n2026-10-01 · 眼科门诊（演示）"
+        }
+      ]
+    },
+    "profileEdit": {
+      "passed": true,
+      "testPatient": "DR-202610-004",
+      "testAge": 68,
+      "restoredAge": 67,
+      "checks": [
+        {
+          "phase": "cross-page",
+          "updated": true
+        },
+        {
+          "phase": "reload",
+          "updated": true
+        }
+      ]
+    }
+  },
+  "patientVisibility": {
+    "signedPatient": "DR-202610-005",
+    "report": "REPORT-EX-202610-005",
+    "otherPatientReportVisible": false,
+    "draftPayloadVisible": false,
+    "unsignedPatient": "DR-202610-002",
+    "unsignedEmptyState": true
+  },
+  "regionTotals": {
+    "patients": 6,
+    "examinations": 7,
+    "awaitingReview": 3,
+    "openTasks": 1
+  },
+  "mobileChecks": [
+    {
+      "overflow": false,
+      "page": "review",
+      "scrollWidth": 375,
+      "width": 375
+    },
+    {
+      "overflow": false,
+      "page": "patient",
+      "scrollWidth": 375,
+      "width": 375
+    },
+    {
+      "overflow": false,
+      "page": "region",
+      "scrollWidth": 375,
+      "tableScroll": true,
+      "width": 375
+    }
+  ],
+  "imageChecks": [
+    {
+      "caption": "左眼 OS · CFP",
+      "case": "left-eye-quality",
+      "quality": "影像证据查看\n需要重拍"
+    },
+    {
+      "case": "missing-modality-quality",
+      "placeholder": "暂无该眼影像资料\n\n缺失资料保留未评估状态",
+      "quality": "影像证据查看\n资料缺失"
+    }
+  ],
+  "httpChecks": [
+    {
+      "code": 20000,
+      "count": 6,
+      "keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "path": "patients",
+      "status": 200
+    },
+    {
+      "code": 20000,
+      "keys": [
+        "id",
+        "name",
+        "age",
+        "sex",
+        "duration",
+        "hba1c",
+        "bp",
+        "date",
+        "status",
+        "tone",
+        "cfp",
+        "oct",
+        "rightGrade",
+        "leftGrade",
+        "institutionId",
+        "currentExaminationId",
+        "note",
+        "isSynthetic"
+      ],
+      "path": "patient?patientId=DR-202610-004",
+      "status": 200
+    },
+    {
+      "code": 20000,
+      "count": 2,
+      "keys": [
+        "0",
+        "1"
+      ],
+      "path": "examinations?patientId=DR-202610-001",
+      "status": 200
+    },
+    {
+      "code": 20000,
+      "keys": [
+        "patient",
+        "examination",
+        "institution",
+        "images",
+        "draft",
+        "reports",
+        "tasks",
+        "reviewRecords"
+      ],
+      "path": "examination?patientId=DR-202610-004&examinationId=EX-202610-004",
+      "patient": "DR-202610-004",
+      "reports": [],
+      "status": 200
+    },
+    {
+      "code": 20000,
+      "keys": [
+        "patient",
+        "reports",
+        "tasks"
+      ],
+      "path": "patient-service?patientId=DR-202610-005",
+      "patient": "DR-202610-005",
+      "reports": [
+        "REPORT-EX-202610-005"
+      ],
+      "status": 200
+    },
+    {
+      "code": 20000,
+      "count": 2,
+      "keys": [
+        "0",
+        "1"
+      ],
+      "path": "region",
+      "status": 200
+    }
+  ],
+  "httpHotReloadPassed": true,
+  "eslint": {
+    "scope": "本次相关 JS/Vue 文件",
+    "passed": true
+  },
+  "unitTests": {
+    "suites": 3,
+    "passed": 21,
+    "failed": 0
+  },
+  "build": {
+    "passed": true,
+    "warnings": [
+      "依赖包大小超过 webpack 建议值",
+      "浏览器兼容数据版本提示"
+    ]
+  },
+  "breastBusinessScan": {
+    "scope": [
+      "src",
+      "mock",
+      "public",
+      "readme.md"
+    ],
+    "matches": 0
+  },
+  "browserErrors": [],
+  "screenshots": [
+    "C:/Users/欧阳洋/.codex/visualizations/2026/10/03/01a101ca-1407-7e50-81ea-1e6e4e64d14a/dr-foundation-review-desktop.png",
+    "C:/Users/欧阳洋/.codex/visualizations/2026/10/03/01a101ca-1407-7e50-81ea-1e6e4e64d14a/dr-foundation-patient-desktop.png",
+    "C:/Users/欧阳洋/.codex/visualizations/2026/10/03/01a101ca-1407-7e50-81ea-1e6e4e64d14a/dr-foundation-region-desktop.png",
+    "C:/Users/欧阳洋/.codex/visualizations/2026/10/03/01a101ca-1407-7e50-81ea-1e6e4e64d14a/dr-foundation-review-mobile.png",
+    "C:/Users/欧阳洋/.codex/visualizations/2026/10/03/01a101ca-1407-7e50-81ea-1e6e4e64d14a/dr-foundation-patient-mobile.png",
+    "C:/Users/欧阳洋/.codex/visualizations/2026/10/03/01a101ca-1407-7e50-81ea-1e6e4e64d14a/dr-foundation-region-mobile.png"
+  ]
+}

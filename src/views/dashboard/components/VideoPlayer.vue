@@ -1,41 +1,11 @@
 <template>
-  <div class="video-player">
-    <video
-      class="video-content"
-      :src="videoSrc"
-      controls
-      playsinline
-    ></video>
-  </div>
+  <section class="education-entry"><i class="el-icon-view" aria-hidden="true" /><h3>了解眼健康筛查流程</h3><p>采集双眼资料，查看共识证据，跟进复核与随访。</p><router-link class="text-link" to="/chat/index">打开眼健康助手 <i class="el-icon-right" /></router-link></section>
 </template>
-
 <script>
-import videoSrc from '@/assets/video1.mp4'
-
-export default {
-  name: "VideoPlayer",
-  data() {
-    return {
-      videoSrc
-    }
-  }
-}
+export default { name: 'VideoPlayer' }
 </script>
-
 <style scoped>
-.video-player {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-.video-content {
-  width: 100%;
-  height: auto; /* ✅ 自动保持视频比例 */
-  display: block;
-  object-fit: cover; /* 可改为 contain 看需求 */
-}
+.education-entry { padding: 24px; background: var(--primary-soft); border-radius: 8px; }
+.education-entry > i { font-size: 28px; color: var(--primary); }
+.education-entry p { color: var(--muted); }
 </style>

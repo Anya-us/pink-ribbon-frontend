@@ -1,372 +1,137 @@
 <template>
-  <div class="patient-panel">
-    <!-- 阶段 1：评估进行中 -->
-    <div v-if="loading" class="loading-box">
-      <el-button class="sync-btn" @click="startEvaluation">一键同步资料</el-button>
-      <div v-if="evaluating" class="progress-area">
-        <el-progress :percentage="progress" :stroke-width="12" color="#fde5d9" />
-        <p class="progress-text">多位医生正在评估中，请稍后...</p>
-      </div>
-    </div>
+  <main class="clinical-page">
+    <clinical-header title="质控与共识草稿" description="汇集不同评估视角，呈现证据、缺失信息与待复核事项。">
+      <el-button icon="el-icon-upload2" @click="$router.push('/screening/intake')">补全资料</el-button>
+      <el-button type="primary" icon="el-icon-document" @click="$router.push('/screening/evidence')">查看双眼证据</el-button>
+    </clinical-header>
+    <demo-notice :text="custom ? '当前只记录了本地资料，未调用模型，因此没有 AI 结论。可切换演示病例查看页面结构。' : '以下共识内容来自预置示例，不是对上传影像的实际推理；全部为未签发的演示草稿。'" />
+    <patient-strip />
+    <section class="review-progress panel">
+      <div v-for="(stage, index) in stages" :key="stage.title" class="review-stage" :class="{ ready: stage.ready }"><span class="stage-index"><i v-if="stage.ready" class="el-icon-check" /><template v-else>{{ index + 1 }}</template></span><div><strong>{{ stage.title }}</strong><small>{{ stage.description }}</small></div><i v-if="index < stages.length - 1" class="el-icon-arrow-right stage-arrow" /></div>
+    </section>
 
-    <!-- 阶段 2：评估结果 -->
-    <div v-else>
-      <el-alert class="note" type="info" :closable="false" show-icon
-        title="本结果仅作健康参考，不能替代医生诊断。如有不适，请及时就医。"/>
-      <!-- 结果概览卡 -->
-      <div class="summary-card" :class="uiClass(final.rule)">
-        <div class="summary-left">
-          <div class="score" :style="{ color: scoreColor() }">{{ riskScore }}</div>
-          <div class="label">风险指数</div>
-        </div>
-        <div class="summary-right">
-          <div class="title">{{ titleText(final.rule) }}</div>
-          <div class="subtitle">{{ subtitleText(final.rule) }}</div>
-          <div class="advice">
-            <span>医生讨论结果：</span>
-            <el-tag :type="consistencyTag">{{ consistencyText }}</el-tag>
+    <div class="two-column section-gap">
+      <section class="panel">
+        <div class="panel-heading"><div><h2>双眼 DR 候选分级</h2><p>{{ custom ? '尚未完成模型推理' : '合成病例中的候选分级，与签发报告分别记录' }}</p></div><span class="status-pill warning">草稿</span></div>
+        <div class="bilateral-summary">
+          <div v-for="eye in eyes" :key="eye.key" class="summary-eye">
+            <span class="eye-abbr">{{ eye.abbr }}</span><span class="muted small-text">{{ eye.label }}</span>
+            <h3>{{ gradeInfo(eye.grade).label }}</h3><span class="status-pill" :class="gradeInfo(eye.grade).tone">{{ eye.grade == null ? '资料 / 评估未完成' : '演示候选 · 待复核' }}</span>
+            <quality-status :status="bundle.examination.eyes[eye.abbr].quality.status" /><div class="eye-meta"><span>黄斑水肿 DME</span><strong>未评估</strong></div>
           </div>
         </div>
-        <div class="assess-again">
-          <span class="question">对结果有疑问？</span>
-          <el-button class="assess-btn">重新评估</el-button>
-        </div>
-      </div>
-
-      <!-- 医生评分折叠 -->
-      <el-card class="more">
-        <el-collapse>
-          <el-collapse-item>
-              <template #title>
-                <span class="collapse-title">查看各医生评估详情</span>
-              </template>
-            <div class="doctor-bars">
-              <div v-for="m in modelViews" :key="m.name" class="bar-row">
-                <span class="mname">{{ m.display }}</span>
-                <el-progress :percentage="m.tendency" :text-inside="true" :stroke-width="20" :color="progressColor" />
-                <span class="hint">{{ m.hint }}</span>
-              </div>
-            </div>
-          </el-collapse-item>
-        </el-collapse>
-      </el-card>
-
-      <!-- 医生意见与说明 -->
-      <div class="card-row">
-        <el-card class="explain">
-          <div class="section-title">这个数值代表什么？</div>
-          <p class="explain-text">{{ reason }}</p>
-        </el-card>
-        <el-card class="reasons">
-          <div class="section-title">医生这样认为</div>
-          <div class="chips">
-            <el-tag v-for="(r,i) in consensusReasons" :key="i" effect="plain" size="small">{{ r }}</el-tag>
-          </div>
-          <el-alert v-if="consistencyText==='有分歧' || final.rule==='gray'" type="warning" :closable="false"
-          title="建议两周内进行线下复查。" show-icon/>
-        </el-card>
-      </div>
-
-      <!-- 报告 -->
-      <el-card class="report-preview">
-        <div class="section-title">报告摘要</div>
-        <p class="report-text">
-          您的综合风险评估指数为 <b>{{ riskScore }}/100</b>，提示存在中度患病风险。
-          结合临床信息、影像学特征与分子标记物，多位医生协同分析后得出。
-          建议进一步影像学检查并与医生沟通后续方案。
-        </p>
-        <div class="report-actions">
-          <el-button class="download-btn" @click="downloadPDF">下载PDF报告</el-button>
-        </div>
-      </el-card>
+        <div class="consensus-foot"><i class="el-icon-info" />DR 分级、DME 与长期风险分别评估；当前不提供长期风险评分。</div>
+      </section>
+      <section class="panel">
+        <div class="panel-heading"><h2>需要医生关注</h2><span class="status-pill warning">待复核</span></div>
+        <ul class="review-points">
+          <li><span class="point-dot" /><div><strong>{{ custom ? '本次影像尚未进行质量检查' : hasCfp ? '复核双眼候选分级与原始影像' : '眼底彩照尚未提供' }}</strong><p>图像质量与诊断分级需要独立确认。</p></div></li>
+          <li><span class="point-dot blue" /><div><strong>{{ hasOct ? 'OCT 待判读，DME 保持未评估' : 'OCT 缺失，DME 保持未评估' }}</strong><p>资料缺失不会自动转为阴性或正常。</p></div></li>
+          <li><span class="point-dot neutral" /><div><strong>{{ report ? '当前检查已有合成签发记录' : '报告尚未由医生签发' }}</strong><p>共识草稿与签发报告分开存档，处置任务关联签发报告。</p></div></li>
+        </ul>
+        <div v-if="custom" class="demo-case-action"><el-button type="text" @click="loadDemo">切换到预置演示病例 <i class="el-icon-right" /></el-button><p>将清除本次选择的文件。</p></div>
+      </section>
     </div>
-  </div>
+
+    <section class="panel section-gap">
+      <div class="panel-heading"><div><h2>六个评估视角</h2><p>各视角的证据与可用性分别呈现，不以多数意见替代医生判读。</p></div><span class="status-pill info">{{ custom ? '未调用模型' : '演示共识草稿' }}</span></div>
+      <div class="agent-grid">
+        <article v-for="agent in agents" :key="agent.number" class="agent-item">
+          <div class="agent-title"><span class="agent-number">{{ agent.number }}</span><h3>{{ agent.name }}</h3><span class="status-pill" :class="agent.tone">{{ agent.status }}</span></div>
+          <p>{{ agent.description }}</p>
+          <div class="agent-result"><span>当前输出</span><strong>{{ agent.result }}</strong></div>
+        </article>
+      </div>
+    </section>
+    <div class="review-end"><i class="el-icon-document-checked" /><span>共识草稿 → 医生复核 → 报告签发 → 随访任务</span><router-link class="text-link" to="/followup/index">查看处置与随访 <i class="el-icon-right" /></router-link></div>
+  </main>
 </template>
-
 <script>
+import ClinicalHeader from '@/components/ClinicalHeader'
+import DemoNotice from '@/components/DemoNotice'
+import PatientStrip from '@/components/PatientStrip'
+import { assessmentView } from '@/services/dr/selectors'
+import QualityStatus from '@/components/dr/QualityStatus'
+import { demoState, patients, selectPatient, gradeInfo, currentBundle } from '@/data/retina-demo'
 export default {
-  name: 'PatientSimmdPanel',
-  data() {
-    return {
-      loading: true,
-      evaluating: false,
-      progress: 0,
-      riskScore: 72,
-      final: { rule: 'rule-in' },
-      consensusReasons: ['结节形态良性','Ki67略高需随访','无家族史风险低'],
-      modelViews: [
-        { name: 'xgb', display: '医生A', tendency: 82, hint: '建议检查' },
-        { name: 'ftt', display: '医生B', tendency: 76, hint: '倾向检查' },
-        { name: 'ebm', display: '医生C', tendency: 68, hint: '建议复查' },
-        { name: 'logit', display: '医生D', tendency: 60, hint: '建议随访' }
-      ],
-      reason: "风险指数代表基于多模态数据的总体评估，数值越高风险越大，请结合医生意见综合判断。"
-    }
-  },
+  name: 'Assess',
+  components: { ClinicalHeader, DemoNotice, PatientStrip, QualityStatus },
   computed: {
-    consistencyText() {
-      const vals = this.modelViews.map(v => v.tendency)
-      const mean = vals.reduce((a,b)=>a+b,0)/vals.length
-      const std = Math.sqrt(vals.reduce((s,x)=>s+(x-mean)**2,0)/vals.length)
-      if (std < 8) return '高度一致'
-      if (std < 15) return '较一致'
-      return '有分歧'
-    },
-    consistencyTag() {
-      return this.consistencyText === '有分歧' ? 'warning' : 'success'
-    }
+    patient() { return demoState.patient },
+    custom() { return !!demoState.intake || Object.keys(demoState.files).length > 0 },
+    hasCfp() { return this.bundle.images.some(item => item.modality === 'CFP') || !!(demoState.files.rightCfp || demoState.files.leftCfp) },
+    hasOct() { return this.bundle.images.some(item => item.modality === 'OCT') || !!(demoState.files.rightOct || demoState.files.leftOct) },
+    bundle: currentBundle,
+    report() { return this.bundle.reports.find(item => item.status === 'signed') },
+    assessment() { return assessmentView(this.bundle, this.custom) },
+    eyes() { return this.assessment.eyes },
+    stages() { return this.assessment.stages },
+    agents() { return this.assessment.agents }
   },
   methods: {
-    uiClass(rule){
-      return rule==='rule-in' ? 'warn'
-           : rule==='rule-out' ? 'safe'
-           : 'neutral'
-    },
-    scoreColor() {
-      if (this.riskScore <= 60) return '#4CAF50'
-      if (this.riskScore <= 80) return '#FED65F' /* 学术黄 */
-      return '#F44336'
-    },
-    titleText(rule){
-      return rule==='rule-in' ? '风险指数偏中' :
-             rule==='rule-out' ? '风险较低' : '指数偏高'
-    },
-    subtitleText(rule){
-      return rule==='rule-in'
-        ? '建议补充检查或与医生沟通'
-        : rule==='rule-out'
-        ? '倾向良性，可定期复查'
-        : '存在异常信号，建议就医'
-    },
-    startEvaluation() {
-      this.evaluating = true;
-      let timer = setInterval(() => {
-        if (this.progress <= 92) this.progress += 8;
-        else {
-          clearInterval(timer);
-          this.loading = false;
-          this.evaluating = false;
-        }
-      }, 300)
-    },
-    progressColor(p) {
-      return p < 70 ? '#d8e2da' : '#ffccd3';
-    },
-    downloadPDF() {
-      window.print()
-    }
+    gradeInfo,
+    loadDemo() { selectPatient(patients[0]); this.$message.info('已切换到预置演示病例，本次文件已清除。') }
   }
 }
 </script>
-
 <style scoped>
-.patient-panel {
-  width: 85%;
-  max-width: 960px;
-  margin: 80px auto 120px;
-  display: flex;
-  flex-direction: column;
-  gap: 48px;
-  font-family: "Inter", "PingFang SC", sans-serif;
-  color: #2e2e2e;
-  background: none;
+.review-progress { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 20px 24px; gap: 18px; }
+.review-stage { display: flex; gap: 12px; align-items: center; min-width: 0; }
+.stage-index { display: grid; place-items: center; flex-shrink: 0; width: 30px; height: 30px; background: #EDF1F0; color: var(--muted); border: 1px solid var(--border); border-radius: 50%; font-size: 13px; }
+.ready .stage-index { color: var(--primary); background: var(--primary-soft); border-color: #B5D1C3; }
+.review-stage strong { font-size: 14px; font-weight: 500; display: block; }
+.review-stage small { display: block; color: var(--muted); font-size: 11px; margin-top: 3px; }
+.stage-arrow { margin-left: auto; color: var(--input-border); font-size: 12px; }
+.bilateral-summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.summary-eye { padding: 24px; }
+.summary-eye + .summary-eye { border-left: 1px solid var(--border); }
+.eye-abbr { font-size: 13px; font-weight: 600; color: var(--primary); margin-right: 7px; }
+.summary-eye h3 { font-size: 23px; font-weight: 600; margin: 13px 0 10px; }
+.eye-meta { display: flex; gap: 10px; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); margin-top: 24px; padding-top: 16px; font-size: 12px; color: var(--muted); }
+.eye-meta strong { font-weight: 500; }
+.consensus-foot { border-top: 1px solid var(--border); font-size: 12px; color: var(--muted); padding: 13px 24px; }
+.consensus-foot i { margin-right: 6px; }
+.review-points { list-style: none; margin: 0; padding: 7px 24px; }
+.review-points li { display: flex; gap: 10px; padding: 14px 0; border-bottom: 1px solid #E7EEEB; }
+.review-points li:last-child { border-bottom: 0; }
+.point-dot { width: 6px; height: 6px; flex-shrink: 0; margin-top: 8px; background: var(--warning); border-radius: 50%; }
+.point-dot.blue { background: var(--blue); }
+.point-dot.neutral { background: var(--muted); }
+.review-points strong { font-size: 13px; font-weight: 500; color: var(--heading); }
+.review-points p { margin: 4px 0 0; font-size: 12px; color: var(--muted); }
+.demo-case-action { margin: 0 24px 18px; }
+.demo-case-action p { margin: 0; font-size: 12px; color: var(--muted); }
+.agent-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.agent-item { padding: 22px 24px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.agent-item:nth-child(3n) { border-right: 0; }
+.agent-item:nth-child(n+4) { border-bottom: 0; }
+.agent-title { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.agent-title h3 { font-size: 15px; font-weight: 600; margin: 0; }
+.agent-title .status-pill { margin-left: auto; }
+.agent-number { color: var(--input-border); font-size: 12px; }
+.agent-item > p { color: var(--muted); font-size: 12px; margin: 13px 0 18px; }
+.agent-result { padding: 10px 12px; background: #F4F7F6; border-radius: 5px; }
+.agent-result > span { font-size: 11px; color: var(--muted); display: block; margin-bottom: 4px; }
+.agent-result strong { font-size: 12px; color: var(--heading); font-weight: 500; }
+.review-end { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding: 20px 0 0; font-size: 13px; color: var(--muted); }
+.review-end > i { font-size: 18px; color: var(--primary); }
+.review-end .text-link { margin-left: auto; }
+@media (max-width: 1100px) {
+  .review-progress { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .agent-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .agent-item:nth-child(n) { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .agent-item:nth-child(2n) { border-right: 0; }
+  .agent-item:nth-last-child(-n+2) { border-bottom: 0; }
 }
-
-/* 加载阶段 */
-.loading-box {
-  text-align: center;
-  margin-top: 140px;
-}
-.sync-btn {
-  background: linear-gradient(135deg, #f5adb8, #ffccd3, #fde5d9, #d8e2da, #e9f4f4);
-  border: none;
-  padding: 14px 36px;
-  border-radius: 28px;
-  color: #808080;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.sync-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(254, 215, 245, 0.35);
-}
-.progress-area {
-  margin-top: 40px;
-}
-.progress-text {
-  margin-top: 16px;
-  font-size: 15px;
-  color: #666;
-}
-
-/* 结果卡 */
-.summary-card {
-  display: flex;
-  align-items: center;
-  border-radius: 18px;
-  padding: 36px 48px;
-  margin-top: 20px;
-  background: #fff;
-  border: 1px solid #eaeaea;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-  justify-content: space-around;
-}
-.summary-left{
-  flex-shrink: 0;
-  text-align: center;
-  margin-right: 50px;
-}
-.score {
-  font-size: 52px;
-  font-weight: 700;
-  line-height: 1;
-  transition: color 0.3s ease;
-}
-.label {
-  font-size: 14px;
-  color: #888;
-  margin-top: 6px;
-}
-.summary-right {
-  flex: 1;
-  line-height: 1.8;
-  margin-left: 20px;
-}
-.assess-again {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  text-align: center;
-  justify-content: left;
-  .question {
-    font-size: 15px;
-    color: #999;
-  }
-}
-.assess-btn {
-  background: linear-gradient(135deg, #f5adb8, #ffccd3, #fde5d9, #d8e2da, #e9f4f4);
-  color: #808080;
-  border: none;
-  border-radius: 26px;
-  padding: 12px 32px;
-  font-size: 15px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-.assess-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(162, 228, 181, 0.35);
-}
-.title {
-  font-size: 20px;
-  font-weight: 600;
-  color: #333;
-}
-.subtitle {
-  font-size: 15px;
-  color: #777;
-  margin-top: 8px;
-}
-.advice {
-  margin-top: 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
-  color: #555;
-}
-.advice .el-tag {
-  border: none;
-  background: #f5f5f5;
-  color: #6CA8F1;
-  border-radius: 6px;
-}
-
-/* 折叠面板 */
-.more {
-  border-radius: 14px;
-  background: #fff;
-  padding: 20px 28px;
-  margin-top: 20px;
-}
-.collapse-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #2e2e2e;
-}
-.bar-row {
-  display: grid;
-  grid-template-columns: 80px 1fr 120px;
-  gap: 12px;
-  align-items: center;
-  margin: 10px 0;
-}
-.mname { font-size: 14px; color: #444; }
-.hint { font-size: 13px; color: #999; }
-
-/* 医生意见与说明*/
-.card-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 32px;
-  margin-top: 20px;
-}
-.card-row .el-card {
-  flex: 1;
-  border-radius: 14px;
-  border: 1px solid #ececec;
-  padding: 28px 32px;
-}
-.section-title {
-  font-weight: 600;
-  font-size: 16px;
-  color: #333;
-  margin-bottom: 14px;
-}
-.explain-text {
-  font-size: 14px;
-  color: #555;
-  line-height: 1.8;
-}
-.el-tag {
-  border-radius: 6px;
-  background: #f8fbff;
-  color: #4FC3B8;
-  border: none;
-  font-size: 13px;
-  margin: 5px;
-}
-
-/*  报告  */
-.report-preview {
-  background: #fff;
-  border-radius: 16px;
-  margin-top: 20px;
-  padding: 36px 40px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-}
-.report-text {
-  color: #444;
-  line-height: 1.9;
-  font-size: 15px;
-  margin-bottom: 24px;
-}
-.download-btn {
-  background: linear-gradient(135deg, #f5adb8, #ffccd3, #fde5d9, #d8e2da, #e9f4f4);
-  color: #808080;
-  border: none;
-  border-radius: 26px;
-  padding: 12px 32px;
-  font-size: 15px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-.download-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(108,168,241,0.35);
+@media (max-width: 767px) {
+  .review-progress { padding: 18px; }
+  .stage-arrow { display: none; }
+  .bilateral-summary { grid-template-columns: minmax(0, 1fr); }
+  .summary-eye { padding: 20px; }
+  .summary-eye + .summary-eye { border-left: 0; border-top: 1px solid var(--border); }
+  .agent-grid { grid-template-columns: minmax(0, 1fr); }
+  .agent-item:nth-child(n) { border-right: 0; border-bottom: 1px solid var(--border); }
+  .agent-item:last-child { border-bottom: 0; }
+  .review-end .text-link { margin-left: 0; }
 }
 </style>
-
-

@@ -5,6 +5,7 @@ const path = require('path')
 const Mock = require('mockjs')
 
 const mockDir = path.join(process.cwd(), 'mock')
+const drDataDir = path.join(process.cwd(), 'src', 'mock', 'dr')
 
 function registerRoutes(app) {
   let mockLastIndex
@@ -25,7 +26,7 @@ function registerRoutes(app) {
 
 function unregisterRoutes() {
   Object.keys(require.cache).forEach(i => {
-    if (i.includes(mockDir)) {
+    if (i.startsWith(mockDir + path.sep) || i.startsWith(drDataDir + path.sep)) {
       delete require.cache[require.resolve(i)]
     }
   })
@@ -56,7 +57,7 @@ module.exports = app => {
   var mockStartIndex = mockRoutes.mockStartIndex
 
   // watch files, hot reload mock server
-  chokidar.watch(mockDir, {
+  chokidar.watch([mockDir, drDataDir], {
     ignored: /mock-server/,
     ignoreInitial: true
   }).on('all', (event, path) => {
@@ -70,7 +71,9 @@ module.exports = app => {
 
         const mockRoutes = registerRoutes(app)
         mockRoutesLength = mockRoutes.mockRoutesLength
-        mockStartIndex = mockRoutes.mockStartIndex
+        // Keep API routes before webpack's HTML fallback after hot reload.
+        const routeLayers = app._router.stack.splice(mockRoutes.mockStartIndex, mockRoutesLength)
+        app._router.stack.splice(mockStartIndex, 0, ...routeLayers)
 
         console.log(chalk.magentaBright(`\n > Mock Server hot reload success! changed  ${path}`))
       } catch (error) {

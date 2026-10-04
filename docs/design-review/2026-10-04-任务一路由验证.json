@@ -1,0 +1,131 @@
+{
+  "date": "2026-10-04",
+  "environment": "Local development server http://127.0.0.1:19527, Vue 2 / Element UI, hash routing",
+  "outcome": "partially_implemented",
+  "themeChanged": false,
+  "routeChecks": [
+    {
+      "heading": "诊疗工作台",
+      "legacyText": false,
+      "path": "/dashboard",
+      "phase": "direct",
+      "title": "诊疗工作台 - 糖网诊疗 · 多模态筛查与管理"
+    },
+    {
+      "heading": "诊疗工作台",
+      "legacyText": false,
+      "path": "/dashboard",
+      "phase": "reload",
+      "title": "诊疗工作台 - 糖网诊疗 · 多模态筛查与管理"
+    },
+    {
+      "heading": "患者档案",
+      "legacyText": false,
+      "path": "/personal/index",
+      "phase": "direct",
+      "title": "患者档案 - 糖网诊疗 · 多模态筛查与管理"
+    },
+    {
+      "heading": "患者档案",
+      "legacyText": false,
+      "path": "/personal/index",
+      "phase": "reload",
+      "title": "患者档案 - 糖网诊疗 · 多模态筛查与管理"
+    },
+    {
+      "heading": "影像与数据采集",
+      "legacyText": false,
+      "path": "/prediction/input",
+      "phase": "direct",
+      "title": "影像与数据采集 - 糖网诊疗 · 多模态筛查与管理"
+    },
+    {
+      "heading": "影像与数据采集",
+      "legacyText": false,
+      "path": "/prediction/input",
+      "phase": "reload",
+      "title": "影像与数据采集 - 糖网诊疗 · 多模态筛查与管理"
+    },
+    {
+      "heading": "多智能体共识",
+      "legacyText": false,
+      "path": "/prediction/assess",
+      "phase": "direct",
+      "title": "多智能体共识 - 糖网诊疗 · 多模态筛查与管理"
+    },
+    {
+      "heading": "多智能体共识",
+      "legacyText": false,
+      "path": "/prediction/assess",
+      "phase": "reload",
+      "title": "多智能体共识 - 糖网诊疗 · 多模态筛查与管理"
+    },
+    {
+      "heading": "双眼分级与证据",
+      "legacyText": false,
+      "path": "/prediction/subtype",
+      "phase": "direct",
+      "title": "双眼分级与证据 - 糖网诊疗 · 多模态筛查与管理"
+    },
+    {
+      "heading": "双眼分级与证据",
+      "legacyText": false,
+      "path": "/prediction/subtype",
+      "phase": "reload",
+      "title": "双眼分级与证据 - 糖网诊疗 · 多模态筛查与管理"
+    },
+    {
+      "heading": "处置与随访",
+      "legacyText": false,
+      "path": "/advice/index",
+      "phase": "direct",
+      "title": "处置与随访 - 糖网诊疗 · 多模态筛查与管理"
+    },
+    {
+      "heading": "处置与随访",
+      "legacyText": false,
+      "path": "/advice/index",
+      "phase": "reload",
+      "title": "处置与随访 - 糖网诊疗 · 多模态筛查与管理"
+    },
+    {
+      "heading": "眼健康助手",
+      "legacyText": false,
+      "path": "/chat/index",
+      "phase": "direct",
+      "title": "眼健康助手 - 糖网诊疗 · 多模态筛查与管理"
+    },
+    {
+      "heading": "眼健康助手",
+      "legacyText": false,
+      "path": "/chat/index",
+      "phase": "reload",
+      "title": "眼健康助手 - 糖网诊疗 · 多模态筛查与管理"
+    }
+  ],
+  "tests": {
+    "command": "node node_modules/@vue/cli-service/bin/vue-cli-service.js test:unit tests/unit/retina-demo.spec.js --runInBand --watchAll=false",
+    "suitesPassed": 1,
+    "testsPassed": 7,
+    "testsTotal": 7
+  },
+  "extraChecks": {
+    "rootRedirect": "/dashboard",
+    "loggedOutDeepLink": "/login?redirect=/prediction/input",
+    "afterLogin": "/prediction/input",
+    "leftEyeToggle": "左眼 OS, aria-pressed=true",
+    "selectedPatientBeforeReload": "DR-202610-004",
+    "selectedPatientAfterReload": "DR-202610-001",
+    "runtimeBrowserErrors": 0
+  },
+  "confirmedLegacyAssets": [
+    "src/assets/pinkribbon.png",
+    "src/assets/home_images/banner1.png",
+    "src/assets/home_images/pic1.jpg"
+  ],
+  "missingPlannedRoutes": [
+    "医生审核",
+    "患者服务",
+    "区域看板"
+  ]
+}

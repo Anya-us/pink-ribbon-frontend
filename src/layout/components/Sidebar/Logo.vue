@@ -1,82 +1,23 @@
 <template>
-  <div class="sidebar-logo-container" :class="{'collapse':collapse}">
-    <transition name="sidebarLogoFade">
-      <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo">
-        <h1 v-else class="sidebar-title">{{ title }} </h1>
-      </router-link>
-      <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo">
-        <h1 class="sidebar-title">{{ title }} </h1>
-      </router-link>
-    </transition>
+  <div class="sidebar-logo-container" :class="{ collapse }">
+    <router-link class="sidebar-logo-link" to="/dashboard" aria-label="糖网诊疗工作台">
+      <img :src="logo" class="sidebar-logo" alt="">
+      <div v-if="!collapse"><span class="sidebar-title">糖网诊疗</span><span class="brand-caption">多模态筛查与管理</span></div>
+    </router-link>
   </div>
 </template>
-
 <script>
 export default {
   name: 'SidebarLogo',
-  props: {
-    collapse: {
-      type: Boolean,
-      required: true
-    }
-  },
-  data() {
-    return {
-      title: 'Vue Element Admin',
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
-    }
-  }
+  props: { collapse: { type: Boolean, required: true }},
+  data() { return { logo: process.env.BASE_URL + 'retina-mark.svg' } }
 }
 </script>
-
-<style lang="scss" scoped>
-.sidebarLogoFade-enter-active {
-  transition: opacity 1.5s;
-}
-
-.sidebarLogoFade-enter,
-.sidebarLogoFade-leave-to {
-  opacity: 0;
-}
-
-.sidebar-logo-container {
-  position: relative;
-  width: 100%;
-  height: 50px;
-  line-height: 50px;
-  background: #2b2f3a;
-  text-align: center;
-  overflow: hidden;
-
-  & .sidebar-logo-link {
-    height: 100%;
-    width: 100%;
-
-    & .sidebar-logo {
-      width: 32px;
-      height: 32px;
-      vertical-align: middle;
-      margin-right: 12px;
-    }
-
-    & .sidebar-title {
-      display: inline-block;
-      margin: 0;
-      color: #fff;
-      font-weight: 600;
-      line-height: 50px;
-      font-size: 14px;
-      font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
-      vertical-align: middle;
-    }
-  }
-
-  &.collapse {
-    .sidebar-logo {
-      margin-right: 0px;
-    }
-  }
-}
+<style scoped>
+.sidebar-logo-container { height: 116px; padding: 32px 24px; }
+.sidebar-logo-link { display: flex !important; align-items: center; gap: 11px; }
+.sidebar-logo { width: 40px; height: 40px; flex-shrink: 0; }
+.sidebar-title { font-size: 21px; font-weight: 650; color: var(--heading); letter-spacing: .06em; }
+.brand-caption { display: block; font-size: 11px; color: var(--muted); margin-top: 1px; white-space: nowrap; }
+.collapse { padding: 32px 12px; }
 </style>
