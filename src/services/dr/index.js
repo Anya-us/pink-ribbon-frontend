@@ -33,6 +33,8 @@ export const drService = {
   getRegion: () => response(() => repository.region()),
   updatePatient: (id, patch) => response(() => repository.updatePatient(id, patch)),
   updateTask: (id, patch) => response(() => repository.updateTask(id, patch)),
-  createIntake: (patientId, form, files) => response(() => repository.createIntake(patientId, form, files))
+  createIntake: (patientId, form, files, capture) => response(() => repository.createIntake(patientId, form, files, capture)),
+  attachInference: (examinationId, eyePredictions) => response(() => repository.attachInference(examinationId, eyePredictions)),
+  submitReview: (examinationId, review) => response(() => repository.submitReview(examinationId, review))
 }
 export { EYES, GRADES, TASK_STATES, QUALITY_STATES, clone }

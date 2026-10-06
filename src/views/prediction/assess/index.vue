@@ -4,7 +4,7 @@
       <el-button icon="el-icon-upload2" @click="$router.push('/screening/intake')">补全资料</el-button>
       <el-button type="primary" icon="el-icon-document" @click="$router.push('/screening/evidence')">查看双眼证据</el-button>
     </clinical-header>
-    <demo-notice :text="custom ? '当前只记录了本地资料，未调用模型，因此没有 AI 结论。可切换演示病例查看页面结构。' : '以下共识内容来自预置示例，不是对上传影像的实际推理；全部为未签发的演示草稿。'" />
+    <demo-notice :text="realInference ? '当前草稿来自“算法创新7”本机 ResNet18 研究推理接口，结果仅供竞赛演示与人工复核，不用于临床诊断或治疗决策。' : custom ? '当前只记录了本地资料，未得到模型结果，因此没有 AI 结论。请确认本机推理后端已经启动。' : '以下共识内容来自预置示例，不是对上传影像的实际推理；全部为未签发的演示草稿。'" />
     <patient-strip />
     <section class="review-progress panel">
       <div v-for="(stage, index) in stages" :key="stage.title" class="review-stage" :class="{ ready: stage.ready }"><span class="stage-index"><i v-if="stage.ready" class="el-icon-check" /><template v-else>{{ index + 1 }}</template></span><div><strong>{{ stage.title }}</strong><small>{{ stage.description }}</small></div><i v-if="index < stages.length - 1" class="el-icon-arrow-right stage-arrow" /></div>
@@ -12,12 +12,13 @@
 
     <div class="two-column section-gap">
       <section class="panel">
-        <div class="panel-heading"><div><h2>双眼 DR 候选分级</h2><p>{{ custom ? '尚未完成模型推理' : '合成病例中的候选分级，与签发报告分别记录' }}</p></div><span class="status-pill warning">草稿</span></div>
+        <div class="panel-heading"><div><h2>双眼 DR 候选分级</h2><p>{{ realInference ? '本机模型返回的研究推理草稿，与医生签发结果分开保存' : custom ? '尚未完成模型推理' : '合成病例中的候选分级，与签发报告分别记录' }}</p></div><span class="status-pill warning">{{ realInference ? '研究推理草稿' : '草稿' }}</span></div>
         <div class="bilateral-summary">
           <div v-for="eye in eyes" :key="eye.key" class="summary-eye">
             <span class="eye-abbr">{{ eye.abbr }}</span><span class="muted small-text">{{ eye.label }}</span>
-            <h3>{{ gradeInfo(eye.grade).label }}</h3><span class="status-pill" :class="gradeInfo(eye.grade).tone">{{ eye.grade == null ? '资料 / 评估未完成' : '演示候选 · 待复核' }}</span>
-            <quality-status :status="bundle.examination.eyes[eye.abbr].quality.status" /><div class="eye-meta"><span>黄斑水肿 DME</span><strong>未评估</strong></div>
+            <h3>{{ gradeInfo(eye.grade).label }}</h3><span class="status-pill" :class="gradeInfo(eye.grade).tone">{{ eye.grade == null ? '资料 / 评估未完成' : realInference ? '模型候选 · 待复核' : '演示候选 · 待复核' }}</span>
+            <div v-if="realInference && eye.inference" class="inference-summary"><span>模型置信度 {{ formatPercent(eye.inference.confidence) }}</span><span>{{ consensusLabel(eye.inference.consensus) }}</span></div>
+            <quality-status :status="bundle.examination.eyes[eye.abbr].quality.status" :reason="bundle.examination.eyes[eye.abbr].quality.reason" show-reason show-next-step /><div class="eye-meta"><span>黄斑水肿 DME</span><strong>未评估</strong></div>
           </div>
         </div>
         <div class="consensus-foot"><i class="el-icon-info" />DR 分级、DME 与长期风险分别评估；当前不提供长期风险评分。</div>
@@ -58,7 +59,8 @@ export default {
   components: { ClinicalHeader, DemoNotice, PatientStrip, QualityStatus },
   computed: {
     patient() { return demoState.patient },
-    custom() { return !!demoState.intake || Object.keys(demoState.files).length > 0 },
+    realInference() { return !!(this.bundle.draft && this.bundle.draft.source === 'algorithm7_local_api') },
+    custom() { return !this.realInference && (!!demoState.intake || Object.keys(demoState.files).length > 0) },
     hasCfp() { return this.bundle.images.some(item => item.modality === 'CFP') || !!(demoState.files.rightCfp || demoState.files.leftCfp) },
     hasOct() { return this.bundle.images.some(item => item.modality === 'OCT') || !!(demoState.files.rightOct || demoState.files.leftOct) },
     bundle: currentBundle,
@@ -70,6 +72,11 @@ export default {
   },
   methods: {
     gradeInfo,
+    formatPercent(value) { return Number.isFinite(value) ? (value * 100).toFixed(1) + '%' : '未返回' },
+    consensusLabel(consensus) {
+      const state = consensus && consensus.status
+      return { accept: '共识：可进入人工复核', review: '共识：建议人工复核', reject: '共识：需补充采集' }[state] || '共识：未返回'
+    },
     loadDemo() { selectPatient(patients[0]); this.$message.info('已切换到预置演示病例，本次文件已清除。') }
   }
 }
@@ -87,6 +94,8 @@ export default {
 .summary-eye + .summary-eye { border-left: 1px solid var(--border); }
 .eye-abbr { font-size: 13px; font-weight: 600; color: var(--primary); margin-right: 7px; }
 .summary-eye h3 { font-size: 23px; font-weight: 600; margin: 13px 0 10px; }
+.inference-summary { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; color: var(--muted); font-size: 12px; }
+.inference-summary span { padding: 5px 7px; border-radius: 4px; background: var(--page); }
 .eye-meta { display: flex; gap: 10px; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); margin-top: 24px; padding-top: 16px; font-size: 12px; color: var(--muted); }
 .eye-meta strong { font-weight: 500; }
 .consensus-foot { border-top: 1px solid var(--border); font-size: 12px; color: var(--muted); padding: 13px 24px; }

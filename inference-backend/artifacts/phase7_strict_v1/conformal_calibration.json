@@ -1,0 +1,56 @@
+{
+  "version": "split-conformal-v2-strict",
+  "method": "class probability threshold using score = 1 - p(true_class)",
+  "num_classes": 5,
+  "temperature": 0.7561860992968659,
+  "temperature_artifact_sha256": "946d2dab2fed703ceef9647871c6bece0ad9be12b2c9dd53801c794b6793b760",
+  "logits_artifact_sha256": "50604a429af61e3328ce032966db81273bff5626ff29ac0998fb8912347ea4fb",
+  "calibration_samples": 150,
+  "test_samples": 150,
+  "results": [
+    {
+      "alpha": 0.2,
+      "target_coverage": 0.8,
+      "nonconformity_quantile": 0.7632718717780194,
+      "probability_inclusion_threshold": 0.23672812822198064,
+      "test_evaluation": {
+        "empirical_coverage": 0.8133333333333334,
+        "mean_set_size": 1.42,
+        "median_set_size": 1.0,
+        "singleton_fraction": 0.6133333333333333,
+        "empty_set_count": 0
+      }
+    },
+    {
+      "alpha": 0.1,
+      "target_coverage": 0.9,
+      "nonconformity_quantile": 0.8901223794692144,
+      "probability_inclusion_threshold": 0.10987762053078565,
+      "test_evaluation": {
+        "empirical_coverage": 0.92,
+        "mean_set_size": 1.9533333333333334,
+        "median_set_size": 2.0,
+        "singleton_fraction": 0.36,
+        "empty_set_count": 0
+      }
+    },
+    {
+      "alpha": 0.05,
+      "target_coverage": 0.95,
+      "nonconformity_quantile": 0.9288640478501883,
+      "probability_inclusion_threshold": 0.07113595214981172,
+      "test_evaluation": {
+        "empirical_coverage": 0.9466666666666667,
+        "mean_set_size": 2.26,
+        "median_set_size": 2.0,
+        "singleton_fraction": 0.2866666666666667,
+        "empty_set_count": 0
+      }
+    }
+  ],
+  "limitations": [
+    "覆盖率保证的交换性假设未在外部数据上验证。",
+    "阈值只由严格 Calibration 拟合；覆盖率和集合大小只在严格 Test 上报告。",
+    "预测集合不等同于病灶证据、临床诊断或治疗建议。"
+  ]
+}

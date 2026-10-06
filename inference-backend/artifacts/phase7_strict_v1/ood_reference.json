@@ -1,0 +1,28 @@
+{
+  "version": "feature-reference-anomaly-v2-strict",
+  "method": "shrinkage-regularized diagonal Mahalanobis squared distance on penultimate ResNet18 features",
+  "model_version": "resnet18-imagenet-aptos-v1",
+  "model_sha256": "5320f51d1ea37cf7f7c78af7302dfd2964b93933ad370df7b64e129245d0207f",
+  "feature_dimension": 512,
+  "calibration_samples": 150,
+  "test_samples": 150,
+  "covariance_shrinkage": 0.1,
+  "reference_tail": 0.99,
+  "reference_distance_threshold": 1048.0725582054238,
+  "calibration_distance_summary": {
+    "mean": 498.8111059504652,
+    "median": 468.53562046133754,
+    "maximum": 1115.5803988514772
+  },
+  "strict_test_reference_screen": {
+    "mean_distance": 531.7855606240439,
+    "median_distance": 464.88257531794625,
+    "maximum_distance": 1884.8897390232876,
+    "reference_outlier_fraction": 0.02666666666666667
+  },
+  "limitations": [
+    "只以 APTOS 内部 Calibration 特征作为参考，未使用独立外部 OOD 数据集评估灵敏度或特异度。",
+    "高距离仅表示相对校准参考分布不典型，应触发人工复核，不是临床 OOD 结论。",
+    "该工件不能替代基础图像质量检查、病灶检测或临床验证。"
+  ]
+}

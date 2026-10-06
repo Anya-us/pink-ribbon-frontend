@@ -21,6 +21,7 @@ export default {
     imageRecord() { return this.images.find(item => item.eye === this.activeEye && item.modality === this.modality) },
     imageUrl() { return this.localFile ? this.localFile.url : this.imageRecord && this.imageRecord.previewUrl ? process.env.BASE_URL + this.imageRecord.previewUrl : '' },
     quality() {
+      if (this.examination.sourceType === 'local' && this.examination.eyes[this.activeEye]) return this.examination.eyes[this.activeEye].quality
       if (this.localFile) return { status: 'pending', reason: '本地选择，尚未质控。' }
       if (!this.imageRecord) return { status: 'missing', reason: '尚未登记该眼该模态影像。' }
       return { status: this.imageRecord.quality, reason: this.examination.eyes[this.activeEye].quality.reason }

@@ -1,0 +1,5063 @@
+{
+  "version": "strict-dr-split-v2",
+  "dataset": {
+    "name": "APTOS 2019 Blindness Detection",
+    "train_csv_sha256": "b2a3479695922e62c83c94a1a9ef669b4b6d68cc26a1d7090ebedecdd7dd79a5",
+    "total_samples": 1000,
+    "source_total_samples": 3662,
+    "pre_split_max_samples": 1000
+  },
+  "split_policy": {
+    "seed": 20260920,
+    "fractions": {
+      "train": 0.7,
+      "calibration": 0.15,
+      "test": 0.15
+    },
+    "model_selection": "predeclared_epochs_only_no_calibration_or_test_checkpoint_selection",
+    "calibration_use": "temperature_and_conformal_only",
+    "test_use": "final_internal_evaluation_only"
+  },
+  "split_summary": {
+    "train": {
+      "samples": 700,
+      "label_counts": {
+        "0": 344,
+        "1": 71,
+        "2": 191,
+        "3": 37,
+        "4": 57
+      }
+    },
+    "calibration": {
+      "samples": 150,
+      "label_counts": {
+        "0": 74,
+        "1": 15,
+        "2": 41,
+        "3": 8,
+        "4": 12
+      }
+    },
+    "test": {
+      "samples": 150,
+      "label_counts": {
+        "0": 74,
+        "1": 15,
+        "2": 41,
+        "3": 8,
+        "4": 12
+      }
+    }
+  },
+  "limitations": [
+    "这是 APTOS 的严格内部拆分，不是外部验证或临床验证。",
+    "只可在完整、可审计的数据集上运行；缺失图像时脚本会拒绝生成清单。"
+  ],
+  "train": [
+    {
+      "id_code": "093a42649c29",
+      "diagnosis": 3,
+      "image_relpath": "train_images/093a42649c29.png"
+    },
+    {
+      "id_code": "10fca1abf338",
+      "diagnosis": 4,
+      "image_relpath": "train_images/10fca1abf338.png"
+    },
+    {
+      "id_code": "5d74f98d62be",
+      "diagnosis": 4,
+      "image_relpath": "train_images/5d74f98d62be.png"
+    },
+    {
+      "id_code": "fefded6bf135",
+      "diagnosis": 0,
+      "image_relpath": "train_images/fefded6bf135.png"
+    },
+    {
+      "id_code": "df0886f1e76b",
+      "diagnosis": 0,
+      "image_relpath": "train_images/df0886f1e76b.png"
+    },
+    {
+      "id_code": "4ad8d3ec8789",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4ad8d3ec8789.png"
+    },
+    {
+      "id_code": "a987aa7aac37",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a987aa7aac37.png"
+    },
+    {
+      "id_code": "94372043d55b",
+      "diagnosis": 1,
+      "image_relpath": "train_images/94372043d55b.png"
+    },
+    {
+      "id_code": "29b52f64d2db",
+      "diagnosis": 1,
+      "image_relpath": "train_images/29b52f64d2db.png"
+    },
+    {
+      "id_code": "0cb6b898389f",
+      "diagnosis": 0,
+      "image_relpath": "train_images/0cb6b898389f.png"
+    },
+    {
+      "id_code": "1ca62b3e4fd3",
+      "diagnosis": 0,
+      "image_relpath": "train_images/1ca62b3e4fd3.png"
+    },
+    {
+      "id_code": "c57c164bca05",
+      "diagnosis": 0,
+      "image_relpath": "train_images/c57c164bca05.png"
+    },
+    {
+      "id_code": "2665f72e2dd3",
+      "diagnosis": 3,
+      "image_relpath": "train_images/2665f72e2dd3.png"
+    },
+    {
+      "id_code": "144a1a426137",
+      "diagnosis": 2,
+      "image_relpath": "train_images/144a1a426137.png"
+    },
+    {
+      "id_code": "d990a3f0cbdb",
+      "diagnosis": 2,
+      "image_relpath": "train_images/d990a3f0cbdb.png"
+    },
+    {
+      "id_code": "df84e7113003",
+      "diagnosis": 4,
+      "image_relpath": "train_images/df84e7113003.png"
+    },
+    {
+      "id_code": "5288f7441f64",
+      "diagnosis": 0,
+      "image_relpath": "train_images/5288f7441f64.png"
+    },
+    {
+      "id_code": "d4bc001f7224",
+      "diagnosis": 0,
+      "image_relpath": "train_images/d4bc001f7224.png"
+    },
+    {
+      "id_code": "e81f4a2fbbdc",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e81f4a2fbbdc.png"
+    },
+    {
+      "id_code": "28751f290ba3",
+      "diagnosis": 0,
+      "image_relpath": "train_images/28751f290ba3.png"
+    },
+    {
+      "id_code": "46f56c38051f",
+      "diagnosis": 2,
+      "image_relpath": "train_images/46f56c38051f.png"
+    },
+    {
+      "id_code": "e893e86dde94",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e893e86dde94.png"
+    },
+    {
+      "id_code": "30263a7d5609",
+      "diagnosis": 0,
+      "image_relpath": "train_images/30263a7d5609.png"
+    },
+    {
+      "id_code": "bed8296c8dfe",
+      "diagnosis": 0,
+      "image_relpath": "train_images/bed8296c8dfe.png"
+    },
+    {
+      "id_code": "103f97a2ab15",
+      "diagnosis": 0,
+      "image_relpath": "train_images/103f97a2ab15.png"
+    },
+    {
+      "id_code": "318eb706a134",
+      "diagnosis": 0,
+      "image_relpath": "train_images/318eb706a134.png"
+    },
+    {
+      "id_code": "90960ddf4d14",
+      "diagnosis": 0,
+      "image_relpath": "train_images/90960ddf4d14.png"
+    },
+    {
+      "id_code": "aad0c0ee9268",
+      "diagnosis": 2,
+      "image_relpath": "train_images/aad0c0ee9268.png"
+    },
+    {
+      "id_code": "ffd97f8cd5aa",
+      "diagnosis": 0,
+      "image_relpath": "train_images/ffd97f8cd5aa.png"
+    },
+    {
+      "id_code": "9a7bd084395e",
+      "diagnosis": 2,
+      "image_relpath": "train_images/9a7bd084395e.png"
+    },
+    {
+      "id_code": "4242c0d87f57",
+      "diagnosis": 2,
+      "image_relpath": "train_images/4242c0d87f57.png"
+    },
+    {
+      "id_code": "c3d12a23f451",
+      "diagnosis": 4,
+      "image_relpath": "train_images/c3d12a23f451.png"
+    },
+    {
+      "id_code": "92fcf50b3562",
+      "diagnosis": 0,
+      "image_relpath": "train_images/92fcf50b3562.png"
+    },
+    {
+      "id_code": "62ecdc90dd42",
+      "diagnosis": 2,
+      "image_relpath": "train_images/62ecdc90dd42.png"
+    },
+    {
+      "id_code": "52edbe29d655",
+      "diagnosis": 0,
+      "image_relpath": "train_images/52edbe29d655.png"
+    },
+    {
+      "id_code": "86fbac86ed3e",
+      "diagnosis": 2,
+      "image_relpath": "train_images/86fbac86ed3e.png"
+    },
+    {
+      "id_code": "6af071b0ac6e",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6af071b0ac6e.png"
+    },
+    {
+      "id_code": "4da6e2089d57",
+      "diagnosis": 2,
+      "image_relpath": "train_images/4da6e2089d57.png"
+    },
+    {
+      "id_code": "4b1001050f1d",
+      "diagnosis": 2,
+      "image_relpath": "train_images/4b1001050f1d.png"
+    },
+    {
+      "id_code": "4554062fa836",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4554062fa836.png"
+    },
+    {
+      "id_code": "d38cf0f4a9af",
+      "diagnosis": 0,
+      "image_relpath": "train_images/d38cf0f4a9af.png"
+    },
+    {
+      "id_code": "595446774178",
+      "diagnosis": 1,
+      "image_relpath": "train_images/595446774178.png"
+    },
+    {
+      "id_code": "57f5ad4b5b29",
+      "diagnosis": 0,
+      "image_relpath": "train_images/57f5ad4b5b29.png"
+    },
+    {
+      "id_code": "65a7fe9482fe",
+      "diagnosis": 0,
+      "image_relpath": "train_images/65a7fe9482fe.png"
+    },
+    {
+      "id_code": "ad1f7445b1a8",
+      "diagnosis": 1,
+      "image_relpath": "train_images/ad1f7445b1a8.png"
+    },
+    {
+      "id_code": "c1e6fa1ad314",
+      "diagnosis": 1,
+      "image_relpath": "train_images/c1e6fa1ad314.png"
+    },
+    {
+      "id_code": "79d44db3da2d",
+      "diagnosis": 4,
+      "image_relpath": "train_images/79d44db3da2d.png"
+    },
+    {
+      "id_code": "ffcf7b45f213",
+      "diagnosis": 2,
+      "image_relpath": "train_images/ffcf7b45f213.png"
+    },
+    {
+      "id_code": "e03a74e7d74f",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e03a74e7d74f.png"
+    },
+    {
+      "id_code": "e62490b7d0e9",
+      "diagnosis": 4,
+      "image_relpath": "train_images/e62490b7d0e9.png"
+    },
+    {
+      "id_code": "bd269a1f0e4d",
+      "diagnosis": 1,
+      "image_relpath": "train_images/bd269a1f0e4d.png"
+    },
+    {
+      "id_code": "fbfa925506f6",
+      "diagnosis": 0,
+      "image_relpath": "train_images/fbfa925506f6.png"
+    },
+    {
+      "id_code": "4318b6adeb97",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4318b6adeb97.png"
+    },
+    {
+      "id_code": "5eb8fb1aad41",
+      "diagnosis": 0,
+      "image_relpath": "train_images/5eb8fb1aad41.png"
+    },
+    {
+      "id_code": "975252e325e3",
+      "diagnosis": 2,
+      "image_relpath": "train_images/975252e325e3.png"
+    },
+    {
+      "id_code": "fb1b8771c70a",
+      "diagnosis": 0,
+      "image_relpath": "train_images/fb1b8771c70a.png"
+    },
+    {
+      "id_code": "43fb6eda9b97",
+      "diagnosis": 2,
+      "image_relpath": "train_images/43fb6eda9b97.png"
+    },
+    {
+      "id_code": "1df0a4c23c95",
+      "diagnosis": 0,
+      "image_relpath": "train_images/1df0a4c23c95.png"
+    },
+    {
+      "id_code": "bd9904495ccd",
+      "diagnosis": 4,
+      "image_relpath": "train_images/bd9904495ccd.png"
+    },
+    {
+      "id_code": "b56340f472d2",
+      "diagnosis": 1,
+      "image_relpath": "train_images/b56340f472d2.png"
+    },
+    {
+      "id_code": "1006345f70b7",
+      "diagnosis": 2,
+      "image_relpath": "train_images/1006345f70b7.png"
+    },
+    {
+      "id_code": "8cb6b0efaaac",
+      "diagnosis": 2,
+      "image_relpath": "train_images/8cb6b0efaaac.png"
+    },
+    {
+      "id_code": "cb2201c226d6",
+      "diagnosis": 0,
+      "image_relpath": "train_images/cb2201c226d6.png"
+    },
+    {
+      "id_code": "b99794a0beed",
+      "diagnosis": 2,
+      "image_relpath": "train_images/b99794a0beed.png"
+    },
+    {
+      "id_code": "18621b9ca978",
+      "diagnosis": 0,
+      "image_relpath": "train_images/18621b9ca978.png"
+    },
+    {
+      "id_code": "5995321563b7",
+      "diagnosis": 0,
+      "image_relpath": "train_images/5995321563b7.png"
+    },
+    {
+      "id_code": "ae1344610ebe",
+      "diagnosis": 2,
+      "image_relpath": "train_images/ae1344610ebe.png"
+    },
+    {
+      "id_code": "4d167ca69ea8",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4d167ca69ea8.png"
+    },
+    {
+      "id_code": "6dc0281f11e3",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6dc0281f11e3.png"
+    },
+    {
+      "id_code": "da0a1043abf7",
+      "diagnosis": 2,
+      "image_relpath": "train_images/da0a1043abf7.png"
+    },
+    {
+      "id_code": "633fe9dbaf39",
+      "diagnosis": 0,
+      "image_relpath": "train_images/633fe9dbaf39.png"
+    },
+    {
+      "id_code": "1cb6961d141c",
+      "diagnosis": 0,
+      "image_relpath": "train_images/1cb6961d141c.png"
+    },
+    {
+      "id_code": "ed2c06fcc573",
+      "diagnosis": 2,
+      "image_relpath": "train_images/ed2c06fcc573.png"
+    },
+    {
+      "id_code": "3c53198519f7",
+      "diagnosis": 2,
+      "image_relpath": "train_images/3c53198519f7.png"
+    },
+    {
+      "id_code": "4b618537d52f",
+      "diagnosis": 3,
+      "image_relpath": "train_images/4b618537d52f.png"
+    },
+    {
+      "id_code": "896ad584a841",
+      "diagnosis": 0,
+      "image_relpath": "train_images/896ad584a841.png"
+    },
+    {
+      "id_code": "7d94a000c2d0",
+      "diagnosis": 0,
+      "image_relpath": "train_images/7d94a000c2d0.png"
+    },
+    {
+      "id_code": "fa573163dd8b",
+      "diagnosis": 0,
+      "image_relpath": "train_images/fa573163dd8b.png"
+    },
+    {
+      "id_code": "aa0afc41ed19",
+      "diagnosis": 2,
+      "image_relpath": "train_images/aa0afc41ed19.png"
+    },
+    {
+      "id_code": "8596a24a14bd",
+      "diagnosis": 4,
+      "image_relpath": "train_images/8596a24a14bd.png"
+    },
+    {
+      "id_code": "8ffa608170d3",
+      "diagnosis": 0,
+      "image_relpath": "train_images/8ffa608170d3.png"
+    },
+    {
+      "id_code": "8d4ff745a409",
+      "diagnosis": 0,
+      "image_relpath": "train_images/8d4ff745a409.png"
+    },
+    {
+      "id_code": "1faf8664816c",
+      "diagnosis": 0,
+      "image_relpath": "train_images/1faf8664816c.png"
+    },
+    {
+      "id_code": "dd90c321d7bc",
+      "diagnosis": 0,
+      "image_relpath": "train_images/dd90c321d7bc.png"
+    },
+    {
+      "id_code": "a86128b601a7",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a86128b601a7.png"
+    },
+    {
+      "id_code": "d8da9de62743",
+      "diagnosis": 0,
+      "image_relpath": "train_images/d8da9de62743.png"
+    },
+    {
+      "id_code": "b2aaa81cc8f0",
+      "diagnosis": 2,
+      "image_relpath": "train_images/b2aaa81cc8f0.png"
+    },
+    {
+      "id_code": "7247a2c97f71",
+      "diagnosis": 2,
+      "image_relpath": "train_images/7247a2c97f71.png"
+    },
+    {
+      "id_code": "5671eb95512b",
+      "diagnosis": 1,
+      "image_relpath": "train_images/5671eb95512b.png"
+    },
+    {
+      "id_code": "d7ab5c040294",
+      "diagnosis": 0,
+      "image_relpath": "train_images/d7ab5c040294.png"
+    },
+    {
+      "id_code": "f431f2e119d7",
+      "diagnosis": 0,
+      "image_relpath": "train_images/f431f2e119d7.png"
+    },
+    {
+      "id_code": "08c60c647673",
+      "diagnosis": 0,
+      "image_relpath": "train_images/08c60c647673.png"
+    },
+    {
+      "id_code": "cd563556cb57",
+      "diagnosis": 0,
+      "image_relpath": "train_images/cd563556cb57.png"
+    },
+    {
+      "id_code": "9b32e8ef0ca0",
+      "diagnosis": 2,
+      "image_relpath": "train_images/9b32e8ef0ca0.png"
+    },
+    {
+      "id_code": "5d5b5da5f939",
+      "diagnosis": 0,
+      "image_relpath": "train_images/5d5b5da5f939.png"
+    },
+    {
+      "id_code": "58f07741ee3b",
+      "diagnosis": 0,
+      "image_relpath": "train_images/58f07741ee3b.png"
+    },
+    {
+      "id_code": "8f9819752ca0",
+      "diagnosis": 0,
+      "image_relpath": "train_images/8f9819752ca0.png"
+    },
+    {
+      "id_code": "887c26fc0e1f",
+      "diagnosis": 4,
+      "image_relpath": "train_images/887c26fc0e1f.png"
+    },
+    {
+      "id_code": "857230f64a2e",
+      "diagnosis": 4,
+      "image_relpath": "train_images/857230f64a2e.png"
+    },
+    {
+      "id_code": "8ff863f8874f",
+      "diagnosis": 1,
+      "image_relpath": "train_images/8ff863f8874f.png"
+    },
+    {
+      "id_code": "784d6d302f98",
+      "diagnosis": 0,
+      "image_relpath": "train_images/784d6d302f98.png"
+    },
+    {
+      "id_code": "e599151ca14b",
+      "diagnosis": 2,
+      "image_relpath": "train_images/e599151ca14b.png"
+    },
+    {
+      "id_code": "5cab3ef4b31c",
+      "diagnosis": 1,
+      "image_relpath": "train_images/5cab3ef4b31c.png"
+    },
+    {
+      "id_code": "0212dd31f623",
+      "diagnosis": 0,
+      "image_relpath": "train_images/0212dd31f623.png"
+    },
+    {
+      "id_code": "8273fdb4405e",
+      "diagnosis": 1,
+      "image_relpath": "train_images/8273fdb4405e.png"
+    },
+    {
+      "id_code": "4145dcb25053",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4145dcb25053.png"
+    },
+    {
+      "id_code": "a1822dd8d05d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a1822dd8d05d.png"
+    },
+    {
+      "id_code": "bc8c6a778cde",
+      "diagnosis": 0,
+      "image_relpath": "train_images/bc8c6a778cde.png"
+    },
+    {
+      "id_code": "c90c6b94cf40",
+      "diagnosis": 0,
+      "image_relpath": "train_images/c90c6b94cf40.png"
+    },
+    {
+      "id_code": "17188c13e635",
+      "diagnosis": 2,
+      "image_relpath": "train_images/17188c13e635.png"
+    },
+    {
+      "id_code": "a19ecd0a706e",
+      "diagnosis": 1,
+      "image_relpath": "train_images/a19ecd0a706e.png"
+    },
+    {
+      "id_code": "1f15ca672675",
+      "diagnosis": 0,
+      "image_relpath": "train_images/1f15ca672675.png"
+    },
+    {
+      "id_code": "c8fc0df22999",
+      "diagnosis": 1,
+      "image_relpath": "train_images/c8fc0df22999.png"
+    },
+    {
+      "id_code": "53273d664cd8",
+      "diagnosis": 0,
+      "image_relpath": "train_images/53273d664cd8.png"
+    },
+    {
+      "id_code": "b5834ee64541",
+      "diagnosis": 3,
+      "image_relpath": "train_images/b5834ee64541.png"
+    },
+    {
+      "id_code": "c6a145742708",
+      "diagnosis": 4,
+      "image_relpath": "train_images/c6a145742708.png"
+    },
+    {
+      "id_code": "3a6e9730b298",
+      "diagnosis": 4,
+      "image_relpath": "train_images/3a6e9730b298.png"
+    },
+    {
+      "id_code": "042470a92154",
+      "diagnosis": 3,
+      "image_relpath": "train_images/042470a92154.png"
+    },
+    {
+      "id_code": "f580566e27f5",
+      "diagnosis": 0,
+      "image_relpath": "train_images/f580566e27f5.png"
+    },
+    {
+      "id_code": "42a67337fa8e",
+      "diagnosis": 2,
+      "image_relpath": "train_images/42a67337fa8e.png"
+    },
+    {
+      "id_code": "d02b79fc3200",
+      "diagnosis": 0,
+      "image_relpath": "train_images/d02b79fc3200.png"
+    },
+    {
+      "id_code": "92d9e9f08709",
+      "diagnosis": 1,
+      "image_relpath": "train_images/92d9e9f08709.png"
+    },
+    {
+      "id_code": "18ce0cdc473d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/18ce0cdc473d.png"
+    },
+    {
+      "id_code": "cab3dfa7962d",
+      "diagnosis": 1,
+      "image_relpath": "train_images/cab3dfa7962d.png"
+    },
+    {
+      "id_code": "959bb2d01091",
+      "diagnosis": 0,
+      "image_relpath": "train_images/959bb2d01091.png"
+    },
+    {
+      "id_code": "941d874c8afb",
+      "diagnosis": 0,
+      "image_relpath": "train_images/941d874c8afb.png"
+    },
+    {
+      "id_code": "cff262ed8f4c",
+      "diagnosis": 0,
+      "image_relpath": "train_images/cff262ed8f4c.png"
+    },
+    {
+      "id_code": "99c6a123ed6a",
+      "diagnosis": 0,
+      "image_relpath": "train_images/99c6a123ed6a.png"
+    },
+    {
+      "id_code": "4731e708ede3",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4731e708ede3.png"
+    },
+    {
+      "id_code": "9cf7c1349673",
+      "diagnosis": 0,
+      "image_relpath": "train_images/9cf7c1349673.png"
+    },
+    {
+      "id_code": "52886bed8a07",
+      "diagnosis": 2,
+      "image_relpath": "train_images/52886bed8a07.png"
+    },
+    {
+      "id_code": "b73d0bcd3d33",
+      "diagnosis": 0,
+      "image_relpath": "train_images/b73d0bcd3d33.png"
+    },
+    {
+      "id_code": "e19936582c61",
+      "diagnosis": 3,
+      "image_relpath": "train_images/e19936582c61.png"
+    },
+    {
+      "id_code": "c18a006f7f1d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/c18a006f7f1d.png"
+    },
+    {
+      "id_code": "2cacdb0dffae",
+      "diagnosis": 0,
+      "image_relpath": "train_images/2cacdb0dffae.png"
+    },
+    {
+      "id_code": "3810040096cb",
+      "diagnosis": 4,
+      "image_relpath": "train_images/3810040096cb.png"
+    },
+    {
+      "id_code": "165c548185f8",
+      "diagnosis": 0,
+      "image_relpath": "train_images/165c548185f8.png"
+    },
+    {
+      "id_code": "f5e6226bd2e0",
+      "diagnosis": 4,
+      "image_relpath": "train_images/f5e6226bd2e0.png"
+    },
+    {
+      "id_code": "e8ddfc9709ce",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e8ddfc9709ce.png"
+    },
+    {
+      "id_code": "40e9b5630438",
+      "diagnosis": 1,
+      "image_relpath": "train_images/40e9b5630438.png"
+    },
+    {
+      "id_code": "b7983cb3f270",
+      "diagnosis": 0,
+      "image_relpath": "train_images/b7983cb3f270.png"
+    },
+    {
+      "id_code": "03a7f4a5786f",
+      "diagnosis": 4,
+      "image_relpath": "train_images/03a7f4a5786f.png"
+    },
+    {
+      "id_code": "0a38b552372d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/0a38b552372d.png"
+    },
+    {
+      "id_code": "addf66a50f42",
+      "diagnosis": 0,
+      "image_relpath": "train_images/addf66a50f42.png"
+    },
+    {
+      "id_code": "d7bc00091cfc",
+      "diagnosis": 0,
+      "image_relpath": "train_images/d7bc00091cfc.png"
+    },
+    {
+      "id_code": "07e827469099",
+      "diagnosis": 0,
+      "image_relpath": "train_images/07e827469099.png"
+    },
+    {
+      "id_code": "d1afdb8cf70d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/d1afdb8cf70d.png"
+    },
+    {
+      "id_code": "18b99159a14f",
+      "diagnosis": 0,
+      "image_relpath": "train_images/18b99159a14f.png"
+    },
+    {
+      "id_code": "cd29c88c9e36",
+      "diagnosis": 2,
+      "image_relpath": "train_images/cd29c88c9e36.png"
+    },
+    {
+      "id_code": "78bcdffb8785",
+      "diagnosis": 1,
+      "image_relpath": "train_images/78bcdffb8785.png"
+    },
+    {
+      "id_code": "69c4cbb630de",
+      "diagnosis": 0,
+      "image_relpath": "train_images/69c4cbb630de.png"
+    },
+    {
+      "id_code": "bd5013540a13",
+      "diagnosis": 4,
+      "image_relpath": "train_images/bd5013540a13.png"
+    },
+    {
+      "id_code": "6d454444f17c",
+      "diagnosis": 2,
+      "image_relpath": "train_images/6d454444f17c.png"
+    },
+    {
+      "id_code": "1608c82a263f",
+      "diagnosis": 0,
+      "image_relpath": "train_images/1608c82a263f.png"
+    },
+    {
+      "id_code": "135575dc57c9",
+      "diagnosis": 2,
+      "image_relpath": "train_images/135575dc57c9.png"
+    },
+    {
+      "id_code": "7c3747c0b2c3",
+      "diagnosis": 0,
+      "image_relpath": "train_images/7c3747c0b2c3.png"
+    },
+    {
+      "id_code": "b402daa0864c",
+      "diagnosis": 2,
+      "image_relpath": "train_images/b402daa0864c.png"
+    },
+    {
+      "id_code": "165cd2070ebd",
+      "diagnosis": 4,
+      "image_relpath": "train_images/165cd2070ebd.png"
+    },
+    {
+      "id_code": "c5431b81cbc9",
+      "diagnosis": 2,
+      "image_relpath": "train_images/c5431b81cbc9.png"
+    },
+    {
+      "id_code": "7e70344b0c25",
+      "diagnosis": 0,
+      "image_relpath": "train_images/7e70344b0c25.png"
+    },
+    {
+      "id_code": "3a1ecf5e2839",
+      "diagnosis": 4,
+      "image_relpath": "train_images/3a1ecf5e2839.png"
+    },
+    {
+      "id_code": "274f4de2a59d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/274f4de2a59d.png"
+    },
+    {
+      "id_code": "97bf61736b86",
+      "diagnosis": 2,
+      "image_relpath": "train_images/97bf61736b86.png"
+    },
+    {
+      "id_code": "d994203deb64",
+      "diagnosis": 2,
+      "image_relpath": "train_images/d994203deb64.png"
+    },
+    {
+      "id_code": "7f6ce40f306b",
+      "diagnosis": 2,
+      "image_relpath": "train_images/7f6ce40f306b.png"
+    },
+    {
+      "id_code": "756b0d6488bb",
+      "diagnosis": 1,
+      "image_relpath": "train_images/756b0d6488bb.png"
+    },
+    {
+      "id_code": "b549af91bd30",
+      "diagnosis": 0,
+      "image_relpath": "train_images/b549af91bd30.png"
+    },
+    {
+      "id_code": "33e8e26a75d4",
+      "diagnosis": 2,
+      "image_relpath": "train_images/33e8e26a75d4.png"
+    },
+    {
+      "id_code": "d9bbdc33db83",
+      "diagnosis": 2,
+      "image_relpath": "train_images/d9bbdc33db83.png"
+    },
+    {
+      "id_code": "baaca2f7e1f0",
+      "diagnosis": 0,
+      "image_relpath": "train_images/baaca2f7e1f0.png"
+    },
+    {
+      "id_code": "4aa07d720638",
+      "diagnosis": 1,
+      "image_relpath": "train_images/4aa07d720638.png"
+    },
+    {
+      "id_code": "a3b2e93d058b",
+      "diagnosis": 2,
+      "image_relpath": "train_images/a3b2e93d058b.png"
+    },
+    {
+      "id_code": "63b71347e95d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/63b71347e95d.png"
+    },
+    {
+      "id_code": "ee3f5cf52188",
+      "diagnosis": 0,
+      "image_relpath": "train_images/ee3f5cf52188.png"
+    },
+    {
+      "id_code": "e1e490773462",
+      "diagnosis": 2,
+      "image_relpath": "train_images/e1e490773462.png"
+    },
+    {
+      "id_code": "2fdfb80ea53c",
+      "diagnosis": 0,
+      "image_relpath": "train_images/2fdfb80ea53c.png"
+    },
+    {
+      "id_code": "0f495d87656a",
+      "diagnosis": 1,
+      "image_relpath": "train_images/0f495d87656a.png"
+    },
+    {
+      "id_code": "4ffa38550c95",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4ffa38550c95.png"
+    },
+    {
+      "id_code": "e4d3d437b0a8",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e4d3d437b0a8.png"
+    },
+    {
+      "id_code": "8f10e41a2f02",
+      "diagnosis": 0,
+      "image_relpath": "train_images/8f10e41a2f02.png"
+    },
+    {
+      "id_code": "486e852a3b4d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/486e852a3b4d.png"
+    },
+    {
+      "id_code": "aba3063c5413",
+      "diagnosis": 3,
+      "image_relpath": "train_images/aba3063c5413.png"
+    },
+    {
+      "id_code": "388f12e8df0b",
+      "diagnosis": 2,
+      "image_relpath": "train_images/388f12e8df0b.png"
+    },
+    {
+      "id_code": "b8f1b30877db",
+      "diagnosis": 2,
+      "image_relpath": "train_images/b8f1b30877db.png"
+    },
+    {
+      "id_code": "78d53c82a23e",
+      "diagnosis": 2,
+      "image_relpath": "train_images/78d53c82a23e.png"
+    },
+    {
+      "id_code": "5c85d22bd0de",
+      "diagnosis": 0,
+      "image_relpath": "train_images/5c85d22bd0de.png"
+    },
+    {
+      "id_code": "a2811f512c1c",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a2811f512c1c.png"
+    },
+    {
+      "id_code": "bda91b76095b",
+      "diagnosis": 0,
+      "image_relpath": "train_images/bda91b76095b.png"
+    },
+    {
+      "id_code": "96a9706b8534",
+      "diagnosis": 1,
+      "image_relpath": "train_images/96a9706b8534.png"
+    },
+    {
+      "id_code": "b4e15102cd7a",
+      "diagnosis": 0,
+      "image_relpath": "train_images/b4e15102cd7a.png"
+    },
+    {
+      "id_code": "a484bdf85b4c",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a484bdf85b4c.png"
+    },
+    {
+      "id_code": "c8905b8d5cf1",
+      "diagnosis": 2,
+      "image_relpath": "train_images/c8905b8d5cf1.png"
+    },
+    {
+      "id_code": "5e97cb2b0888",
+      "diagnosis": 0,
+      "image_relpath": "train_images/5e97cb2b0888.png"
+    },
+    {
+      "id_code": "4f0866b90c27",
+      "diagnosis": 3,
+      "image_relpath": "train_images/4f0866b90c27.png"
+    },
+    {
+      "id_code": "4826d10030b3",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4826d10030b3.png"
+    },
+    {
+      "id_code": "a476fd984005",
+      "diagnosis": 2,
+      "image_relpath": "train_images/a476fd984005.png"
+    },
+    {
+      "id_code": "62318d514160",
+      "diagnosis": 4,
+      "image_relpath": "train_images/62318d514160.png"
+    },
+    {
+      "id_code": "1ee1eb7943db",
+      "diagnosis": 2,
+      "image_relpath": "train_images/1ee1eb7943db.png"
+    },
+    {
+      "id_code": "8a81f62320d6",
+      "diagnosis": 0,
+      "image_relpath": "train_images/8a81f62320d6.png"
+    },
+    {
+      "id_code": "870f433e8f37",
+      "diagnosis": 0,
+      "image_relpath": "train_images/870f433e8f37.png"
+    },
+    {
+      "id_code": "e3e490babc0c",
+      "diagnosis": 2,
+      "image_relpath": "train_images/e3e490babc0c.png"
+    },
+    {
+      "id_code": "946545473380",
+      "diagnosis": 0,
+      "image_relpath": "train_images/946545473380.png"
+    },
+    {
+      "id_code": "143db89c11c8",
+      "diagnosis": 0,
+      "image_relpath": "train_images/143db89c11c8.png"
+    },
+    {
+      "id_code": "315c1a0d87fd",
+      "diagnosis": 0,
+      "image_relpath": "train_images/315c1a0d87fd.png"
+    },
+    {
+      "id_code": "96b5474ae604",
+      "diagnosis": 0,
+      "image_relpath": "train_images/96b5474ae604.png"
+    },
+    {
+      "id_code": "d85ea1220a03",
+      "diagnosis": 4,
+      "image_relpath": "train_images/d85ea1220a03.png"
+    },
+    {
+      "id_code": "8f1e7433a95d",
+      "diagnosis": 2,
+      "image_relpath": "train_images/8f1e7433a95d.png"
+    },
+    {
+      "id_code": "5bf3357a2823",
+      "diagnosis": 0,
+      "image_relpath": "train_images/5bf3357a2823.png"
+    },
+    {
+      "id_code": "f583a722434c",
+      "diagnosis": 2,
+      "image_relpath": "train_images/f583a722434c.png"
+    },
+    {
+      "id_code": "1f3f32efaf20",
+      "diagnosis": 0,
+      "image_relpath": "train_images/1f3f32efaf20.png"
+    },
+    {
+      "id_code": "d18b1d8ac4de",
+      "diagnosis": 2,
+      "image_relpath": "train_images/d18b1d8ac4de.png"
+    },
+    {
+      "id_code": "6c250a30593b",
+      "diagnosis": 4,
+      "image_relpath": "train_images/6c250a30593b.png"
+    },
+    {
+      "id_code": "883ddb650967",
+      "diagnosis": 0,
+      "image_relpath": "train_images/883ddb650967.png"
+    },
+    {
+      "id_code": "4dc2211a1c31",
+      "diagnosis": 4,
+      "image_relpath": "train_images/4dc2211a1c31.png"
+    },
+    {
+      "id_code": "83517eaeccb9",
+      "diagnosis": 0,
+      "image_relpath": "train_images/83517eaeccb9.png"
+    },
+    {
+      "id_code": "42af7282349b",
+      "diagnosis": 0,
+      "image_relpath": "train_images/42af7282349b.png"
+    },
+    {
+      "id_code": "b576c5269ad1",
+      "diagnosis": 1,
+      "image_relpath": "train_images/b576c5269ad1.png"
+    },
+    {
+      "id_code": "8564b7aa3c1a",
+      "diagnosis": 0,
+      "image_relpath": "train_images/8564b7aa3c1a.png"
+    },
+    {
+      "id_code": "52ddde91a349",
+      "diagnosis": 0,
+      "image_relpath": "train_images/52ddde91a349.png"
+    },
+    {
+      "id_code": "2a5a8b744f08",
+      "diagnosis": 2,
+      "image_relpath": "train_images/2a5a8b744f08.png"
+    },
+    {
+      "id_code": "025a169a0bb0",
+      "diagnosis": 2,
+      "image_relpath": "train_images/025a169a0bb0.png"
+    },
+    {
+      "id_code": "405b4f78658f",
+      "diagnosis": 3,
+      "image_relpath": "train_images/405b4f78658f.png"
+    },
+    {
+      "id_code": "a6d45de20e4d",
+      "diagnosis": 4,
+      "image_relpath": "train_images/a6d45de20e4d.png"
+    },
+    {
+      "id_code": "92889b863ae6",
+      "diagnosis": 0,
+      "image_relpath": "train_images/92889b863ae6.png"
+    },
+    {
+      "id_code": "95a4cc805c7b",
+      "diagnosis": 1,
+      "image_relpath": "train_images/95a4cc805c7b.png"
+    },
+    {
+      "id_code": "3ac92ac3d65a",
+      "diagnosis": 0,
+      "image_relpath": "train_images/3ac92ac3d65a.png"
+    },
+    {
+      "id_code": "84b4da14bc23",
+      "diagnosis": 0,
+      "image_relpath": "train_images/84b4da14bc23.png"
+    },
+    {
+      "id_code": "96d48b073f18",
+      "diagnosis": 2,
+      "image_relpath": "train_images/96d48b073f18.png"
+    },
+    {
+      "id_code": "21037f5c7790",
+      "diagnosis": 0,
+      "image_relpath": "train_images/21037f5c7790.png"
+    },
+    {
+      "id_code": "0daddc45d832",
+      "diagnosis": 0,
+      "image_relpath": "train_images/0daddc45d832.png"
+    },
+    {
+      "id_code": "b086c7cd3868",
+      "diagnosis": 0,
+      "image_relpath": "train_images/b086c7cd3868.png"
+    },
+    {
+      "id_code": "e26d8718ca58",
+      "diagnosis": 1,
+      "image_relpath": "train_images/e26d8718ca58.png"
+    },
+    {
+      "id_code": "da1fb35f5df9",
+      "diagnosis": 1,
+      "image_relpath": "train_images/da1fb35f5df9.png"
+    },
+    {
+      "id_code": "582f739b8f62",
+      "diagnosis": 2,
+      "image_relpath": "train_images/582f739b8f62.png"
+    },
+    {
+      "id_code": "d0079cc188e9",
+      "diagnosis": 3,
+      "image_relpath": "train_images/d0079cc188e9.png"
+    },
+    {
+      "id_code": "66bae1ba227f",
+      "diagnosis": 2,
+      "image_relpath": "train_images/66bae1ba227f.png"
+    },
+    {
+      "id_code": "4e54ccfd49b2",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4e54ccfd49b2.png"
+    },
+    {
+      "id_code": "0f364b7d4384",
+      "diagnosis": 0,
+      "image_relpath": "train_images/0f364b7d4384.png"
+    },
+    {
+      "id_code": "54038e56131d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/54038e56131d.png"
+    },
+    {
+      "id_code": "25dc1b41ed9c",
+      "diagnosis": 2,
+      "image_relpath": "train_images/25dc1b41ed9c.png"
+    },
+    {
+      "id_code": "e265c870f9b3",
+      "diagnosis": 2,
+      "image_relpath": "train_images/e265c870f9b3.png"
+    },
+    {
+      "id_code": "bdf47b9f10c4",
+      "diagnosis": 0,
+      "image_relpath": "train_images/bdf47b9f10c4.png"
+    },
+    {
+      "id_code": "1414128bead0",
+      "diagnosis": 2,
+      "image_relpath": "train_images/1414128bead0.png"
+    },
+    {
+      "id_code": "64a13949e879",
+      "diagnosis": 2,
+      "image_relpath": "train_images/64a13949e879.png"
+    },
+    {
+      "id_code": "5188a8afa879",
+      "diagnosis": 2,
+      "image_relpath": "train_images/5188a8afa879.png"
+    },
+    {
+      "id_code": "0981195eb9fb",
+      "diagnosis": 4,
+      "image_relpath": "train_images/0981195eb9fb.png"
+    },
+    {
+      "id_code": "c85b79d70079",
+      "diagnosis": 0,
+      "image_relpath": "train_images/c85b79d70079.png"
+    },
+    {
+      "id_code": "b50b30aa6e6c",
+      "diagnosis": 1,
+      "image_relpath": "train_images/b50b30aa6e6c.png"
+    },
+    {
+      "id_code": "e9ff9352ccb3",
+      "diagnosis": 1,
+      "image_relpath": "train_images/e9ff9352ccb3.png"
+    },
+    {
+      "id_code": "f3a4751af42e",
+      "diagnosis": 0,
+      "image_relpath": "train_images/f3a4751af42e.png"
+    },
+    {
+      "id_code": "74418f620068",
+      "diagnosis": 2,
+      "image_relpath": "train_images/74418f620068.png"
+    },
+    {
+      "id_code": "7ea756985353",
+      "diagnosis": 1,
+      "image_relpath": "train_images/7ea756985353.png"
+    },
+    {
+      "id_code": "4c570172778b",
+      "diagnosis": 3,
+      "image_relpath": "train_images/4c570172778b.png"
+    },
+    {
+      "id_code": "51cd8d2057fa",
+      "diagnosis": 0,
+      "image_relpath": "train_images/51cd8d2057fa.png"
+    },
+    {
+      "id_code": "2608e1dac5b1",
+      "diagnosis": 2,
+      "image_relpath": "train_images/2608e1dac5b1.png"
+    },
+    {
+      "id_code": "1c7a013eeba7",
+      "diagnosis": 0,
+      "image_relpath": "train_images/1c7a013eeba7.png"
+    },
+    {
+      "id_code": "afc744fad65e",
+      "diagnosis": 0,
+      "image_relpath": "train_images/afc744fad65e.png"
+    },
+    {
+      "id_code": "3cd9713c0ecb",
+      "diagnosis": 0,
+      "image_relpath": "train_images/3cd9713c0ecb.png"
+    },
+    {
+      "id_code": "c9c563864ab1",
+      "diagnosis": 0,
+      "image_relpath": "train_images/c9c563864ab1.png"
+    },
+    {
+      "id_code": "bf811911acf9",
+      "diagnosis": 0,
+      "image_relpath": "train_images/bf811911acf9.png"
+    },
+    {
+      "id_code": "840527bc6628",
+      "diagnosis": 2,
+      "image_relpath": "train_images/840527bc6628.png"
+    },
+    {
+      "id_code": "9b95d6203406",
+      "diagnosis": 2,
+      "image_relpath": "train_images/9b95d6203406.png"
+    },
+    {
+      "id_code": "6a57a3db3eff",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6a57a3db3eff.png"
+    },
+    {
+      "id_code": "5633ced07d8e",
+      "diagnosis": 1,
+      "image_relpath": "train_images/5633ced07d8e.png"
+    },
+    {
+      "id_code": "bde1063a5dd7",
+      "diagnosis": 0,
+      "image_relpath": "train_images/bde1063a5dd7.png"
+    },
+    {
+      "id_code": "2b2f5a0f880d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/2b2f5a0f880d.png"
+    },
+    {
+      "id_code": "8650d32f4a9e",
+      "diagnosis": 0,
+      "image_relpath": "train_images/8650d32f4a9e.png"
+    },
+    {
+      "id_code": "da3a2275c850",
+      "diagnosis": 0,
+      "image_relpath": "train_images/da3a2275c850.png"
+    },
+    {
+      "id_code": "4a213b405ee4",
+      "diagnosis": 1,
+      "image_relpath": "train_images/4a213b405ee4.png"
+    },
+    {
+      "id_code": "3ee4841936ef",
+      "diagnosis": 4,
+      "image_relpath": "train_images/3ee4841936ef.png"
+    },
+    {
+      "id_code": "2d3f4094c08a",
+      "diagnosis": 0,
+      "image_relpath": "train_images/2d3f4094c08a.png"
+    },
+    {
+      "id_code": "09f6ab477654",
+      "diagnosis": 2,
+      "image_relpath": "train_images/09f6ab477654.png"
+    },
+    {
+      "id_code": "cf8f1bc7a215",
+      "diagnosis": 0,
+      "image_relpath": "train_images/cf8f1bc7a215.png"
+    },
+    {
+      "id_code": "91cf56d3d1af",
+      "diagnosis": 3,
+      "image_relpath": "train_images/91cf56d3d1af.png"
+    },
+    {
+      "id_code": "d3e56584a481",
+      "diagnosis": 0,
+      "image_relpath": "train_images/d3e56584a481.png"
+    },
+    {
+      "id_code": "3c78bfca247b",
+      "diagnosis": 4,
+      "image_relpath": "train_images/3c78bfca247b.png"
+    },
+    {
+      "id_code": "8543a801dce0",
+      "diagnosis": 2,
+      "image_relpath": "train_images/8543a801dce0.png"
+    },
+    {
+      "id_code": "9b0eb9f41da4",
+      "diagnosis": 2,
+      "image_relpath": "train_images/9b0eb9f41da4.png"
+    },
+    {
+      "id_code": "fbdc796290d4",
+      "diagnosis": 0,
+      "image_relpath": "train_images/fbdc796290d4.png"
+    },
+    {
+      "id_code": "ce8d2efd9d4f",
+      "diagnosis": 0,
+      "image_relpath": "train_images/ce8d2efd9d4f.png"
+    },
+    {
+      "id_code": "6c6505a0c637",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6c6505a0c637.png"
+    },
+    {
+      "id_code": "6c315ad3d07f",
+      "diagnosis": 2,
+      "image_relpath": "train_images/6c315ad3d07f.png"
+    },
+    {
+      "id_code": "290ecdba359f",
+      "diagnosis": 2,
+      "image_relpath": "train_images/290ecdba359f.png"
+    },
+    {
+      "id_code": "1a1e974a7dbf",
+      "diagnosis": 0,
+      "image_relpath": "train_images/1a1e974a7dbf.png"
+    },
+    {
+      "id_code": "bb9a3d835a94",
+      "diagnosis": 1,
+      "image_relpath": "train_images/bb9a3d835a94.png"
+    },
+    {
+      "id_code": "a8b637abd96b",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a8b637abd96b.png"
+    },
+    {
+      "id_code": "fe674c2f73f5",
+      "diagnosis": 1,
+      "image_relpath": "train_images/fe674c2f73f5.png"
+    },
+    {
+      "id_code": "68987fb159ab",
+      "diagnosis": 0,
+      "image_relpath": "train_images/68987fb159ab.png"
+    },
+    {
+      "id_code": "0c7e82daf5a0",
+      "diagnosis": 2,
+      "image_relpath": "train_images/0c7e82daf5a0.png"
+    },
+    {
+      "id_code": "937bc1b924b1",
+      "diagnosis": 0,
+      "image_relpath": "train_images/937bc1b924b1.png"
+    },
+    {
+      "id_code": "fdbc252813b1",
+      "diagnosis": 0,
+      "image_relpath": "train_images/fdbc252813b1.png"
+    },
+    {
+      "id_code": "24f271c87e73",
+      "diagnosis": 0,
+      "image_relpath": "train_images/24f271c87e73.png"
+    },
+    {
+      "id_code": "8c2f0f04e1ed",
+      "diagnosis": 1,
+      "image_relpath": "train_images/8c2f0f04e1ed.png"
+    },
+    {
+      "id_code": "5a27b9b2a9c1",
+      "diagnosis": 0,
+      "image_relpath": "train_images/5a27b9b2a9c1.png"
+    },
+    {
+      "id_code": "2a3a1ed1c285",
+      "diagnosis": 2,
+      "image_relpath": "train_images/2a3a1ed1c285.png"
+    },
+    {
+      "id_code": "0a74c92e287c",
+      "diagnosis": 0,
+      "image_relpath": "train_images/0a74c92e287c.png"
+    },
+    {
+      "id_code": "ec6f1797a25a",
+      "diagnosis": 0,
+      "image_relpath": "train_images/ec6f1797a25a.png"
+    },
+    {
+      "id_code": "70d0392397de",
+      "diagnosis": 0,
+      "image_relpath": "train_images/70d0392397de.png"
+    },
+    {
+      "id_code": "910bfd38e2f5",
+      "diagnosis": 3,
+      "image_relpath": "train_images/910bfd38e2f5.png"
+    },
+    {
+      "id_code": "3a61e690f4bb",
+      "diagnosis": 2,
+      "image_relpath": "train_images/3a61e690f4bb.png"
+    },
+    {
+      "id_code": "80dbeb0fdc75",
+      "diagnosis": 0,
+      "image_relpath": "train_images/80dbeb0fdc75.png"
+    },
+    {
+      "id_code": "af8aa32beee4",
+      "diagnosis": 2,
+      "image_relpath": "train_images/af8aa32beee4.png"
+    },
+    {
+      "id_code": "555d0bef3c5b",
+      "diagnosis": 0,
+      "image_relpath": "train_images/555d0bef3c5b.png"
+    },
+    {
+      "id_code": "71f6a6e4620a",
+      "diagnosis": 1,
+      "image_relpath": "train_images/71f6a6e4620a.png"
+    },
+    {
+      "id_code": "65f69234c8a7",
+      "diagnosis": 0,
+      "image_relpath": "train_images/65f69234c8a7.png"
+    },
+    {
+      "id_code": "c027e5482e8c",
+      "diagnosis": 1,
+      "image_relpath": "train_images/c027e5482e8c.png"
+    },
+    {
+      "id_code": "61bbc11fe503",
+      "diagnosis": 4,
+      "image_relpath": "train_images/61bbc11fe503.png"
+    },
+    {
+      "id_code": "5486da4273d7",
+      "diagnosis": 2,
+      "image_relpath": "train_images/5486da4273d7.png"
+    },
+    {
+      "id_code": "6cee2e148520",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6cee2e148520.png"
+    },
+    {
+      "id_code": "b187b3c93afb",
+      "diagnosis": 2,
+      "image_relpath": "train_images/b187b3c93afb.png"
+    },
+    {
+      "id_code": "98104c8c67eb",
+      "diagnosis": 2,
+      "image_relpath": "train_images/98104c8c67eb.png"
+    },
+    {
+      "id_code": "150fc7127582",
+      "diagnosis": 0,
+      "image_relpath": "train_images/150fc7127582.png"
+    },
+    {
+      "id_code": "f71bea807c96",
+      "diagnosis": 0,
+      "image_relpath": "train_images/f71bea807c96.png"
+    },
+    {
+      "id_code": "fcc55ae641ae",
+      "diagnosis": 2,
+      "image_relpath": "train_images/fcc55ae641ae.png"
+    },
+    {
+      "id_code": "f4de9620e3f2",
+      "diagnosis": 0,
+      "image_relpath": "train_images/f4de9620e3f2.png"
+    },
+    {
+      "id_code": "d16e59a2b33a",
+      "diagnosis": 0,
+      "image_relpath": "train_images/d16e59a2b33a.png"
+    },
+    {
+      "id_code": "308f7fce6f0d",
+      "diagnosis": 2,
+      "image_relpath": "train_images/308f7fce6f0d.png"
+    },
+    {
+      "id_code": "875d2ffcbf47",
+      "diagnosis": 0,
+      "image_relpath": "train_images/875d2ffcbf47.png"
+    },
+    {
+      "id_code": "3e3a3955b9c5",
+      "diagnosis": 3,
+      "image_relpath": "train_images/3e3a3955b9c5.png"
+    },
+    {
+      "id_code": "4d1cf360b2d7",
+      "diagnosis": 2,
+      "image_relpath": "train_images/4d1cf360b2d7.png"
+    },
+    {
+      "id_code": "b06dabab4f09",
+      "diagnosis": 2,
+      "image_relpath": "train_images/b06dabab4f09.png"
+    },
+    {
+      "id_code": "650fbed3fdca",
+      "diagnosis": 2,
+      "image_relpath": "train_images/650fbed3fdca.png"
+    },
+    {
+      "id_code": "bdb98063fe84",
+      "diagnosis": 2,
+      "image_relpath": "train_images/bdb98063fe84.png"
+    },
+    {
+      "id_code": "ed88faaa325a",
+      "diagnosis": 2,
+      "image_relpath": "train_images/ed88faaa325a.png"
+    },
+    {
+      "id_code": "79ade634c633",
+      "diagnosis": 0,
+      "image_relpath": "train_images/79ade634c633.png"
+    },
+    {
+      "id_code": "e9faf0296643",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e9faf0296643.png"
+    },
+    {
+      "id_code": "8ae049175db6",
+      "diagnosis": 4,
+      "image_relpath": "train_images/8ae049175db6.png"
+    },
+    {
+      "id_code": "df3adfd6ba36",
+      "diagnosis": 2,
+      "image_relpath": "train_images/df3adfd6ba36.png"
+    },
+    {
+      "id_code": "4a0890b08532",
+      "diagnosis": 2,
+      "image_relpath": "train_images/4a0890b08532.png"
+    },
+    {
+      "id_code": "a150ff5dfe07",
+      "diagnosis": 2,
+      "image_relpath": "train_images/a150ff5dfe07.png"
+    },
+    {
+      "id_code": "b6a0e348a01e",
+      "diagnosis": 1,
+      "image_relpath": "train_images/b6a0e348a01e.png"
+    },
+    {
+      "id_code": "a34fc5376669",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a34fc5376669.png"
+    },
+    {
+      "id_code": "1ffaa51a6245",
+      "diagnosis": 2,
+      "image_relpath": "train_images/1ffaa51a6245.png"
+    },
+    {
+      "id_code": "5b301a6d1ac7",
+      "diagnosis": 2,
+      "image_relpath": "train_images/5b301a6d1ac7.png"
+    },
+    {
+      "id_code": "f2c0b41acd05",
+      "diagnosis": 0,
+      "image_relpath": "train_images/f2c0b41acd05.png"
+    },
+    {
+      "id_code": "992599744a23",
+      "diagnosis": 0,
+      "image_relpath": "train_images/992599744a23.png"
+    },
+    {
+      "id_code": "a6c9e96a10d7",
+      "diagnosis": 2,
+      "image_relpath": "train_images/a6c9e96a10d7.png"
+    },
+    {
+      "id_code": "83e529e95b0e",
+      "diagnosis": 1,
+      "image_relpath": "train_images/83e529e95b0e.png"
+    },
+    {
+      "id_code": "fdc685055659",
+      "diagnosis": 0,
+      "image_relpath": "train_images/fdc685055659.png"
+    },
+    {
+      "id_code": "67c03349bb31",
+      "diagnosis": 2,
+      "image_relpath": "train_images/67c03349bb31.png"
+    },
+    {
+      "id_code": "9bbb6c455913",
+      "diagnosis": 0,
+      "image_relpath": "train_images/9bbb6c455913.png"
+    },
+    {
+      "id_code": "55092c0071eb",
+      "diagnosis": 2,
+      "image_relpath": "train_images/55092c0071eb.png"
+    },
+    {
+      "id_code": "e34fa07bd64d",
+      "diagnosis": 2,
+      "image_relpath": "train_images/e34fa07bd64d.png"
+    },
+    {
+      "id_code": "fa9bece586fc",
+      "diagnosis": 0,
+      "image_relpath": "train_images/fa9bece586fc.png"
+    },
+    {
+      "id_code": "b69c224edd6e",
+      "diagnosis": 0,
+      "image_relpath": "train_images/b69c224edd6e.png"
+    },
+    {
+      "id_code": "be68322c7223",
+      "diagnosis": 2,
+      "image_relpath": "train_images/be68322c7223.png"
+    },
+    {
+      "id_code": "314862758acf",
+      "diagnosis": 2,
+      "image_relpath": "train_images/314862758acf.png"
+    },
+    {
+      "id_code": "331121c65e88",
+      "diagnosis": 0,
+      "image_relpath": "train_images/331121c65e88.png"
+    },
+    {
+      "id_code": "8af50c9d0a86",
+      "diagnosis": 0,
+      "image_relpath": "train_images/8af50c9d0a86.png"
+    },
+    {
+      "id_code": "39f8935185e6",
+      "diagnosis": 0,
+      "image_relpath": "train_images/39f8935185e6.png"
+    },
+    {
+      "id_code": "6f923b60934b",
+      "diagnosis": 4,
+      "image_relpath": "train_images/6f923b60934b.png"
+    },
+    {
+      "id_code": "34723fae6475",
+      "diagnosis": 2,
+      "image_relpath": "train_images/34723fae6475.png"
+    },
+    {
+      "id_code": "a80dab8eddf4",
+      "diagnosis": 3,
+      "image_relpath": "train_images/a80dab8eddf4.png"
+    },
+    {
+      "id_code": "1da25637859b",
+      "diagnosis": 2,
+      "image_relpath": "train_images/1da25637859b.png"
+    },
+    {
+      "id_code": "bf6cbccacf39",
+      "diagnosis": 0,
+      "image_relpath": "train_images/bf6cbccacf39.png"
+    },
+    {
+      "id_code": "6b00cb764237",
+      "diagnosis": 1,
+      "image_relpath": "train_images/6b00cb764237.png"
+    },
+    {
+      "id_code": "1633f8291a80",
+      "diagnosis": 0,
+      "image_relpath": "train_images/1633f8291a80.png"
+    },
+    {
+      "id_code": "d48178e4a49b",
+      "diagnosis": 4,
+      "image_relpath": "train_images/d48178e4a49b.png"
+    },
+    {
+      "id_code": "80e6e425f966",
+      "diagnosis": 0,
+      "image_relpath": "train_images/80e6e425f966.png"
+    },
+    {
+      "id_code": "a654b25124c3",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a654b25124c3.png"
+    },
+    {
+      "id_code": "d29096bd94aa",
+      "diagnosis": 2,
+      "image_relpath": "train_images/d29096bd94aa.png"
+    },
+    {
+      "id_code": "916915f01e17",
+      "diagnosis": 0,
+      "image_relpath": "train_images/916915f01e17.png"
+    },
+    {
+      "id_code": "54bdcdecd8f3",
+      "diagnosis": 0,
+      "image_relpath": "train_images/54bdcdecd8f3.png"
+    },
+    {
+      "id_code": "dec5595e6154",
+      "diagnosis": 0,
+      "image_relpath": "train_images/dec5595e6154.png"
+    },
+    {
+      "id_code": "ee78ce914066",
+      "diagnosis": 1,
+      "image_relpath": "train_images/ee78ce914066.png"
+    },
+    {
+      "id_code": "3f6bccf21ce8",
+      "diagnosis": 0,
+      "image_relpath": "train_images/3f6bccf21ce8.png"
+    },
+    {
+      "id_code": "29f44aea93a4",
+      "diagnosis": 2,
+      "image_relpath": "train_images/29f44aea93a4.png"
+    },
+    {
+      "id_code": "419406328dcd",
+      "diagnosis": 2,
+      "image_relpath": "train_images/419406328dcd.png"
+    },
+    {
+      "id_code": "5f6db235c04d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/5f6db235c04d.png"
+    },
+    {
+      "id_code": "f999c6921e6d",
+      "diagnosis": 2,
+      "image_relpath": "train_images/f999c6921e6d.png"
+    },
+    {
+      "id_code": "3c72f580d4ba",
+      "diagnosis": 1,
+      "image_relpath": "train_images/3c72f580d4ba.png"
+    },
+    {
+      "id_code": "ff8a0b45c789",
+      "diagnosis": 4,
+      "image_relpath": "train_images/ff8a0b45c789.png"
+    },
+    {
+      "id_code": "91b7a4179ecf",
+      "diagnosis": 0,
+      "image_relpath": "train_images/91b7a4179ecf.png"
+    },
+    {
+      "id_code": "06586082a24d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/06586082a24d.png"
+    },
+    {
+      "id_code": "992b9a07b25f",
+      "diagnosis": 0,
+      "image_relpath": "train_images/992b9a07b25f.png"
+    },
+    {
+      "id_code": "65e530ee2e79",
+      "diagnosis": 2,
+      "image_relpath": "train_images/65e530ee2e79.png"
+    },
+    {
+      "id_code": "29580bed2f7d",
+      "diagnosis": 2,
+      "image_relpath": "train_images/29580bed2f7d.png"
+    },
+    {
+      "id_code": "e93394175a19",
+      "diagnosis": 3,
+      "image_relpath": "train_images/e93394175a19.png"
+    },
+    {
+      "id_code": "5c817060c0ed",
+      "diagnosis": 0,
+      "image_relpath": "train_images/5c817060c0ed.png"
+    },
+    {
+      "id_code": "08037e4490e5",
+      "diagnosis": 0,
+      "image_relpath": "train_images/08037e4490e5.png"
+    },
+    {
+      "id_code": "022f820027b8",
+      "diagnosis": 0,
+      "image_relpath": "train_images/022f820027b8.png"
+    },
+    {
+      "id_code": "8ee50c26fc13",
+      "diagnosis": 0,
+      "image_relpath": "train_images/8ee50c26fc13.png"
+    },
+    {
+      "id_code": "b460ca9fa26f",
+      "diagnosis": 0,
+      "image_relpath": "train_images/b460ca9fa26f.png"
+    },
+    {
+      "id_code": "d6283ded6aea",
+      "diagnosis": 2,
+      "image_relpath": "train_images/d6283ded6aea.png"
+    },
+    {
+      "id_code": "cd941e5bc659",
+      "diagnosis": 0,
+      "image_relpath": "train_images/cd941e5bc659.png"
+    },
+    {
+      "id_code": "2d9d97a6e713",
+      "diagnosis": 1,
+      "image_relpath": "train_images/2d9d97a6e713.png"
+    },
+    {
+      "id_code": "3a122851e526",
+      "diagnosis": 2,
+      "image_relpath": "train_images/3a122851e526.png"
+    },
+    {
+      "id_code": "bebb3f167654",
+      "diagnosis": 1,
+      "image_relpath": "train_images/bebb3f167654.png"
+    },
+    {
+      "id_code": "6daef3e5ca22",
+      "diagnosis": 4,
+      "image_relpath": "train_images/6daef3e5ca22.png"
+    },
+    {
+      "id_code": "0ac436400db4",
+      "diagnosis": 2,
+      "image_relpath": "train_images/0ac436400db4.png"
+    },
+    {
+      "id_code": "e1b8acb1cea1",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e1b8acb1cea1.png"
+    },
+    {
+      "id_code": "4a5a6efc0bef",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4a5a6efc0bef.png"
+    },
+    {
+      "id_code": "be7f791a7877",
+      "diagnosis": 0,
+      "image_relpath": "train_images/be7f791a7877.png"
+    },
+    {
+      "id_code": "266fbefa58fb",
+      "diagnosis": 0,
+      "image_relpath": "train_images/266fbefa58fb.png"
+    },
+    {
+      "id_code": "e13412678eff",
+      "diagnosis": 3,
+      "image_relpath": "train_images/e13412678eff.png"
+    },
+    {
+      "id_code": "c80f79579fed",
+      "diagnosis": 2,
+      "image_relpath": "train_images/c80f79579fed.png"
+    },
+    {
+      "id_code": "e0b5a982a018",
+      "diagnosis": 3,
+      "image_relpath": "train_images/e0b5a982a018.png"
+    },
+    {
+      "id_code": "2fb3a8606a77",
+      "diagnosis": 2,
+      "image_relpath": "train_images/2fb3a8606a77.png"
+    },
+    {
+      "id_code": "b2b79b37d314",
+      "diagnosis": 0,
+      "image_relpath": "train_images/b2b79b37d314.png"
+    },
+    {
+      "id_code": "f57cf3b6f48e",
+      "diagnosis": 0,
+      "image_relpath": "train_images/f57cf3b6f48e.png"
+    },
+    {
+      "id_code": "77acc2cafee1",
+      "diagnosis": 0,
+      "image_relpath": "train_images/77acc2cafee1.png"
+    },
+    {
+      "id_code": "51cfeccaf40d",
+      "diagnosis": 2,
+      "image_relpath": "train_images/51cfeccaf40d.png"
+    },
+    {
+      "id_code": "6b664ed2a938",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6b664ed2a938.png"
+    },
+    {
+      "id_code": "51269b77d312",
+      "diagnosis": 3,
+      "image_relpath": "train_images/51269b77d312.png"
+    },
+    {
+      "id_code": "709784f7fcc2",
+      "diagnosis": 2,
+      "image_relpath": "train_images/709784f7fcc2.png"
+    },
+    {
+      "id_code": "0d310aba6373",
+      "diagnosis": 1,
+      "image_relpath": "train_images/0d310aba6373.png"
+    },
+    {
+      "id_code": "6cb98da77e3e",
+      "diagnosis": 2,
+      "image_relpath": "train_images/6cb98da77e3e.png"
+    },
+    {
+      "id_code": "56e56aa08362",
+      "diagnosis": 2,
+      "image_relpath": "train_images/56e56aa08362.png"
+    },
+    {
+      "id_code": "0bf37ca3156a",
+      "diagnosis": 4,
+      "image_relpath": "train_images/0bf37ca3156a.png"
+    },
+    {
+      "id_code": "9ad92f1c1542",
+      "diagnosis": 2,
+      "image_relpath": "train_images/9ad92f1c1542.png"
+    },
+    {
+      "id_code": "8c7c26c52a6c",
+      "diagnosis": 4,
+      "image_relpath": "train_images/8c7c26c52a6c.png"
+    },
+    {
+      "id_code": "93d6d20a5ee3",
+      "diagnosis": 0,
+      "image_relpath": "train_images/93d6d20a5ee3.png"
+    },
+    {
+      "id_code": "1b398c0494d1",
+      "diagnosis": 0,
+      "image_relpath": "train_images/1b398c0494d1.png"
+    },
+    {
+      "id_code": "18d8fdb140b7",
+      "diagnosis": 2,
+      "image_relpath": "train_images/18d8fdb140b7.png"
+    },
+    {
+      "id_code": "76b950c6ed5e",
+      "diagnosis": 0,
+      "image_relpath": "train_images/76b950c6ed5e.png"
+    },
+    {
+      "id_code": "6165081b9021",
+      "diagnosis": 1,
+      "image_relpath": "train_images/6165081b9021.png"
+    },
+    {
+      "id_code": "db690e2d02f8",
+      "diagnosis": 1,
+      "image_relpath": "train_images/db690e2d02f8.png"
+    },
+    {
+      "id_code": "4bd941611343",
+      "diagnosis": 4,
+      "image_relpath": "train_images/4bd941611343.png"
+    },
+    {
+      "id_code": "e1418d28d668",
+      "diagnosis": 2,
+      "image_relpath": "train_images/e1418d28d668.png"
+    },
+    {
+      "id_code": "ba0107fb1bfd",
+      "diagnosis": 0,
+      "image_relpath": "train_images/ba0107fb1bfd.png"
+    },
+    {
+      "id_code": "807135cbc438",
+      "diagnosis": 2,
+      "image_relpath": "train_images/807135cbc438.png"
+    },
+    {
+      "id_code": "ab88081e5654",
+      "diagnosis": 0,
+      "image_relpath": "train_images/ab88081e5654.png"
+    },
+    {
+      "id_code": "d2ffe9287dc7",
+      "diagnosis": 3,
+      "image_relpath": "train_images/d2ffe9287dc7.png"
+    },
+    {
+      "id_code": "1dfe599d12a9",
+      "diagnosis": 0,
+      "image_relpath": "train_images/1dfe599d12a9.png"
+    },
+    {
+      "id_code": "cae33655ca00",
+      "diagnosis": 0,
+      "image_relpath": "train_images/cae33655ca00.png"
+    },
+    {
+      "id_code": "1f07dae3cadb",
+      "diagnosis": 2,
+      "image_relpath": "train_images/1f07dae3cadb.png"
+    },
+    {
+      "id_code": "10bf25731c08",
+      "diagnosis": 0,
+      "image_relpath": "train_images/10bf25731c08.png"
+    },
+    {
+      "id_code": "3c726de3ee90",
+      "diagnosis": 1,
+      "image_relpath": "train_images/3c726de3ee90.png"
+    },
+    {
+      "id_code": "66cd9c28e636",
+      "diagnosis": 1,
+      "image_relpath": "train_images/66cd9c28e636.png"
+    },
+    {
+      "id_code": "df6d13d04da1",
+      "diagnosis": 0,
+      "image_relpath": "train_images/df6d13d04da1.png"
+    },
+    {
+      "id_code": "8329e80c10ac",
+      "diagnosis": 0,
+      "image_relpath": "train_images/8329e80c10ac.png"
+    },
+    {
+      "id_code": "33596a635b53",
+      "diagnosis": 0,
+      "image_relpath": "train_images/33596a635b53.png"
+    },
+    {
+      "id_code": "b77b8a1f09f1",
+      "diagnosis": 4,
+      "image_relpath": "train_images/b77b8a1f09f1.png"
+    },
+    {
+      "id_code": "ea68b58a6e8f",
+      "diagnosis": 0,
+      "image_relpath": "train_images/ea68b58a6e8f.png"
+    },
+    {
+      "id_code": "461fa5292fda",
+      "diagnosis": 0,
+      "image_relpath": "train_images/461fa5292fda.png"
+    },
+    {
+      "id_code": "14c3b41d289c",
+      "diagnosis": 0,
+      "image_relpath": "train_images/14c3b41d289c.png"
+    },
+    {
+      "id_code": "4e82c3c8d31f",
+      "diagnosis": 1,
+      "image_relpath": "train_images/4e82c3c8d31f.png"
+    },
+    {
+      "id_code": "3b018e8b7303",
+      "diagnosis": 3,
+      "image_relpath": "train_images/3b018e8b7303.png"
+    },
+    {
+      "id_code": "18b7e34eab8f",
+      "diagnosis": 0,
+      "image_relpath": "train_images/18b7e34eab8f.png"
+    },
+    {
+      "id_code": "357f02a779d7",
+      "diagnosis": 0,
+      "image_relpath": "train_images/357f02a779d7.png"
+    },
+    {
+      "id_code": "7e160c8b611e",
+      "diagnosis": 3,
+      "image_relpath": "train_images/7e160c8b611e.png"
+    },
+    {
+      "id_code": "772af553b8b7",
+      "diagnosis": 3,
+      "image_relpath": "train_images/772af553b8b7.png"
+    },
+    {
+      "id_code": "f092febbf5c0",
+      "diagnosis": 3,
+      "image_relpath": "train_images/f092febbf5c0.png"
+    },
+    {
+      "id_code": "4c78d9d18da9",
+      "diagnosis": 2,
+      "image_relpath": "train_images/4c78d9d18da9.png"
+    },
+    {
+      "id_code": "188219f2d9c6",
+      "diagnosis": 0,
+      "image_relpath": "train_images/188219f2d9c6.png"
+    },
+    {
+      "id_code": "fe3f62695b2d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/fe3f62695b2d.png"
+    },
+    {
+      "id_code": "37de05ef12a5",
+      "diagnosis": 2,
+      "image_relpath": "train_images/37de05ef12a5.png"
+    },
+    {
+      "id_code": "ff52392372d3",
+      "diagnosis": 2,
+      "image_relpath": "train_images/ff52392372d3.png"
+    },
+    {
+      "id_code": "d473f6fafba0",
+      "diagnosis": 2,
+      "image_relpath": "train_images/d473f6fafba0.png"
+    },
+    {
+      "id_code": "b60dbf9f0744",
+      "diagnosis": 2,
+      "image_relpath": "train_images/b60dbf9f0744.png"
+    },
+    {
+      "id_code": "1a90fad9ffa2",
+      "diagnosis": 4,
+      "image_relpath": "train_images/1a90fad9ffa2.png"
+    },
+    {
+      "id_code": "76516f828d88",
+      "diagnosis": 0,
+      "image_relpath": "train_images/76516f828d88.png"
+    },
+    {
+      "id_code": "8ead8f37423c",
+      "diagnosis": 0,
+      "image_relpath": "train_images/8ead8f37423c.png"
+    },
+    {
+      "id_code": "07929d32b5b3",
+      "diagnosis": 1,
+      "image_relpath": "train_images/07929d32b5b3.png"
+    },
+    {
+      "id_code": "fe3b0e50be78",
+      "diagnosis": 0,
+      "image_relpath": "train_images/fe3b0e50be78.png"
+    },
+    {
+      "id_code": "789c60cba801",
+      "diagnosis": 0,
+      "image_relpath": "train_images/789c60cba801.png"
+    },
+    {
+      "id_code": "23148a40ecb0",
+      "diagnosis": 2,
+      "image_relpath": "train_images/23148a40ecb0.png"
+    },
+    {
+      "id_code": "25d069089c5e",
+      "diagnosis": 4,
+      "image_relpath": "train_images/25d069089c5e.png"
+    },
+    {
+      "id_code": "a04fb36db784",
+      "diagnosis": 2,
+      "image_relpath": "train_images/a04fb36db784.png"
+    },
+    {
+      "id_code": "4b422b48d0d4",
+      "diagnosis": 2,
+      "image_relpath": "train_images/4b422b48d0d4.png"
+    },
+    {
+      "id_code": "338326891d84",
+      "diagnosis": 0,
+      "image_relpath": "train_images/338326891d84.png"
+    },
+    {
+      "id_code": "e01b7bac822b",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e01b7bac822b.png"
+    },
+    {
+      "id_code": "6b91e99c9408",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6b91e99c9408.png"
+    },
+    {
+      "id_code": "1c4d87baaffc",
+      "diagnosis": 2,
+      "image_relpath": "train_images/1c4d87baaffc.png"
+    },
+    {
+      "id_code": "ae58ccb5905e",
+      "diagnosis": 0,
+      "image_relpath": "train_images/ae58ccb5905e.png"
+    },
+    {
+      "id_code": "b82dfa63a75f",
+      "diagnosis": 0,
+      "image_relpath": "train_images/b82dfa63a75f.png"
+    },
+    {
+      "id_code": "c2f3281cf528",
+      "diagnosis": 0,
+      "image_relpath": "train_images/c2f3281cf528.png"
+    },
+    {
+      "id_code": "e387311a840e",
+      "diagnosis": 2,
+      "image_relpath": "train_images/e387311a840e.png"
+    },
+    {
+      "id_code": "07083738b75e",
+      "diagnosis": 2,
+      "image_relpath": "train_images/07083738b75e.png"
+    },
+    {
+      "id_code": "5ea9e447bb62",
+      "diagnosis": 0,
+      "image_relpath": "train_images/5ea9e447bb62.png"
+    },
+    {
+      "id_code": "291e2ff3d834",
+      "diagnosis": 2,
+      "image_relpath": "train_images/291e2ff3d834.png"
+    },
+    {
+      "id_code": "4289af3afbd2",
+      "diagnosis": 2,
+      "image_relpath": "train_images/4289af3afbd2.png"
+    },
+    {
+      "id_code": "4b6cb0bcfd44",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4b6cb0bcfd44.png"
+    },
+    {
+      "id_code": "76be29bb30b2",
+      "diagnosis": 1,
+      "image_relpath": "train_images/76be29bb30b2.png"
+    },
+    {
+      "id_code": "3b185ac445d0",
+      "diagnosis": 4,
+      "image_relpath": "train_images/3b185ac445d0.png"
+    },
+    {
+      "id_code": "aca88f566228",
+      "diagnosis": 2,
+      "image_relpath": "train_images/aca88f566228.png"
+    },
+    {
+      "id_code": "578109578b46",
+      "diagnosis": 1,
+      "image_relpath": "train_images/578109578b46.png"
+    },
+    {
+      "id_code": "27f82ada84ac",
+      "diagnosis": 0,
+      "image_relpath": "train_images/27f82ada84ac.png"
+    },
+    {
+      "id_code": "36041171f441",
+      "diagnosis": 1,
+      "image_relpath": "train_images/36041171f441.png"
+    },
+    {
+      "id_code": "4d17559ac1e2",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4d17559ac1e2.png"
+    },
+    {
+      "id_code": "5347b4c8e9b3",
+      "diagnosis": 1,
+      "image_relpath": "train_images/5347b4c8e9b3.png"
+    },
+    {
+      "id_code": "9bd008aab548",
+      "diagnosis": 0,
+      "image_relpath": "train_images/9bd008aab548.png"
+    },
+    {
+      "id_code": "a9bc2f892cb3",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a9bc2f892cb3.png"
+    },
+    {
+      "id_code": "ed2ef440d22c",
+      "diagnosis": 0,
+      "image_relpath": "train_images/ed2ef440d22c.png"
+    },
+    {
+      "id_code": "87d46b1cc4e9",
+      "diagnosis": 0,
+      "image_relpath": "train_images/87d46b1cc4e9.png"
+    },
+    {
+      "id_code": "3aa2b1ce6700",
+      "diagnosis": 2,
+      "image_relpath": "train_images/3aa2b1ce6700.png"
+    },
+    {
+      "id_code": "e7b5dd5bab1f",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e7b5dd5bab1f.png"
+    },
+    {
+      "id_code": "312694ea8e6a",
+      "diagnosis": 4,
+      "image_relpath": "train_images/312694ea8e6a.png"
+    },
+    {
+      "id_code": "4528fbbd43a3",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4528fbbd43a3.png"
+    },
+    {
+      "id_code": "ee77763a6afb",
+      "diagnosis": 0,
+      "image_relpath": "train_images/ee77763a6afb.png"
+    },
+    {
+      "id_code": "a0b7ad98df57",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a0b7ad98df57.png"
+    },
+    {
+      "id_code": "cb28adab4e8a",
+      "diagnosis": 0,
+      "image_relpath": "train_images/cb28adab4e8a.png"
+    },
+    {
+      "id_code": "0ceb222f6629",
+      "diagnosis": 4,
+      "image_relpath": "train_images/0ceb222f6629.png"
+    },
+    {
+      "id_code": "7f6690fa390a",
+      "diagnosis": 0,
+      "image_relpath": "train_images/7f6690fa390a.png"
+    },
+    {
+      "id_code": "2f7789c1e046",
+      "diagnosis": 4,
+      "image_relpath": "train_images/2f7789c1e046.png"
+    },
+    {
+      "id_code": "58059e73d2d4",
+      "diagnosis": 0,
+      "image_relpath": "train_images/58059e73d2d4.png"
+    },
+    {
+      "id_code": "beb2ad14fd2d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/beb2ad14fd2d.png"
+    },
+    {
+      "id_code": "ff344e5c9341",
+      "diagnosis": 2,
+      "image_relpath": "train_images/ff344e5c9341.png"
+    },
+    {
+      "id_code": "5e5275ddee29",
+      "diagnosis": 0,
+      "image_relpath": "train_images/5e5275ddee29.png"
+    },
+    {
+      "id_code": "0da632ca45e0",
+      "diagnosis": 0,
+      "image_relpath": "train_images/0da632ca45e0.png"
+    },
+    {
+      "id_code": "388279491b5d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/388279491b5d.png"
+    },
+    {
+      "id_code": "8a759f94613a",
+      "diagnosis": 2,
+      "image_relpath": "train_images/8a759f94613a.png"
+    },
+    {
+      "id_code": "523d0c2cb4d6",
+      "diagnosis": 2,
+      "image_relpath": "train_images/523d0c2cb4d6.png"
+    },
+    {
+      "id_code": "65cf00be6fb4",
+      "diagnosis": 0,
+      "image_relpath": "train_images/65cf00be6fb4.png"
+    },
+    {
+      "id_code": "1968183f0e61",
+      "diagnosis": 2,
+      "image_relpath": "train_images/1968183f0e61.png"
+    },
+    {
+      "id_code": "3d2ecffe0386",
+      "diagnosis": 0,
+      "image_relpath": "train_images/3d2ecffe0386.png"
+    },
+    {
+      "id_code": "ca0f1a17c8e5",
+      "diagnosis": 2,
+      "image_relpath": "train_images/ca0f1a17c8e5.png"
+    },
+    {
+      "id_code": "278aa860dffd",
+      "diagnosis": 1,
+      "image_relpath": "train_images/278aa860dffd.png"
+    },
+    {
+      "id_code": "cb39761f0712",
+      "diagnosis": 0,
+      "image_relpath": "train_images/cb39761f0712.png"
+    },
+    {
+      "id_code": "9c893e16c055",
+      "diagnosis": 0,
+      "image_relpath": "train_images/9c893e16c055.png"
+    },
+    {
+      "id_code": "b99afe7137fb",
+      "diagnosis": 4,
+      "image_relpath": "train_images/b99afe7137fb.png"
+    },
+    {
+      "id_code": "5e7630f8438e",
+      "diagnosis": 2,
+      "image_relpath": "train_images/5e7630f8438e.png"
+    },
+    {
+      "id_code": "916ec976ff30",
+      "diagnosis": 3,
+      "image_relpath": "train_images/916ec976ff30.png"
+    },
+    {
+      "id_code": "498f143c0374",
+      "diagnosis": 3,
+      "image_relpath": "train_images/498f143c0374.png"
+    },
+    {
+      "id_code": "4c389d033cb0",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4c389d033cb0.png"
+    },
+    {
+      "id_code": "8201cab8322d",
+      "diagnosis": 3,
+      "image_relpath": "train_images/8201cab8322d.png"
+    },
+    {
+      "id_code": "1601c939412f",
+      "diagnosis": 0,
+      "image_relpath": "train_images/1601c939412f.png"
+    },
+    {
+      "id_code": "17eff993386f",
+      "diagnosis": 1,
+      "image_relpath": "train_images/17eff993386f.png"
+    },
+    {
+      "id_code": "6061f5b7378d",
+      "diagnosis": 3,
+      "image_relpath": "train_images/6061f5b7378d.png"
+    },
+    {
+      "id_code": "b37aae3c8fe1",
+      "diagnosis": 4,
+      "image_relpath": "train_images/b37aae3c8fe1.png"
+    },
+    {
+      "id_code": "5b0e53f53ef3",
+      "diagnosis": 1,
+      "image_relpath": "train_images/5b0e53f53ef3.png"
+    },
+    {
+      "id_code": "47b756014447",
+      "diagnosis": 2,
+      "image_relpath": "train_images/47b756014447.png"
+    },
+    {
+      "id_code": "66393d8c60ba",
+      "diagnosis": 0,
+      "image_relpath": "train_images/66393d8c60ba.png"
+    },
+    {
+      "id_code": "2f5c9cdfb333",
+      "diagnosis": 2,
+      "image_relpath": "train_images/2f5c9cdfb333.png"
+    },
+    {
+      "id_code": "7d8f67cadc29",
+      "diagnosis": 2,
+      "image_relpath": "train_images/7d8f67cadc29.png"
+    },
+    {
+      "id_code": "62ab144d5cee",
+      "diagnosis": 2,
+      "image_relpath": "train_images/62ab144d5cee.png"
+    },
+    {
+      "id_code": "4c6c5a1bf5ab",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4c6c5a1bf5ab.png"
+    },
+    {
+      "id_code": "a790a3b36390",
+      "diagnosis": 2,
+      "image_relpath": "train_images/a790a3b36390.png"
+    },
+    {
+      "id_code": "a2696f444ecb",
+      "diagnosis": 1,
+      "image_relpath": "train_images/a2696f444ecb.png"
+    },
+    {
+      "id_code": "eae70f527755",
+      "diagnosis": 0,
+      "image_relpath": "train_images/eae70f527755.png"
+    },
+    {
+      "id_code": "86722fcd802c",
+      "diagnosis": 2,
+      "image_relpath": "train_images/86722fcd802c.png"
+    },
+    {
+      "id_code": "c5a6f432a1ec",
+      "diagnosis": 0,
+      "image_relpath": "train_images/c5a6f432a1ec.png"
+    },
+    {
+      "id_code": "7526c59c36d3",
+      "diagnosis": 0,
+      "image_relpath": "train_images/7526c59c36d3.png"
+    },
+    {
+      "id_code": "0083ee8054ee",
+      "diagnosis": 4,
+      "image_relpath": "train_images/0083ee8054ee.png"
+    },
+    {
+      "id_code": "4cfd22ae43d4",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4cfd22ae43d4.png"
+    },
+    {
+      "id_code": "02cd34a85b24",
+      "diagnosis": 0,
+      "image_relpath": "train_images/02cd34a85b24.png"
+    },
+    {
+      "id_code": "96ce10a1dbd7",
+      "diagnosis": 0,
+      "image_relpath": "train_images/96ce10a1dbd7.png"
+    },
+    {
+      "id_code": "5ed6dc419e4d",
+      "diagnosis": 2,
+      "image_relpath": "train_images/5ed6dc419e4d.png"
+    },
+    {
+      "id_code": "a32b5ce3d48a",
+      "diagnosis": 4,
+      "image_relpath": "train_images/a32b5ce3d48a.png"
+    },
+    {
+      "id_code": "6dc07f968794",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6dc07f968794.png"
+    },
+    {
+      "id_code": "f7e9fa75c7c1",
+      "diagnosis": 0,
+      "image_relpath": "train_images/f7e9fa75c7c1.png"
+    },
+    {
+      "id_code": "7bda86d95c5b",
+      "diagnosis": 2,
+      "image_relpath": "train_images/7bda86d95c5b.png"
+    },
+    {
+      "id_code": "a26f50218b84",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a26f50218b84.png"
+    },
+    {
+      "id_code": "6df8b7b6e837",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6df8b7b6e837.png"
+    },
+    {
+      "id_code": "36b5b3c9fb32",
+      "diagnosis": 3,
+      "image_relpath": "train_images/36b5b3c9fb32.png"
+    },
+    {
+      "id_code": "89d9c071a56f",
+      "diagnosis": 1,
+      "image_relpath": "train_images/89d9c071a56f.png"
+    },
+    {
+      "id_code": "3af9aaa880e9",
+      "diagnosis": 0,
+      "image_relpath": "train_images/3af9aaa880e9.png"
+    },
+    {
+      "id_code": "e811f39a1243",
+      "diagnosis": 2,
+      "image_relpath": "train_images/e811f39a1243.png"
+    },
+    {
+      "id_code": "57760be09c03",
+      "diagnosis": 2,
+      "image_relpath": "train_images/57760be09c03.png"
+    },
+    {
+      "id_code": "2ef955d6d9ff",
+      "diagnosis": 0,
+      "image_relpath": "train_images/2ef955d6d9ff.png"
+    },
+    {
+      "id_code": "907aaff827e5",
+      "diagnosis": 2,
+      "image_relpath": "train_images/907aaff827e5.png"
+    },
+    {
+      "id_code": "2ecbc2e3f239",
+      "diagnosis": 1,
+      "image_relpath": "train_images/2ecbc2e3f239.png"
+    },
+    {
+      "id_code": "f0f89314e860",
+      "diagnosis": 4,
+      "image_relpath": "train_images/f0f89314e860.png"
+    },
+    {
+      "id_code": "184a185e7447",
+      "diagnosis": 0,
+      "image_relpath": "train_images/184a185e7447.png"
+    },
+    {
+      "id_code": "b835b6e31a59",
+      "diagnosis": 0,
+      "image_relpath": "train_images/b835b6e31a59.png"
+    },
+    {
+      "id_code": "5905a9b06a73",
+      "diagnosis": 2,
+      "image_relpath": "train_images/5905a9b06a73.png"
+    },
+    {
+      "id_code": "9fa02dfb5553",
+      "diagnosis": 0,
+      "image_relpath": "train_images/9fa02dfb5553.png"
+    },
+    {
+      "id_code": "eed4afc8ec83",
+      "diagnosis": 1,
+      "image_relpath": "train_images/eed4afc8ec83.png"
+    },
+    {
+      "id_code": "9568eb7e9c08",
+      "diagnosis": 2,
+      "image_relpath": "train_images/9568eb7e9c08.png"
+    },
+    {
+      "id_code": "b82d5f1f1145",
+      "diagnosis": 2,
+      "image_relpath": "train_images/b82d5f1f1145.png"
+    },
+    {
+      "id_code": "97fdee242fea",
+      "diagnosis": 0,
+      "image_relpath": "train_images/97fdee242fea.png"
+    },
+    {
+      "id_code": "1ec95179cdfe",
+      "diagnosis": 0,
+      "image_relpath": "train_images/1ec95179cdfe.png"
+    },
+    {
+      "id_code": "88e4399d207c",
+      "diagnosis": 0,
+      "image_relpath": "train_images/88e4399d207c.png"
+    },
+    {
+      "id_code": "c6a2975228af",
+      "diagnosis": 2,
+      "image_relpath": "train_images/c6a2975228af.png"
+    },
+    {
+      "id_code": "7ed4128b2a4e",
+      "diagnosis": 0,
+      "image_relpath": "train_images/7ed4128b2a4e.png"
+    },
+    {
+      "id_code": "9904939ab83d",
+      "diagnosis": 2,
+      "image_relpath": "train_images/9904939ab83d.png"
+    },
+    {
+      "id_code": "80feb1f7ca5e",
+      "diagnosis": 2,
+      "image_relpath": "train_images/80feb1f7ca5e.png"
+    },
+    {
+      "id_code": "edceb0657d77",
+      "diagnosis": 0,
+      "image_relpath": "train_images/edceb0657d77.png"
+    },
+    {
+      "id_code": "7877be80901c",
+      "diagnosis": 2,
+      "image_relpath": "train_images/7877be80901c.png"
+    },
+    {
+      "id_code": "44ecf3f4efa5",
+      "diagnosis": 4,
+      "image_relpath": "train_images/44ecf3f4efa5.png"
+    },
+    {
+      "id_code": "d364423ec6f9",
+      "diagnosis": 2,
+      "image_relpath": "train_images/d364423ec6f9.png"
+    },
+    {
+      "id_code": "5ead17e894ae",
+      "diagnosis": 0,
+      "image_relpath": "train_images/5ead17e894ae.png"
+    },
+    {
+      "id_code": "9c14ce27cbfc",
+      "diagnosis": 0,
+      "image_relpath": "train_images/9c14ce27cbfc.png"
+    },
+    {
+      "id_code": "0161338f53cc",
+      "diagnosis": 2,
+      "image_relpath": "train_images/0161338f53cc.png"
+    },
+    {
+      "id_code": "b3d135bd3bb5",
+      "diagnosis": 3,
+      "image_relpath": "train_images/b3d135bd3bb5.png"
+    },
+    {
+      "id_code": "7ef5ff774a48",
+      "diagnosis": 1,
+      "image_relpath": "train_images/7ef5ff774a48.png"
+    },
+    {
+      "id_code": "b5a3ca5c0a80",
+      "diagnosis": 0,
+      "image_relpath": "train_images/b5a3ca5c0a80.png"
+    },
+    {
+      "id_code": "3402124408ea",
+      "diagnosis": 2,
+      "image_relpath": "train_images/3402124408ea.png"
+    },
+    {
+      "id_code": "7e9081e95bf6",
+      "diagnosis": 0,
+      "image_relpath": "train_images/7e9081e95bf6.png"
+    },
+    {
+      "id_code": "e42d9a94a66d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e42d9a94a66d.png"
+    },
+    {
+      "id_code": "1df1530b9b8d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/1df1530b9b8d.png"
+    },
+    {
+      "id_code": "45c39ab9e797",
+      "diagnosis": 2,
+      "image_relpath": "train_images/45c39ab9e797.png"
+    },
+    {
+      "id_code": "5814cbd2e9bf",
+      "diagnosis": 0,
+      "image_relpath": "train_images/5814cbd2e9bf.png"
+    },
+    {
+      "id_code": "ef5155990874",
+      "diagnosis": 0,
+      "image_relpath": "train_images/ef5155990874.png"
+    },
+    {
+      "id_code": "1c5ad36fb799",
+      "diagnosis": 2,
+      "image_relpath": "train_images/1c5ad36fb799.png"
+    },
+    {
+      "id_code": "8acffaf1f4b9",
+      "diagnosis": 2,
+      "image_relpath": "train_images/8acffaf1f4b9.png"
+    },
+    {
+      "id_code": "c7d0deb71576",
+      "diagnosis": 0,
+      "image_relpath": "train_images/c7d0deb71576.png"
+    },
+    {
+      "id_code": "84b88e8d3bca",
+      "diagnosis": 0,
+      "image_relpath": "train_images/84b88e8d3bca.png"
+    },
+    {
+      "id_code": "189cbbc9e5e3",
+      "diagnosis": 0,
+      "image_relpath": "train_images/189cbbc9e5e3.png"
+    },
+    {
+      "id_code": "e933923aab15",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e933923aab15.png"
+    },
+    {
+      "id_code": "2d870833c0c9",
+      "diagnosis": 2,
+      "image_relpath": "train_images/2d870833c0c9.png"
+    },
+    {
+      "id_code": "b46b09a45f39",
+      "diagnosis": 0,
+      "image_relpath": "train_images/b46b09a45f39.png"
+    },
+    {
+      "id_code": "bcb0498ed2c1",
+      "diagnosis": 0,
+      "image_relpath": "train_images/bcb0498ed2c1.png"
+    },
+    {
+      "id_code": "a3fcf42ff56d",
+      "diagnosis": 4,
+      "image_relpath": "train_images/a3fcf42ff56d.png"
+    },
+    {
+      "id_code": "f02057c41256",
+      "diagnosis": 0,
+      "image_relpath": "train_images/f02057c41256.png"
+    },
+    {
+      "id_code": "fda39982a810",
+      "diagnosis": 3,
+      "image_relpath": "train_images/fda39982a810.png"
+    },
+    {
+      "id_code": "6e0f78e188ff",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6e0f78e188ff.png"
+    },
+    {
+      "id_code": "529906ff9dfa",
+      "diagnosis": 0,
+      "image_relpath": "train_images/529906ff9dfa.png"
+    },
+    {
+      "id_code": "499c8df39222",
+      "diagnosis": 4,
+      "image_relpath": "train_images/499c8df39222.png"
+    },
+    {
+      "id_code": "e0313be77035",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e0313be77035.png"
+    },
+    {
+      "id_code": "3b232b394e4f",
+      "diagnosis": 4,
+      "image_relpath": "train_images/3b232b394e4f.png"
+    },
+    {
+      "id_code": "594f69b503ad",
+      "diagnosis": 2,
+      "image_relpath": "train_images/594f69b503ad.png"
+    },
+    {
+      "id_code": "2f2e1949ad56",
+      "diagnosis": 1,
+      "image_relpath": "train_images/2f2e1949ad56.png"
+    },
+    {
+      "id_code": "0f96c358a250",
+      "diagnosis": 3,
+      "image_relpath": "train_images/0f96c358a250.png"
+    },
+    {
+      "id_code": "2fefb720869a",
+      "diagnosis": 0,
+      "image_relpath": "train_images/2fefb720869a.png"
+    },
+    {
+      "id_code": "9f8112c710be",
+      "diagnosis": 0,
+      "image_relpath": "train_images/9f8112c710be.png"
+    },
+    {
+      "id_code": "f58cdfa968be",
+      "diagnosis": 0,
+      "image_relpath": "train_images/f58cdfa968be.png"
+    },
+    {
+      "id_code": "38e0e28d35d3",
+      "diagnosis": 1,
+      "image_relpath": "train_images/38e0e28d35d3.png"
+    },
+    {
+      "id_code": "bec0acd539b2",
+      "diagnosis": 3,
+      "image_relpath": "train_images/bec0acd539b2.png"
+    },
+    {
+      "id_code": "737ef6226677",
+      "diagnosis": 0,
+      "image_relpath": "train_images/737ef6226677.png"
+    },
+    {
+      "id_code": "b8dab47a260e",
+      "diagnosis": 0,
+      "image_relpath": "train_images/b8dab47a260e.png"
+    },
+    {
+      "id_code": "a88f68b0b114",
+      "diagnosis": 2,
+      "image_relpath": "train_images/a88f68b0b114.png"
+    },
+    {
+      "id_code": "bfaa0080ab61",
+      "diagnosis": 2,
+      "image_relpath": "train_images/bfaa0080ab61.png"
+    },
+    {
+      "id_code": "9c6512166557",
+      "diagnosis": 0,
+      "image_relpath": "train_images/9c6512166557.png"
+    },
+    {
+      "id_code": "ec4649213ccf",
+      "diagnosis": 1,
+      "image_relpath": "train_images/ec4649213ccf.png"
+    },
+    {
+      "id_code": "10a5026eb8e6",
+      "diagnosis": 0,
+      "image_relpath": "train_images/10a5026eb8e6.png"
+    },
+    {
+      "id_code": "d141728fa392",
+      "diagnosis": 2,
+      "image_relpath": "train_images/d141728fa392.png"
+    },
+    {
+      "id_code": "cb75210abebe",
+      "diagnosis": 2,
+      "image_relpath": "train_images/cb75210abebe.png"
+    },
+    {
+      "id_code": "237c078d00fc",
+      "diagnosis": 3,
+      "image_relpath": "train_images/237c078d00fc.png"
+    },
+    {
+      "id_code": "04d029cfb612",
+      "diagnosis": 2,
+      "image_relpath": "train_images/04d029cfb612.png"
+    },
+    {
+      "id_code": "1e1fb019710d",
+      "diagnosis": 2,
+      "image_relpath": "train_images/1e1fb019710d.png"
+    },
+    {
+      "id_code": "222d0ac042b4",
+      "diagnosis": 2,
+      "image_relpath": "train_images/222d0ac042b4.png"
+    },
+    {
+      "id_code": "05339950962e",
+      "diagnosis": 0,
+      "image_relpath": "train_images/05339950962e.png"
+    },
+    {
+      "id_code": "a4d41c495666",
+      "diagnosis": 2,
+      "image_relpath": "train_images/a4d41c495666.png"
+    },
+    {
+      "id_code": "365f8c01d994",
+      "diagnosis": 1,
+      "image_relpath": "train_images/365f8c01d994.png"
+    },
+    {
+      "id_code": "74211a2b6dcf",
+      "diagnosis": 0,
+      "image_relpath": "train_images/74211a2b6dcf.png"
+    },
+    {
+      "id_code": "d271d3a2b552",
+      "diagnosis": 4,
+      "image_relpath": "train_images/d271d3a2b552.png"
+    },
+    {
+      "id_code": "2a93334f663a",
+      "diagnosis": 0,
+      "image_relpath": "train_images/2a93334f663a.png"
+    },
+    {
+      "id_code": "612f2df37a1d",
+      "diagnosis": 4,
+      "image_relpath": "train_images/612f2df37a1d.png"
+    },
+    {
+      "id_code": "6bcce181be65",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6bcce181be65.png"
+    },
+    {
+      "id_code": "1d2472849dce",
+      "diagnosis": 0,
+      "image_relpath": "train_images/1d2472849dce.png"
+    },
+    {
+      "id_code": "c4aef0d88d1b",
+      "diagnosis": 0,
+      "image_relpath": "train_images/c4aef0d88d1b.png"
+    },
+    {
+      "id_code": "6b66b0e86f7e",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6b66b0e86f7e.png"
+    },
+    {
+      "id_code": "6e092b306fe1",
+      "diagnosis": 2,
+      "image_relpath": "train_images/6e092b306fe1.png"
+    },
+    {
+      "id_code": "1c0cf251b426",
+      "diagnosis": 1,
+      "image_relpath": "train_images/1c0cf251b426.png"
+    },
+    {
+      "id_code": "5078caaf1f57",
+      "diagnosis": 0,
+      "image_relpath": "train_images/5078caaf1f57.png"
+    },
+    {
+      "id_code": "8d3d67661620",
+      "diagnosis": 2,
+      "image_relpath": "train_images/8d3d67661620.png"
+    },
+    {
+      "id_code": "0b00f8a77510",
+      "diagnosis": 0,
+      "image_relpath": "train_images/0b00f8a77510.png"
+    },
+    {
+      "id_code": "8a3eb86ae4bd",
+      "diagnosis": 0,
+      "image_relpath": "train_images/8a3eb86ae4bd.png"
+    },
+    {
+      "id_code": "e2856afe62c5",
+      "diagnosis": 2,
+      "image_relpath": "train_images/e2856afe62c5.png"
+    },
+    {
+      "id_code": "3599029efeb3",
+      "diagnosis": 0,
+      "image_relpath": "train_images/3599029efeb3.png"
+    },
+    {
+      "id_code": "7ae69d22075a",
+      "diagnosis": 1,
+      "image_relpath": "train_images/7ae69d22075a.png"
+    },
+    {
+      "id_code": "23175b7ef453",
+      "diagnosis": 2,
+      "image_relpath": "train_images/23175b7ef453.png"
+    },
+    {
+      "id_code": "6653ad026901",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6653ad026901.png"
+    },
+    {
+      "id_code": "5ac7a414560e",
+      "diagnosis": 0,
+      "image_relpath": "train_images/5ac7a414560e.png"
+    },
+    {
+      "id_code": "15c24478ac72",
+      "diagnosis": 0,
+      "image_relpath": "train_images/15c24478ac72.png"
+    },
+    {
+      "id_code": "7a0cff4c24b2",
+      "diagnosis": 2,
+      "image_relpath": "train_images/7a0cff4c24b2.png"
+    },
+    {
+      "id_code": "f1d719c97838",
+      "diagnosis": 0,
+      "image_relpath": "train_images/f1d719c97838.png"
+    },
+    {
+      "id_code": "af5a0bc4e1fa",
+      "diagnosis": 0,
+      "image_relpath": "train_images/af5a0bc4e1fa.png"
+    },
+    {
+      "id_code": "b0eeae01b8ab",
+      "diagnosis": 2,
+      "image_relpath": "train_images/b0eeae01b8ab.png"
+    },
+    {
+      "id_code": "0c43c79e8cfb",
+      "diagnosis": 0,
+      "image_relpath": "train_images/0c43c79e8cfb.png"
+    },
+    {
+      "id_code": "fc1b1841eadf",
+      "diagnosis": 2,
+      "image_relpath": "train_images/fc1b1841eadf.png"
+    },
+    {
+      "id_code": "7e4019ac7f5a",
+      "diagnosis": 4,
+      "image_relpath": "train_images/7e4019ac7f5a.png"
+    },
+    {
+      "id_code": "0ad7f631dedb",
+      "diagnosis": 1,
+      "image_relpath": "train_images/0ad7f631dedb.png"
+    },
+    {
+      "id_code": "12e6e66c80a7",
+      "diagnosis": 2,
+      "image_relpath": "train_images/12e6e66c80a7.png"
+    },
+    {
+      "id_code": "6d6fcf49e515",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6d6fcf49e515.png"
+    },
+    {
+      "id_code": "9041eb43456e",
+      "diagnosis": 2,
+      "image_relpath": "train_images/9041eb43456e.png"
+    },
+    {
+      "id_code": "3f82631e9080",
+      "diagnosis": 0,
+      "image_relpath": "train_images/3f82631e9080.png"
+    },
+    {
+      "id_code": "eb6b1f1c09db",
+      "diagnosis": 0,
+      "image_relpath": "train_images/eb6b1f1c09db.png"
+    },
+    {
+      "id_code": "11242a67122d",
+      "diagnosis": 4,
+      "image_relpath": "train_images/11242a67122d.png"
+    },
+    {
+      "id_code": "83d6e40c869f",
+      "diagnosis": 2,
+      "image_relpath": "train_images/83d6e40c869f.png"
+    },
+    {
+      "id_code": "3908b3cfd620",
+      "diagnosis": 0,
+      "image_relpath": "train_images/3908b3cfd620.png"
+    },
+    {
+      "id_code": "ca30a97e9d13",
+      "diagnosis": 1,
+      "image_relpath": "train_images/ca30a97e9d13.png"
+    },
+    {
+      "id_code": "1df3e03a8f5f",
+      "diagnosis": 1,
+      "image_relpath": "train_images/1df3e03a8f5f.png"
+    },
+    {
+      "id_code": "8d9516ea3587",
+      "diagnosis": 0,
+      "image_relpath": "train_images/8d9516ea3587.png"
+    },
+    {
+      "id_code": "80b5a9519aec",
+      "diagnosis": 2,
+      "image_relpath": "train_images/80b5a9519aec.png"
+    },
+    {
+      "id_code": "8dfff47b06b7",
+      "diagnosis": 2,
+      "image_relpath": "train_images/8dfff47b06b7.png"
+    },
+    {
+      "id_code": "a505981d1cab",
+      "diagnosis": 2,
+      "image_relpath": "train_images/a505981d1cab.png"
+    },
+    {
+      "id_code": "9519a590985d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/9519a590985d.png"
+    },
+    {
+      "id_code": "ae57c8630249",
+      "diagnosis": 0,
+      "image_relpath": "train_images/ae57c8630249.png"
+    },
+    {
+      "id_code": "3f3de2a6b0f5",
+      "diagnosis": 2,
+      "image_relpath": "train_images/3f3de2a6b0f5.png"
+    },
+    {
+      "id_code": "e12df54e0d1e",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e12df54e0d1e.png"
+    },
+    {
+      "id_code": "aea59ebec445",
+      "diagnosis": 3,
+      "image_relpath": "train_images/aea59ebec445.png"
+    },
+    {
+      "id_code": "e60e4edb3ca9",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e60e4edb3ca9.png"
+    },
+    {
+      "id_code": "3710ff45299c",
+      "diagnosis": 0,
+      "image_relpath": "train_images/3710ff45299c.png"
+    },
+    {
+      "id_code": "e0863b353093",
+      "diagnosis": 2,
+      "image_relpath": "train_images/e0863b353093.png"
+    },
+    {
+      "id_code": "e82232a3c28b",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e82232a3c28b.png"
+    },
+    {
+      "id_code": "302bcdb635ff",
+      "diagnosis": 2,
+      "image_relpath": "train_images/302bcdb635ff.png"
+    },
+    {
+      "id_code": "f4df3d86688d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/f4df3d86688d.png"
+    },
+    {
+      "id_code": "60eeae3ba23d",
+      "diagnosis": 2,
+      "image_relpath": "train_images/60eeae3ba23d.png"
+    },
+    {
+      "id_code": "f5a8c6426a71",
+      "diagnosis": 3,
+      "image_relpath": "train_images/f5a8c6426a71.png"
+    },
+    {
+      "id_code": "d1a24527a15d",
+      "diagnosis": 4,
+      "image_relpath": "train_images/d1a24527a15d.png"
+    },
+    {
+      "id_code": "8ead17dfb6a6",
+      "diagnosis": 0,
+      "image_relpath": "train_images/8ead17dfb6a6.png"
+    },
+    {
+      "id_code": "7b8c78b41c0d",
+      "diagnosis": 2,
+      "image_relpath": "train_images/7b8c78b41c0d.png"
+    },
+    {
+      "id_code": "3f98be586fe3",
+      "diagnosis": 0,
+      "image_relpath": "train_images/3f98be586fe3.png"
+    },
+    {
+      "id_code": "c1ebe785503a",
+      "diagnosis": 1,
+      "image_relpath": "train_images/c1ebe785503a.png"
+    },
+    {
+      "id_code": "ef247f28004f",
+      "diagnosis": 0,
+      "image_relpath": "train_images/ef247f28004f.png"
+    },
+    {
+      "id_code": "87b671c6d4c5",
+      "diagnosis": 0,
+      "image_relpath": "train_images/87b671c6d4c5.png"
+    },
+    {
+      "id_code": "3c28fd846b43",
+      "diagnosis": 0,
+      "image_relpath": "train_images/3c28fd846b43.png"
+    },
+    {
+      "id_code": "f0860c21533b",
+      "diagnosis": 0,
+      "image_relpath": "train_images/f0860c21533b.png"
+    },
+    {
+      "id_code": "6fe4751a3b42",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6fe4751a3b42.png"
+    },
+    {
+      "id_code": "b8e9a8f4617d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/b8e9a8f4617d.png"
+    },
+    {
+      "id_code": "996f9bba4ef0",
+      "diagnosis": 0,
+      "image_relpath": "train_images/996f9bba4ef0.png"
+    },
+    {
+      "id_code": "83038ca49b6d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/83038ca49b6d.png"
+    },
+    {
+      "id_code": "a5c9a8c726b2",
+      "diagnosis": 4,
+      "image_relpath": "train_images/a5c9a8c726b2.png"
+    },
+    {
+      "id_code": "417f408ee8e0",
+      "diagnosis": 2,
+      "image_relpath": "train_images/417f408ee8e0.png"
+    },
+    {
+      "id_code": "4360a112db10",
+      "diagnosis": 3,
+      "image_relpath": "train_images/4360a112db10.png"
+    },
+    {
+      "id_code": "63c3c571b8ee",
+      "diagnosis": 2,
+      "image_relpath": "train_images/63c3c571b8ee.png"
+    },
+    {
+      "id_code": "4464bb62bf20",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4464bb62bf20.png"
+    },
+    {
+      "id_code": "0790515cf5af",
+      "diagnosis": 0,
+      "image_relpath": "train_images/0790515cf5af.png"
+    }
+  ],
+  "calibration": [
+    {
+      "id_code": "26d9576e8043",
+      "diagnosis": 0,
+      "image_relpath": "train_images/26d9576e8043.png"
+    },
+    {
+      "id_code": "76df141d966b",
+      "diagnosis": 0,
+      "image_relpath": "train_images/76df141d966b.png"
+    },
+    {
+      "id_code": "de50dfa745f8",
+      "diagnosis": 2,
+      "image_relpath": "train_images/de50dfa745f8.png"
+    },
+    {
+      "id_code": "d74ccc796517",
+      "diagnosis": 0,
+      "image_relpath": "train_images/d74ccc796517.png"
+    },
+    {
+      "id_code": "8d8aca52c07b",
+      "diagnosis": 4,
+      "image_relpath": "train_images/8d8aca52c07b.png"
+    },
+    {
+      "id_code": "e4ae1ee6aada",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e4ae1ee6aada.png"
+    },
+    {
+      "id_code": "c755a0c4edcc",
+      "diagnosis": 0,
+      "image_relpath": "train_images/c755a0c4edcc.png"
+    },
+    {
+      "id_code": "03c85870824c",
+      "diagnosis": 3,
+      "image_relpath": "train_images/03c85870824c.png"
+    },
+    {
+      "id_code": "a125377fb985",
+      "diagnosis": 2,
+      "image_relpath": "train_images/a125377fb985.png"
+    },
+    {
+      "id_code": "a8e08e7fe016",
+      "diagnosis": 2,
+      "image_relpath": "train_images/a8e08e7fe016.png"
+    },
+    {
+      "id_code": "698d6e422a80",
+      "diagnosis": 2,
+      "image_relpath": "train_images/698d6e422a80.png"
+    },
+    {
+      "id_code": "a07d9a5045cb",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a07d9a5045cb.png"
+    },
+    {
+      "id_code": "2376e5415458",
+      "diagnosis": 2,
+      "image_relpath": "train_images/2376e5415458.png"
+    },
+    {
+      "id_code": "f460608cf4cc",
+      "diagnosis": 2,
+      "image_relpath": "train_images/f460608cf4cc.png"
+    },
+    {
+      "id_code": "da9574d35b82",
+      "diagnosis": 0,
+      "image_relpath": "train_images/da9574d35b82.png"
+    },
+    {
+      "id_code": "349f3c0ac83e",
+      "diagnosis": 2,
+      "image_relpath": "train_images/349f3c0ac83e.png"
+    },
+    {
+      "id_code": "5b1c4cefeb24",
+      "diagnosis": 0,
+      "image_relpath": "train_images/5b1c4cefeb24.png"
+    },
+    {
+      "id_code": "f6f7dba7104d",
+      "diagnosis": 1,
+      "image_relpath": "train_images/f6f7dba7104d.png"
+    },
+    {
+      "id_code": "94ef1d14597f",
+      "diagnosis": 4,
+      "image_relpath": "train_images/94ef1d14597f.png"
+    },
+    {
+      "id_code": "785777558f05",
+      "diagnosis": 4,
+      "image_relpath": "train_images/785777558f05.png"
+    },
+    {
+      "id_code": "e12b67835e03",
+      "diagnosis": 2,
+      "image_relpath": "train_images/e12b67835e03.png"
+    },
+    {
+      "id_code": "3ce2f8a77a32",
+      "diagnosis": 0,
+      "image_relpath": "train_images/3ce2f8a77a32.png"
+    },
+    {
+      "id_code": "8c87bd748996",
+      "diagnosis": 2,
+      "image_relpath": "train_images/8c87bd748996.png"
+    },
+    {
+      "id_code": "f6f3ea0d2693",
+      "diagnosis": 4,
+      "image_relpath": "train_images/f6f3ea0d2693.png"
+    },
+    {
+      "id_code": "b10fca20c885",
+      "diagnosis": 0,
+      "image_relpath": "train_images/b10fca20c885.png"
+    },
+    {
+      "id_code": "d871895742b1",
+      "diagnosis": 0,
+      "image_relpath": "train_images/d871895742b1.png"
+    },
+    {
+      "id_code": "a61723fc38c2",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a61723fc38c2.png"
+    },
+    {
+      "id_code": "74eee788edee",
+      "diagnosis": 3,
+      "image_relpath": "train_images/74eee788edee.png"
+    },
+    {
+      "id_code": "389552047476",
+      "diagnosis": 0,
+      "image_relpath": "train_images/389552047476.png"
+    },
+    {
+      "id_code": "f451eee2b66b",
+      "diagnosis": 0,
+      "image_relpath": "train_images/f451eee2b66b.png"
+    },
+    {
+      "id_code": "8a87dd2a784e",
+      "diagnosis": 0,
+      "image_relpath": "train_images/8a87dd2a784e.png"
+    },
+    {
+      "id_code": "5db895d3f1fc",
+      "diagnosis": 0,
+      "image_relpath": "train_images/5db895d3f1fc.png"
+    },
+    {
+      "id_code": "f361060eda3e",
+      "diagnosis": 0,
+      "image_relpath": "train_images/f361060eda3e.png"
+    },
+    {
+      "id_code": "5a36cea278ae",
+      "diagnosis": 2,
+      "image_relpath": "train_images/5a36cea278ae.png"
+    },
+    {
+      "id_code": "43ddd0ab0cc4",
+      "diagnosis": 2,
+      "image_relpath": "train_images/43ddd0ab0cc4.png"
+    },
+    {
+      "id_code": "0c76fd494af6",
+      "diagnosis": 2,
+      "image_relpath": "train_images/0c76fd494af6.png"
+    },
+    {
+      "id_code": "9d62478042b6",
+      "diagnosis": 0,
+      "image_relpath": "train_images/9d62478042b6.png"
+    },
+    {
+      "id_code": "599498e9e4bc",
+      "diagnosis": 0,
+      "image_relpath": "train_images/599498e9e4bc.png"
+    },
+    {
+      "id_code": "9a496b1e20f9",
+      "diagnosis": 4,
+      "image_relpath": "train_images/9a496b1e20f9.png"
+    },
+    {
+      "id_code": "415d5c5e785f",
+      "diagnosis": 0,
+      "image_relpath": "train_images/415d5c5e785f.png"
+    },
+    {
+      "id_code": "f47a2a4a0411",
+      "diagnosis": 1,
+      "image_relpath": "train_images/f47a2a4a0411.png"
+    },
+    {
+      "id_code": "beb00fa6e7c9",
+      "diagnosis": 0,
+      "image_relpath": "train_images/beb00fa6e7c9.png"
+    },
+    {
+      "id_code": "25b0e72705a8",
+      "diagnosis": 3,
+      "image_relpath": "train_images/25b0e72705a8.png"
+    },
+    {
+      "id_code": "582115961a3d",
+      "diagnosis": 1,
+      "image_relpath": "train_images/582115961a3d.png"
+    },
+    {
+      "id_code": "a94da3d3b5c0",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a94da3d3b5c0.png"
+    },
+    {
+      "id_code": "f9e1c439d4c8",
+      "diagnosis": 0,
+      "image_relpath": "train_images/f9e1c439d4c8.png"
+    },
+    {
+      "id_code": "f952ad2e4356",
+      "diagnosis": 0,
+      "image_relpath": "train_images/f952ad2e4356.png"
+    },
+    {
+      "id_code": "29a13e666266",
+      "diagnosis": 0,
+      "image_relpath": "train_images/29a13e666266.png"
+    },
+    {
+      "id_code": "84b472c49cfa",
+      "diagnosis": 0,
+      "image_relpath": "train_images/84b472c49cfa.png"
+    },
+    {
+      "id_code": "7d1da90d3ca9",
+      "diagnosis": 2,
+      "image_relpath": "train_images/7d1da90d3ca9.png"
+    },
+    {
+      "id_code": "45369821d6a3",
+      "diagnosis": 0,
+      "image_relpath": "train_images/45369821d6a3.png"
+    },
+    {
+      "id_code": "e6a5e4718873",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e6a5e4718873.png"
+    },
+    {
+      "id_code": "3dfc50108072",
+      "diagnosis": 2,
+      "image_relpath": "train_images/3dfc50108072.png"
+    },
+    {
+      "id_code": "4a558a1cd243",
+      "diagnosis": 2,
+      "image_relpath": "train_images/4a558a1cd243.png"
+    },
+    {
+      "id_code": "a8854768549f",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a8854768549f.png"
+    },
+    {
+      "id_code": "b9bc81fcb075",
+      "diagnosis": 0,
+      "image_relpath": "train_images/b9bc81fcb075.png"
+    },
+    {
+      "id_code": "59bd19c1c5bb",
+      "diagnosis": 0,
+      "image_relpath": "train_images/59bd19c1c5bb.png"
+    },
+    {
+      "id_code": "ee3fe7809e6a",
+      "diagnosis": 0,
+      "image_relpath": "train_images/ee3fe7809e6a.png"
+    },
+    {
+      "id_code": "a7673ac44509",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a7673ac44509.png"
+    },
+    {
+      "id_code": "64eb5a79dfdd",
+      "diagnosis": 1,
+      "image_relpath": "train_images/64eb5a79dfdd.png"
+    },
+    {
+      "id_code": "c3aa424eff9a",
+      "diagnosis": 0,
+      "image_relpath": "train_images/c3aa424eff9a.png"
+    },
+    {
+      "id_code": "880edb2cdb69",
+      "diagnosis": 0,
+      "image_relpath": "train_images/880edb2cdb69.png"
+    },
+    {
+      "id_code": "2df07eb5779f",
+      "diagnosis": 4,
+      "image_relpath": "train_images/2df07eb5779f.png"
+    },
+    {
+      "id_code": "d1fb4efb117c",
+      "diagnosis": 2,
+      "image_relpath": "train_images/d1fb4efb117c.png"
+    },
+    {
+      "id_code": "fca931da5c5e",
+      "diagnosis": 1,
+      "image_relpath": "train_images/fca931da5c5e.png"
+    },
+    {
+      "id_code": "ee74c3b177e0",
+      "diagnosis": 2,
+      "image_relpath": "train_images/ee74c3b177e0.png"
+    },
+    {
+      "id_code": "18b06f56ab27",
+      "diagnosis": 1,
+      "image_relpath": "train_images/18b06f56ab27.png"
+    },
+    {
+      "id_code": "6d10709053ae",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6d10709053ae.png"
+    },
+    {
+      "id_code": "c76664770c07",
+      "diagnosis": 3,
+      "image_relpath": "train_images/c76664770c07.png"
+    },
+    {
+      "id_code": "a3bd2e034614",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a3bd2e034614.png"
+    },
+    {
+      "id_code": "e067b06fd655",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e067b06fd655.png"
+    },
+    {
+      "id_code": "a32886cb31ab",
+      "diagnosis": 1,
+      "image_relpath": "train_images/a32886cb31ab.png"
+    },
+    {
+      "id_code": "86410aa13b3e",
+      "diagnosis": 0,
+      "image_relpath": "train_images/86410aa13b3e.png"
+    },
+    {
+      "id_code": "d2c2f02bb313",
+      "diagnosis": 4,
+      "image_relpath": "train_images/d2c2f02bb313.png"
+    },
+    {
+      "id_code": "510aa0a898fa",
+      "diagnosis": 2,
+      "image_relpath": "train_images/510aa0a898fa.png"
+    },
+    {
+      "id_code": "054b1b305160",
+      "diagnosis": 0,
+      "image_relpath": "train_images/054b1b305160.png"
+    },
+    {
+      "id_code": "74898f372d2b",
+      "diagnosis": 0,
+      "image_relpath": "train_images/74898f372d2b.png"
+    },
+    {
+      "id_code": "cfd1bd0fcbb4",
+      "diagnosis": 1,
+      "image_relpath": "train_images/cfd1bd0fcbb4.png"
+    },
+    {
+      "id_code": "d99dd99be001",
+      "diagnosis": 0,
+      "image_relpath": "train_images/d99dd99be001.png"
+    },
+    {
+      "id_code": "780f9c237c56",
+      "diagnosis": 0,
+      "image_relpath": "train_images/780f9c237c56.png"
+    },
+    {
+      "id_code": "4e4a6224a04e",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4e4a6224a04e.png"
+    },
+    {
+      "id_code": "b13d72ceea26",
+      "diagnosis": 2,
+      "image_relpath": "train_images/b13d72ceea26.png"
+    },
+    {
+      "id_code": "e740af6ac6ea",
+      "diagnosis": 4,
+      "image_relpath": "train_images/e740af6ac6ea.png"
+    },
+    {
+      "id_code": "ce887b196c23",
+      "diagnosis": 2,
+      "image_relpath": "train_images/ce887b196c23.png"
+    },
+    {
+      "id_code": "436e1793d240",
+      "diagnosis": 2,
+      "image_relpath": "train_images/436e1793d240.png"
+    },
+    {
+      "id_code": "e6f0ce5bf282",
+      "diagnosis": 2,
+      "image_relpath": "train_images/e6f0ce5bf282.png"
+    },
+    {
+      "id_code": "8e7981855125",
+      "diagnosis": 0,
+      "image_relpath": "train_images/8e7981855125.png"
+    },
+    {
+      "id_code": "2408799a09b2",
+      "diagnosis": 0,
+      "image_relpath": "train_images/2408799a09b2.png"
+    },
+    {
+      "id_code": "65e120143825",
+      "diagnosis": 4,
+      "image_relpath": "train_images/65e120143825.png"
+    },
+    {
+      "id_code": "b83a6eca125f",
+      "diagnosis": 2,
+      "image_relpath": "train_images/b83a6eca125f.png"
+    },
+    {
+      "id_code": "4ecd1fdd1435",
+      "diagnosis": 1,
+      "image_relpath": "train_images/4ecd1fdd1435.png"
+    },
+    {
+      "id_code": "df4aec4a0eaf",
+      "diagnosis": 4,
+      "image_relpath": "train_images/df4aec4a0eaf.png"
+    },
+    {
+      "id_code": "bfa30ebf63a8",
+      "diagnosis": 0,
+      "image_relpath": "train_images/bfa30ebf63a8.png"
+    },
+    {
+      "id_code": "1d14dd912671",
+      "diagnosis": 2,
+      "image_relpath": "train_images/1d14dd912671.png"
+    },
+    {
+      "id_code": "5e505e25cd3e",
+      "diagnosis": 0,
+      "image_relpath": "train_images/5e505e25cd3e.png"
+    },
+    {
+      "id_code": "a3ad6c2db6f1",
+      "diagnosis": 1,
+      "image_relpath": "train_images/a3ad6c2db6f1.png"
+    },
+    {
+      "id_code": "1c3a6b4449e9",
+      "diagnosis": 1,
+      "image_relpath": "train_images/1c3a6b4449e9.png"
+    },
+    {
+      "id_code": "4e8585a96739",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4e8585a96739.png"
+    },
+    {
+      "id_code": "6377e23928f6",
+      "diagnosis": 1,
+      "image_relpath": "train_images/6377e23928f6.png"
+    },
+    {
+      "id_code": "ff631653374e",
+      "diagnosis": 0,
+      "image_relpath": "train_images/ff631653374e.png"
+    },
+    {
+      "id_code": "db6207e62c7b",
+      "diagnosis": 0,
+      "image_relpath": "train_images/db6207e62c7b.png"
+    },
+    {
+      "id_code": "d26bb2ed6e71",
+      "diagnosis": 0,
+      "image_relpath": "train_images/d26bb2ed6e71.png"
+    },
+    {
+      "id_code": "3cdda8b3df19",
+      "diagnosis": 2,
+      "image_relpath": "train_images/3cdda8b3df19.png"
+    },
+    {
+      "id_code": "71c22da3d6c6",
+      "diagnosis": 0,
+      "image_relpath": "train_images/71c22da3d6c6.png"
+    },
+    {
+      "id_code": "2b074afdf626",
+      "diagnosis": 2,
+      "image_relpath": "train_images/2b074afdf626.png"
+    },
+    {
+      "id_code": "fb61230b99dd",
+      "diagnosis": 3,
+      "image_relpath": "train_images/fb61230b99dd.png"
+    },
+    {
+      "id_code": "2b88cb6e31cd",
+      "diagnosis": 2,
+      "image_relpath": "train_images/2b88cb6e31cd.png"
+    },
+    {
+      "id_code": "d16398c971e9",
+      "diagnosis": 3,
+      "image_relpath": "train_images/d16398c971e9.png"
+    },
+    {
+      "id_code": "8a234d68b27e",
+      "diagnosis": 3,
+      "image_relpath": "train_images/8a234d68b27e.png"
+    },
+    {
+      "id_code": "6c4ec95dd8ba",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6c4ec95dd8ba.png"
+    },
+    {
+      "id_code": "fa3e544a7401",
+      "diagnosis": 2,
+      "image_relpath": "train_images/fa3e544a7401.png"
+    },
+    {
+      "id_code": "a8263d248523",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a8263d248523.png"
+    },
+    {
+      "id_code": "c05b7b4c22fe",
+      "diagnosis": 2,
+      "image_relpath": "train_images/c05b7b4c22fe.png"
+    },
+    {
+      "id_code": "4bd5d0b30198",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4bd5d0b30198.png"
+    },
+    {
+      "id_code": "43f22d1be8dd",
+      "diagnosis": 0,
+      "image_relpath": "train_images/43f22d1be8dd.png"
+    },
+    {
+      "id_code": "f4d3169b468a",
+      "diagnosis": 0,
+      "image_relpath": "train_images/f4d3169b468a.png"
+    },
+    {
+      "id_code": "354b8911d6ed",
+      "diagnosis": 2,
+      "image_relpath": "train_images/354b8911d6ed.png"
+    },
+    {
+      "id_code": "58184d6fd087",
+      "diagnosis": 1,
+      "image_relpath": "train_images/58184d6fd087.png"
+    },
+    {
+      "id_code": "83b61051737f",
+      "diagnosis": 2,
+      "image_relpath": "train_images/83b61051737f.png"
+    },
+    {
+      "id_code": "0124dffecf29",
+      "diagnosis": 1,
+      "image_relpath": "train_images/0124dffecf29.png"
+    },
+    {
+      "id_code": "90b8bf342032",
+      "diagnosis": 3,
+      "image_relpath": "train_images/90b8bf342032.png"
+    },
+    {
+      "id_code": "b8e20c076b03",
+      "diagnosis": 0,
+      "image_relpath": "train_images/b8e20c076b03.png"
+    },
+    {
+      "id_code": "0dbe6c26cedc",
+      "diagnosis": 0,
+      "image_relpath": "train_images/0dbe6c26cedc.png"
+    },
+    {
+      "id_code": "d332d7b8a26e",
+      "diagnosis": 0,
+      "image_relpath": "train_images/d332d7b8a26e.png"
+    },
+    {
+      "id_code": "a188c60b93fb",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a188c60b93fb.png"
+    },
+    {
+      "id_code": "a77eb914b383",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a77eb914b383.png"
+    },
+    {
+      "id_code": "4c53cc97ea13",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4c53cc97ea13.png"
+    },
+    {
+      "id_code": "d57d1be1bbd1",
+      "diagnosis": 0,
+      "image_relpath": "train_images/d57d1be1bbd1.png"
+    },
+    {
+      "id_code": "8785b71238d8",
+      "diagnosis": 4,
+      "image_relpath": "train_images/8785b71238d8.png"
+    },
+    {
+      "id_code": "97a5ad7548b7",
+      "diagnosis": 2,
+      "image_relpath": "train_images/97a5ad7548b7.png"
+    },
+    {
+      "id_code": "35beb47fe159",
+      "diagnosis": 0,
+      "image_relpath": "train_images/35beb47fe159.png"
+    },
+    {
+      "id_code": "77543f66a84a",
+      "diagnosis": 2,
+      "image_relpath": "train_images/77543f66a84a.png"
+    },
+    {
+      "id_code": "cc671a73e1cb",
+      "diagnosis": 0,
+      "image_relpath": "train_images/cc671a73e1cb.png"
+    },
+    {
+      "id_code": "8448af27ba07",
+      "diagnosis": 0,
+      "image_relpath": "train_images/8448af27ba07.png"
+    },
+    {
+      "id_code": "36e4b704b905",
+      "diagnosis": 0,
+      "image_relpath": "train_images/36e4b704b905.png"
+    },
+    {
+      "id_code": "e2265c383348",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e2265c383348.png"
+    },
+    {
+      "id_code": "f920ccd926db",
+      "diagnosis": 2,
+      "image_relpath": "train_images/f920ccd926db.png"
+    },
+    {
+      "id_code": "4210809074c1",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4210809074c1.png"
+    },
+    {
+      "id_code": "c2d2b4f536da",
+      "diagnosis": 2,
+      "image_relpath": "train_images/c2d2b4f536da.png"
+    },
+    {
+      "id_code": "080f66eedfb9",
+      "diagnosis": 4,
+      "image_relpath": "train_images/080f66eedfb9.png"
+    },
+    {
+      "id_code": "bff51afc76d4",
+      "diagnosis": 0,
+      "image_relpath": "train_images/bff51afc76d4.png"
+    },
+    {
+      "id_code": "2209daf71aab",
+      "diagnosis": 0,
+      "image_relpath": "train_images/2209daf71aab.png"
+    },
+    {
+      "id_code": "a00b4cb250a7",
+      "diagnosis": 1,
+      "image_relpath": "train_images/a00b4cb250a7.png"
+    },
+    {
+      "id_code": "81bc03e2ff2b",
+      "diagnosis": 2,
+      "image_relpath": "train_images/81bc03e2ff2b.png"
+    },
+    {
+      "id_code": "2cdcc910778d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/2cdcc910778d.png"
+    },
+    {
+      "id_code": "4ed31cc07366",
+      "diagnosis": 2,
+      "image_relpath": "train_images/4ed31cc07366.png"
+    },
+    {
+      "id_code": "25002fe43f92",
+      "diagnosis": 2,
+      "image_relpath": "train_images/25002fe43f92.png"
+    },
+    {
+      "id_code": "232549883508",
+      "diagnosis": 2,
+      "image_relpath": "train_images/232549883508.png"
+    },
+    {
+      "id_code": "76cfe8967f7d",
+      "diagnosis": 2,
+      "image_relpath": "train_images/76cfe8967f7d.png"
+    },
+    {
+      "id_code": "01eb826f6467",
+      "diagnosis": 2,
+      "image_relpath": "train_images/01eb826f6467.png"
+    }
+  ],
+  "test": [
+    {
+      "id_code": "18f1f979d30d",
+      "diagnosis": 2,
+      "image_relpath": "train_images/18f1f979d30d.png"
+    },
+    {
+      "id_code": "6e44f6d04fc9",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6e44f6d04fc9.png"
+    },
+    {
+      "id_code": "28824d12d31d",
+      "diagnosis": 2,
+      "image_relpath": "train_images/28824d12d31d.png"
+    },
+    {
+      "id_code": "ba08cee68c71",
+      "diagnosis": 4,
+      "image_relpath": "train_images/ba08cee68c71.png"
+    },
+    {
+      "id_code": "233d948e2544",
+      "diagnosis": 0,
+      "image_relpath": "train_images/233d948e2544.png"
+    },
+    {
+      "id_code": "c252da9b41d8",
+      "diagnosis": 2,
+      "image_relpath": "train_images/c252da9b41d8.png"
+    },
+    {
+      "id_code": "19722bff5a09",
+      "diagnosis": 1,
+      "image_relpath": "train_images/19722bff5a09.png"
+    },
+    {
+      "id_code": "25a0a1e41afd",
+      "diagnosis": 0,
+      "image_relpath": "train_images/25a0a1e41afd.png"
+    },
+    {
+      "id_code": "76fe19ff64fb",
+      "diagnosis": 2,
+      "image_relpath": "train_images/76fe19ff64fb.png"
+    },
+    {
+      "id_code": "5ca779ace6e7",
+      "diagnosis": 0,
+      "image_relpath": "train_images/5ca779ace6e7.png"
+    },
+    {
+      "id_code": "54f57cf26126",
+      "diagnosis": 0,
+      "image_relpath": "train_images/54f57cf26126.png"
+    },
+    {
+      "id_code": "94111ed3d276",
+      "diagnosis": 1,
+      "image_relpath": "train_images/94111ed3d276.png"
+    },
+    {
+      "id_code": "09662e462531",
+      "diagnosis": 0,
+      "image_relpath": "train_images/09662e462531.png"
+    },
+    {
+      "id_code": "248dec89b3a2",
+      "diagnosis": 0,
+      "image_relpath": "train_images/248dec89b3a2.png"
+    },
+    {
+      "id_code": "7da558d92100",
+      "diagnosis": 0,
+      "image_relpath": "train_images/7da558d92100.png"
+    },
+    {
+      "id_code": "a76b69e443ce",
+      "diagnosis": 4,
+      "image_relpath": "train_images/a76b69e443ce.png"
+    },
+    {
+      "id_code": "4462fba1d2a1",
+      "diagnosis": 4,
+      "image_relpath": "train_images/4462fba1d2a1.png"
+    },
+    {
+      "id_code": "a879c3569552",
+      "diagnosis": 2,
+      "image_relpath": "train_images/a879c3569552.png"
+    },
+    {
+      "id_code": "d88806d9ece9",
+      "diagnosis": 2,
+      "image_relpath": "train_images/d88806d9ece9.png"
+    },
+    {
+      "id_code": "071435a218ec",
+      "diagnosis": 2,
+      "image_relpath": "train_images/071435a218ec.png"
+    },
+    {
+      "id_code": "9878db94d9f3",
+      "diagnosis": 3,
+      "image_relpath": "train_images/9878db94d9f3.png"
+    },
+    {
+      "id_code": "f72adcac5638",
+      "diagnosis": 4,
+      "image_relpath": "train_images/f72adcac5638.png"
+    },
+    {
+      "id_code": "c5b58cc992af",
+      "diagnosis": 0,
+      "image_relpath": "train_images/c5b58cc992af.png"
+    },
+    {
+      "id_code": "47536db39f00",
+      "diagnosis": 0,
+      "image_relpath": "train_images/47536db39f00.png"
+    },
+    {
+      "id_code": "906d02fb822d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/906d02fb822d.png"
+    },
+    {
+      "id_code": "7efc91af4ae6",
+      "diagnosis": 4,
+      "image_relpath": "train_images/7efc91af4ae6.png"
+    },
+    {
+      "id_code": "519c6e8f78dc",
+      "diagnosis": 0,
+      "image_relpath": "train_images/519c6e8f78dc.png"
+    },
+    {
+      "id_code": "0edadb2aa127",
+      "diagnosis": 3,
+      "image_relpath": "train_images/0edadb2aa127.png"
+    },
+    {
+      "id_code": "5c7ab966a3ee",
+      "diagnosis": 4,
+      "image_relpath": "train_images/5c7ab966a3ee.png"
+    },
+    {
+      "id_code": "ffec9a18a3ce",
+      "diagnosis": 2,
+      "image_relpath": "train_images/ffec9a18a3ce.png"
+    },
+    {
+      "id_code": "a30a143a53a3",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a30a143a53a3.png"
+    },
+    {
+      "id_code": "86d58f850a0c",
+      "diagnosis": 0,
+      "image_relpath": "train_images/86d58f850a0c.png"
+    },
+    {
+      "id_code": "6fbaaf8eb67a",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6fbaaf8eb67a.png"
+    },
+    {
+      "id_code": "50840c36f0b4",
+      "diagnosis": 1,
+      "image_relpath": "train_images/50840c36f0b4.png"
+    },
+    {
+      "id_code": "6089fa333013",
+      "diagnosis": 3,
+      "image_relpath": "train_images/6089fa333013.png"
+    },
+    {
+      "id_code": "1b862fb6f65d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/1b862fb6f65d.png"
+    },
+    {
+      "id_code": "7347f5133a6a",
+      "diagnosis": 1,
+      "image_relpath": "train_images/7347f5133a6a.png"
+    },
+    {
+      "id_code": "523b3f0fc646",
+      "diagnosis": 1,
+      "image_relpath": "train_images/523b3f0fc646.png"
+    },
+    {
+      "id_code": "1b32e1d775ea",
+      "diagnosis": 4,
+      "image_relpath": "train_images/1b32e1d775ea.png"
+    },
+    {
+      "id_code": "12ab2f6397f0",
+      "diagnosis": 0,
+      "image_relpath": "train_images/12ab2f6397f0.png"
+    },
+    {
+      "id_code": "a528be013a04",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a528be013a04.png"
+    },
+    {
+      "id_code": "4205e9deb058",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4205e9deb058.png"
+    },
+    {
+      "id_code": "65dda202653d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/65dda202653d.png"
+    },
+    {
+      "id_code": "891329021e12",
+      "diagnosis": 0,
+      "image_relpath": "train_images/891329021e12.png"
+    },
+    {
+      "id_code": "9e99ae6ee7af",
+      "diagnosis": 0,
+      "image_relpath": "train_images/9e99ae6ee7af.png"
+    },
+    {
+      "id_code": "0fd16b64697e",
+      "diagnosis": 2,
+      "image_relpath": "train_images/0fd16b64697e.png"
+    },
+    {
+      "id_code": "cbf0394039f8",
+      "diagnosis": 2,
+      "image_relpath": "train_images/cbf0394039f8.png"
+    },
+    {
+      "id_code": "9e5ec293267c",
+      "diagnosis": 2,
+      "image_relpath": "train_images/9e5ec293267c.png"
+    },
+    {
+      "id_code": "840a06a9c690",
+      "diagnosis": 0,
+      "image_relpath": "train_images/840a06a9c690.png"
+    },
+    {
+      "id_code": "de16416220de",
+      "diagnosis": 4,
+      "image_relpath": "train_images/de16416220de.png"
+    },
+    {
+      "id_code": "9782c0489eca",
+      "diagnosis": 1,
+      "image_relpath": "train_images/9782c0489eca.png"
+    },
+    {
+      "id_code": "cb68fce07789",
+      "diagnosis": 0,
+      "image_relpath": "train_images/cb68fce07789.png"
+    },
+    {
+      "id_code": "3a4cfea0a766",
+      "diagnosis": 0,
+      "image_relpath": "train_images/3a4cfea0a766.png"
+    },
+    {
+      "id_code": "60edda7b4871",
+      "diagnosis": 0,
+      "image_relpath": "train_images/60edda7b4871.png"
+    },
+    {
+      "id_code": "d28bd830c171",
+      "diagnosis": 2,
+      "image_relpath": "train_images/d28bd830c171.png"
+    },
+    {
+      "id_code": "0e43c8298fc0",
+      "diagnosis": 0,
+      "image_relpath": "train_images/0e43c8298fc0.png"
+    },
+    {
+      "id_code": "4cf4d528c08e",
+      "diagnosis": 0,
+      "image_relpath": "train_images/4cf4d528c08e.png"
+    },
+    {
+      "id_code": "0da09e3ce8f1",
+      "diagnosis": 2,
+      "image_relpath": "train_images/0da09e3ce8f1.png"
+    },
+    {
+      "id_code": "40c24aded50c",
+      "diagnosis": 0,
+      "image_relpath": "train_images/40c24aded50c.png"
+    },
+    {
+      "id_code": "6f460f9968c7",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6f460f9968c7.png"
+    },
+    {
+      "id_code": "d6df4fe492ec",
+      "diagnosis": 0,
+      "image_relpath": "train_images/d6df4fe492ec.png"
+    },
+    {
+      "id_code": "710b05a96e0f",
+      "diagnosis": 4,
+      "image_relpath": "train_images/710b05a96e0f.png"
+    },
+    {
+      "id_code": "1ae3c58759fb",
+      "diagnosis": 0,
+      "image_relpath": "train_images/1ae3c58759fb.png"
+    },
+    {
+      "id_code": "a76132e79688",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a76132e79688.png"
+    },
+    {
+      "id_code": "44e0d56e9d42",
+      "diagnosis": 2,
+      "image_relpath": "train_images/44e0d56e9d42.png"
+    },
+    {
+      "id_code": "b1c6f0997e27",
+      "diagnosis": 0,
+      "image_relpath": "train_images/b1c6f0997e27.png"
+    },
+    {
+      "id_code": "6b3860e8f64f",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6b3860e8f64f.png"
+    },
+    {
+      "id_code": "d6f36ec5564a",
+      "diagnosis": 0,
+      "image_relpath": "train_images/d6f36ec5564a.png"
+    },
+    {
+      "id_code": "e16fc934069f",
+      "diagnosis": 2,
+      "image_relpath": "train_images/e16fc934069f.png"
+    },
+    {
+      "id_code": "28503940d10b",
+      "diagnosis": 0,
+      "image_relpath": "train_images/28503940d10b.png"
+    },
+    {
+      "id_code": "80ca40196225",
+      "diagnosis": 3,
+      "image_relpath": "train_images/80ca40196225.png"
+    },
+    {
+      "id_code": "8ef2eb8c51c4",
+      "diagnosis": 1,
+      "image_relpath": "train_images/8ef2eb8c51c4.png"
+    },
+    {
+      "id_code": "f0c13be90519",
+      "diagnosis": 1,
+      "image_relpath": "train_images/f0c13be90519.png"
+    },
+    {
+      "id_code": "4c9f0fdaaef7",
+      "diagnosis": 3,
+      "image_relpath": "train_images/4c9f0fdaaef7.png"
+    },
+    {
+      "id_code": "1f4bf8e28b41",
+      "diagnosis": 2,
+      "image_relpath": "train_images/1f4bf8e28b41.png"
+    },
+    {
+      "id_code": "b21abe5d9722",
+      "diagnosis": 0,
+      "image_relpath": "train_images/b21abe5d9722.png"
+    },
+    {
+      "id_code": "96ea316ed0ab",
+      "diagnosis": 0,
+      "image_relpath": "train_images/96ea316ed0ab.png"
+    },
+    {
+      "id_code": "3a643599f852",
+      "diagnosis": 0,
+      "image_relpath": "train_images/3a643599f852.png"
+    },
+    {
+      "id_code": "e7defafeb957",
+      "diagnosis": 2,
+      "image_relpath": "train_images/e7defafeb957.png"
+    },
+    {
+      "id_code": "4ad6109706e8",
+      "diagnosis": 2,
+      "image_relpath": "train_images/4ad6109706e8.png"
+    },
+    {
+      "id_code": "6dfd80748e72",
+      "diagnosis": 2,
+      "image_relpath": "train_images/6dfd80748e72.png"
+    },
+    {
+      "id_code": "a66c3165876f",
+      "diagnosis": 2,
+      "image_relpath": "train_images/a66c3165876f.png"
+    },
+    {
+      "id_code": "4f7755e74a9e",
+      "diagnosis": 1,
+      "image_relpath": "train_images/4f7755e74a9e.png"
+    },
+    {
+      "id_code": "ff1e940105f9",
+      "diagnosis": 0,
+      "image_relpath": "train_images/ff1e940105f9.png"
+    },
+    {
+      "id_code": "9039cbfcbb2f",
+      "diagnosis": 0,
+      "image_relpath": "train_images/9039cbfcbb2f.png"
+    },
+    {
+      "id_code": "12ef75375322",
+      "diagnosis": 0,
+      "image_relpath": "train_images/12ef75375322.png"
+    },
+    {
+      "id_code": "e4c799738a19",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e4c799738a19.png"
+    },
+    {
+      "id_code": "f69835dc7c50",
+      "diagnosis": 4,
+      "image_relpath": "train_images/f69835dc7c50.png"
+    },
+    {
+      "id_code": "58c12863f33d",
+      "diagnosis": 0,
+      "image_relpath": "train_images/58c12863f33d.png"
+    },
+    {
+      "id_code": "6810410187a0",
+      "diagnosis": 2,
+      "image_relpath": "train_images/6810410187a0.png"
+    },
+    {
+      "id_code": "276b14f72328",
+      "diagnosis": 0,
+      "image_relpath": "train_images/276b14f72328.png"
+    },
+    {
+      "id_code": "d18aea8238a0",
+      "diagnosis": 2,
+      "image_relpath": "train_images/d18aea8238a0.png"
+    },
+    {
+      "id_code": "437900a99871",
+      "diagnosis": 2,
+      "image_relpath": "train_images/437900a99871.png"
+    },
+    {
+      "id_code": "0ca0aee4d57e",
+      "diagnosis": 2,
+      "image_relpath": "train_images/0ca0aee4d57e.png"
+    },
+    {
+      "id_code": "66b88a4bc474",
+      "diagnosis": 0,
+      "image_relpath": "train_images/66b88a4bc474.png"
+    },
+    {
+      "id_code": "e5f332efcbc7",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e5f332efcbc7.png"
+    },
+    {
+      "id_code": "a82a12ad3fb1",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a82a12ad3fb1.png"
+    },
+    {
+      "id_code": "996f57c86ba5",
+      "diagnosis": 3,
+      "image_relpath": "train_images/996f57c86ba5.png"
+    },
+    {
+      "id_code": "3b9817a39adf",
+      "diagnosis": 0,
+      "image_relpath": "train_images/3b9817a39adf.png"
+    },
+    {
+      "id_code": "30941b65348b",
+      "diagnosis": 1,
+      "image_relpath": "train_images/30941b65348b.png"
+    },
+    {
+      "id_code": "ec57cc20d776",
+      "diagnosis": 0,
+      "image_relpath": "train_images/ec57cc20d776.png"
+    },
+    {
+      "id_code": "fb88783de055",
+      "diagnosis": 0,
+      "image_relpath": "train_images/fb88783de055.png"
+    },
+    {
+      "id_code": "4384fa687afa",
+      "diagnosis": 2,
+      "image_relpath": "train_images/4384fa687afa.png"
+    },
+    {
+      "id_code": "abf09c44d5f4",
+      "diagnosis": 2,
+      "image_relpath": "train_images/abf09c44d5f4.png"
+    },
+    {
+      "id_code": "f71333204618",
+      "diagnosis": 0,
+      "image_relpath": "train_images/f71333204618.png"
+    },
+    {
+      "id_code": "d968a983d4d2",
+      "diagnosis": 2,
+      "image_relpath": "train_images/d968a983d4d2.png"
+    },
+    {
+      "id_code": "12025b34deb8",
+      "diagnosis": 2,
+      "image_relpath": "train_images/12025b34deb8.png"
+    },
+    {
+      "id_code": "b2b7ccd34cbd",
+      "diagnosis": 0,
+      "image_relpath": "train_images/b2b7ccd34cbd.png"
+    },
+    {
+      "id_code": "e2c39ed0c941",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e2c39ed0c941.png"
+    },
+    {
+      "id_code": "42a850acd2ac",
+      "diagnosis": 2,
+      "image_relpath": "train_images/42a850acd2ac.png"
+    },
+    {
+      "id_code": "b927a9238434",
+      "diagnosis": 2,
+      "image_relpath": "train_images/b927a9238434.png"
+    },
+    {
+      "id_code": "525d0dd8dc45",
+      "diagnosis": 0,
+      "image_relpath": "train_images/525d0dd8dc45.png"
+    },
+    {
+      "id_code": "2b07790a2422",
+      "diagnosis": 2,
+      "image_relpath": "train_images/2b07790a2422.png"
+    },
+    {
+      "id_code": "44878f34e31f",
+      "diagnosis": 0,
+      "image_relpath": "train_images/44878f34e31f.png"
+    },
+    {
+      "id_code": "3e1f8fecb06f",
+      "diagnosis": 2,
+      "image_relpath": "train_images/3e1f8fecb06f.png"
+    },
+    {
+      "id_code": "a95d9d61ddd4",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a95d9d61ddd4.png"
+    },
+    {
+      "id_code": "c56e65f74187",
+      "diagnosis": 1,
+      "image_relpath": "train_images/c56e65f74187.png"
+    },
+    {
+      "id_code": "b0b3b16fc305",
+      "diagnosis": 0,
+      "image_relpath": "train_images/b0b3b16fc305.png"
+    },
+    {
+      "id_code": "80e7cc0a0649",
+      "diagnosis": 3,
+      "image_relpath": "train_images/80e7cc0a0649.png"
+    },
+    {
+      "id_code": "524f240e0c90",
+      "diagnosis": 2,
+      "image_relpath": "train_images/524f240e0c90.png"
+    },
+    {
+      "id_code": "1bb0ddfe753a",
+      "diagnosis": 1,
+      "image_relpath": "train_images/1bb0ddfe753a.png"
+    },
+    {
+      "id_code": "6852f4531591",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6852f4531591.png"
+    },
+    {
+      "id_code": "e2161692a0b4",
+      "diagnosis": 2,
+      "image_relpath": "train_images/e2161692a0b4.png"
+    },
+    {
+      "id_code": "838b3e4d0bb4",
+      "diagnosis": 0,
+      "image_relpath": "train_images/838b3e4d0bb4.png"
+    },
+    {
+      "id_code": "9f4132bd6ed6",
+      "diagnosis": 2,
+      "image_relpath": "train_images/9f4132bd6ed6.png"
+    },
+    {
+      "id_code": "80d24897669f",
+      "diagnosis": 1,
+      "image_relpath": "train_images/80d24897669f.png"
+    },
+    {
+      "id_code": "bf1b7e21e774",
+      "diagnosis": 2,
+      "image_relpath": "train_images/bf1b7e21e774.png"
+    },
+    {
+      "id_code": "20d5fdd450ae",
+      "diagnosis": 4,
+      "image_relpath": "train_images/20d5fdd450ae.png"
+    },
+    {
+      "id_code": "bfda2fd0533a",
+      "diagnosis": 2,
+      "image_relpath": "train_images/bfda2fd0533a.png"
+    },
+    {
+      "id_code": "32ed318235b8",
+      "diagnosis": 0,
+      "image_relpath": "train_images/32ed318235b8.png"
+    },
+    {
+      "id_code": "5ca73d28f17f",
+      "diagnosis": 0,
+      "image_relpath": "train_images/5ca73d28f17f.png"
+    },
+    {
+      "id_code": "91b6ebaa3678",
+      "diagnosis": 3,
+      "image_relpath": "train_images/91b6ebaa3678.png"
+    },
+    {
+      "id_code": "f48241b0c995",
+      "diagnosis": 0,
+      "image_relpath": "train_images/f48241b0c995.png"
+    },
+    {
+      "id_code": "f850cb51fdba",
+      "diagnosis": 4,
+      "image_relpath": "train_images/f850cb51fdba.png"
+    },
+    {
+      "id_code": "453d553b0a94",
+      "diagnosis": 2,
+      "image_relpath": "train_images/453d553b0a94.png"
+    },
+    {
+      "id_code": "9870ce41cac4",
+      "diagnosis": 0,
+      "image_relpath": "train_images/9870ce41cac4.png"
+    },
+    {
+      "id_code": "3dec415b188a",
+      "diagnosis": 0,
+      "image_relpath": "train_images/3dec415b188a.png"
+    },
+    {
+      "id_code": "84e8c62165b5",
+      "diagnosis": 2,
+      "image_relpath": "train_images/84e8c62165b5.png"
+    },
+    {
+      "id_code": "0cae727cf119",
+      "diagnosis": 0,
+      "image_relpath": "train_images/0cae727cf119.png"
+    },
+    {
+      "id_code": "11d8e5eaee5b",
+      "diagnosis": 0,
+      "image_relpath": "train_images/11d8e5eaee5b.png"
+    },
+    {
+      "id_code": "6bb30ec3231a",
+      "diagnosis": 0,
+      "image_relpath": "train_images/6bb30ec3231a.png"
+    },
+    {
+      "id_code": "a11c62cb3f86",
+      "diagnosis": 0,
+      "image_relpath": "train_images/a11c62cb3f86.png"
+    },
+    {
+      "id_code": "1ab8d3431ffc",
+      "diagnosis": 0,
+      "image_relpath": "train_images/1ab8d3431ffc.png"
+    },
+    {
+      "id_code": "0b64a0a06f9a",
+      "diagnosis": 0,
+      "image_relpath": "train_images/0b64a0a06f9a.png"
+    },
+    {
+      "id_code": "141735b57ec0",
+      "diagnosis": 2,
+      "image_relpath": "train_images/141735b57ec0.png"
+    },
+    {
+      "id_code": "2eba4279e503",
+      "diagnosis": 0,
+      "image_relpath": "train_images/2eba4279e503.png"
+    },
+    {
+      "id_code": "a5a2a7003d60",
+      "diagnosis": 1,
+      "image_relpath": "train_images/a5a2a7003d60.png"
+    },
+    {
+      "id_code": "7427dedafccf",
+      "diagnosis": 1,
+      "image_relpath": "train_images/7427dedafccf.png"
+    },
+    {
+      "id_code": "e7578d8dba72",
+      "diagnosis": 0,
+      "image_relpath": "train_images/e7578d8dba72.png"
+    },
+    {
+      "id_code": "6d3d1fe6c32a",
+      "diagnosis": 2,
+      "image_relpath": "train_images/6d3d1fe6c32a.png"
+    }
+  ]
+}

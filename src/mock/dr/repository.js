@@ -73,7 +73,7 @@ function createRepository(seed = createFixtures(), onChange = () => {}) {
       const exams = db.examinations.filter(item => item.institutionId === institution.id)
       const examIds = new Set(exams.map(item => item.id))
       const tasks = db.tasks.filter(item => item.type !== 'preparation' && examIds.has(item.examinationId))
-      return { ...institution, patients: db.patients.filter(item => item.institutionId === institution.id).length, examinations: exams.length, qualityPassed: exams.filter(item => EYES.every(eye => item.eyes[eye].quality.status === 'passed')).length, retake: exams.filter(item => EYES.some(eye => ['retake', 'ungradable'].includes(item.eyes[eye].quality.status))).length, awaitingReview: exams.filter(item => item.status === 'awaiting_review').length, signedReports: db.reports.filter(item => item.status === 'signed' && examIds.has(item.examinationId)).length, openTasks: tasks.filter(item => item.status !== 'completed').length, completedTasks: tasks.filter(item => item.status === 'completed').length }
+      return { ...institution, patients: db.patients.filter(item => item.institutionId === institution.id).length, examinations: exams.length, qualityPassed: exams.filter(item => EYES.every(eye => item.eyes[eye].quality.status === 'passed')).length, retake: exams.filter(item => EYES.some(eye => ['retake', 'ungradable', 'unknown_device'].includes(item.eyes[eye].quality.status))).length, awaitingReview: exams.filter(item => item.status === 'awaiting_review').length, signedReports: db.reports.filter(item => item.status === 'signed' && examIds.has(item.examinationId)).length, openTasks: tasks.filter(item => item.status !== 'completed').length, completedTasks: tasks.filter(item => item.status === 'completed').length }
     })
   }
   function updatePatient(id, patch) {
@@ -91,11 +91,21 @@ function createRepository(seed = createFixtures(), onChange = () => {}) {
     onChange(db)
     return clone(task)
   }
-  function createIntake(patientId, form, files) {
+  function createIntake(patientId, form, files, capture = {}) {
     const patient = find('patients', patientId)
     const id = 'EX-LOCAL-' + Date.now() + '-' + (db.examinations.length + 1)
-    const capturedAt = new Date().toISOString()
-    const exam = { id, patientId, institutionId: patient.institutionId, performedAt: capturedAt, sourceType: 'local', status: 'pending_quality', isSynthetic: true, eyes: {}}
+    const capturedAt = capture.capturedAt || new Date().toISOString()
+    const selectedEyes = EYES.filter(eye => (capture.eyes || []).includes(eye))
+    const qualityScenario = capture.deviceId ? (capture.qualityScenario || 'pending') : 'unknown_device'
+    const qualityInfo = {
+      passed: { status: 'passed', reason: '演示质控通过：图像与采集信息满足进入人工复核的基础条件。' },
+      retake: { status: 'retake', reason: '演示质控提示：视野或清晰度不足，建议改善对焦后重新采集。' },
+      ungradable: { status: 'ungradable', reason: '演示质控提示：图像严重不可判读，本次不进入候选分级。' },
+      unknown_device: { status: 'unknown_device', reason: '未登记采集设备，需补录设备信息后再进入医生复核。' },
+      pending: { status: 'pending', reason: '已提交本地影像，等待模型技术检查。' }
+    }[qualityScenario] || { status: 'pending', reason: '本地资料已选择，等待质控。' }
+    const device = capture.deviceId ? find('devices', capture.deviceId) : null
+    const exam = { id, patientId, institutionId: patient.institutionId, performedAt: capturedAt, sourceType: 'local', source: capture.source || '现场采集', deviceId: capture.deviceId || null, deviceName: device ? device.name : '未登记', captureQualityScenario: capture.qualityScenario || '', status: 'pending_quality', isSynthetic: false, eyes: {}}
     EYES.forEach(eye => {
       const imageIds = []
       const prefix = eye === 'OD' ? 'right' : 'left'
@@ -104,17 +114,161 @@ function createRepository(seed = createFixtures(), onChange = () => {}) {
         if (!file) return
         const imageId = id + '-' + eye + '-' + modality
         imageIds.push(imageId)
-        db.images.push({ id: imageId, patientId, examinationId: id, eye, modality, capturedAt, institutionId: patient.institutionId, deviceId: null, sourceType: 'local', fileName: file.name, previewUrl: '', isSchematic: false, isSynthetic: true, quality: 'pending' })
+        db.images.push({ id: imageId, patientId, examinationId: id, eye, modality, capturedAt, institutionId: patient.institutionId, deviceId: capture.deviceId || null, sourceType: 'local', fileName: file.name, previewUrl: '', isSchematic: false, isSynthetic: false, quality: selectedEyes.includes(eye) ? qualityInfo.status : 'missing' })
       })
-      exam.eyes[eye] = { eye, imageIds, quality: { status: imageIds.length ? 'pending' : 'missing', reason: imageIds.length ? '本地选择，尚未质控；文件内容不保存到模拟服务。' : '尚未提供该眼影像。' }, drGrade: null, dmeStatus: 'not_assessed' }
+      const suppliedCfp = !!files[prefix + 'Cfp']
+      exam.eyes[eye] = { eye, imageIds, quality: { status: suppliedCfp && selectedEyes.includes(eye) ? qualityInfo.status : 'missing', reason: suppliedCfp && selectedEyes.includes(eye) ? qualityInfo.reason : '该眼未纳入本次采集，相关评估保持未提供 / 未评估。' }, drGrade: null, dmeStatus: 'not_assessed' }
     })
+    const collectedEyes = selectedEyes.filter(eye => exam.eyes[eye].imageIds.length)
+    exam.status = collectedEyes.length && collectedEyes.every(eye => exam.eyes[eye].quality.status === 'passed') ? 'awaiting_review' : 'pending_quality'
     db.examinations.push(exam)
-    preparationTemplates.forEach(template => db.tasks.push({ ...template, id: id + '-' + template.key, patientId, examinationId: id, reportId: null, type: 'preparation', status: 'preparing', note: '', dueAt: null, updatedAt: capturedAt, isSynthetic: true }))
+    preparationTemplates.forEach(template => db.tasks.push({ ...template, id: id + '-' + template.key, patientId, examinationId: id, reportId: null, type: 'preparation', status: 'preparing', note: '', dueAt: null, updatedAt: capturedAt, isSynthetic: false }))
     updatePatient(patientId, form)
     Object.assign(patient, { currentExaminationId: id, rightGrade: null, leftGrade: null, status: '待评估', tone: 'info', date: capturedAt.slice(0, 10), cfp: !!(files.rightCfp || files.leftCfp), oct: !!(files.rightOct || files.leftOct) })
     onChange(db)
     return clone(exam)
   }
-  return { db, find, context, bundle, portal, region, updatePatient, updateTask, createIntake, snapshot: () => clone(db) }
+  function attachInference(examinationId, eyePredictions) {
+    const exam = find('examinations', examinationId)
+    const patient = find('patients', exam.patientId)
+    const updatedEyes = []
+    const disagreementNotes = []
+    EYES.forEach(eye => {
+      const prediction = eyePredictions[eye]
+      if (!prediction) return
+      const technical = prediction.technical_check || {}
+      const consensus = prediction.consensus || {}
+      const manualQuality = ['retake', 'ungradable'].includes(exam.captureQualityScenario)
+      const modelQuality = technical.status === 'pass' ? 'passed' : 'retake'
+      const priorQuality = exam.eyes[eye].quality
+      let status = modelQuality
+      let reason = (technical.message || '模型技术检查未返回说明。') + '（研究演示，非临床质量认证）'
+      if (!exam.deviceId) {
+        status = 'unknown_device'
+        reason = '设备未登记；' + reason
+      } else if (manualQuality) {
+        status = priorQuality.status
+        reason = priorQuality.reason + ' 模型技术检查结果：' + (technical.message || '未返回说明。')
+      }
+      exam.eyes[eye].quality = { status, reason }
+      exam.eyes[eye].drGrade = Number.isInteger(prediction.predicted_grade) ? prediction.predicted_grade : null
+      exam.eyes[eye].dmeStatus = 'not_assessed'
+      exam.eyes[eye].inference = {
+        source: 'algorithm7_local_api',
+        modelVersion: prediction.model_version || '模型版本未返回',
+        confidence: prediction.confidence,
+        probabilities: prediction.probabilities || [],
+        technicalCheck: technical,
+        consensus,
+        phase3: prediction.phase3 || { status: 'not_available' },
+        lesionEvidence: prediction.lesion_evidence || { status: 'not_available' },
+        needsReview: prediction.needs_review !== false,
+        decisionReason: prediction.decision_reason || '研究推理草稿，需医生复核。'
+      }
+      if (consensus.status !== 'accept' || prediction.needs_review !== false) disagreementNotes.push((eye === 'OD' ? '右眼 OD' : '左眼 OS') + '：' + exam.eyes[eye].inference.decisionReason)
+      updatedEyes.push(eye)
+    })
+    if (!updatedEyes.length) throw new Error('模型没有返回可用的逐眼推理结果')
+    const allCollectedEyes = EYES.filter(eye => exam.eyes[eye].imageIds.some(id => find('images', id).modality === 'CFP'))
+    const allQualityPassed = allCollectedEyes.length && allCollectedEyes.every(eye => exam.eyes[eye].quality.status === 'passed')
+    exam.status = allQualityPassed ? 'awaiting_review' : 'pending_quality'
+    const modelVersions = [...new Set(updatedEyes.map(eye => exam.eyes[eye].inference.modelVersion))]
+    const draft = {
+      id: 'DRAFT-' + examinationId,
+      examinationId,
+      patientId: patient.id,
+      status: 'needs_review',
+      source: 'algorithm7_local_api',
+      modelVersion: modelVersions.join('；'),
+      createdAt: new Date().toISOString(),
+      eyeResults: clone(exam.eyes),
+      disagreements: disagreementNotes,
+      isSynthetic: false,
+      researchOnly: true,
+      notice: '由本机算法创新7接口生成的研究推理草稿，不能用于临床诊断或治疗决策。'
+    }
+    const existing = db.drafts.find(item => item.examinationId === examinationId)
+    if (existing) Object.assign(existing, draft)
+    else db.drafts.push(draft)
+    patient.status = allQualityPassed ? '待医生复核' : '待补全质控'
+    patient.tone = allQualityPassed ? 'warning' : 'info'
+    patient.rightGrade = exam.eyes.OD.drGrade
+    patient.leftGrade = exam.eyes.OS.drGrade
+    onChange(db)
+    return clone(bundle(patient.id, examinationId))
+  }
+  function submitReview(examinationId, review) {
+    const exam = find('examinations', examinationId)
+    const patient = find('patients', exam.patientId)
+    const action = review.action
+    const doctor = String(review.doctor || '').trim()
+    const opinion = String(review.opinion || '').trim()
+    const modificationReason = String(review.modificationReason || '').trim()
+    if (!['accepted', 'modified', 'returned'].includes(action)) throw new Error('审核操作无效')
+    if (!doctor) throw new Error('请填写审核医生')
+    const collectedEyes = EYES.filter(eye => exam.eyes[eye].imageIds.some(id => find('images', id).modality === 'CFP'))
+    if (!collectedEyes.length) throw new Error('当前检查未提供眼底彩照，不能提交医生审核')
+    const allQualityPassed = collectedEyes.every(eye => exam.eyes[eye].quality.status === 'passed')
+    const now = new Date().toISOString()
+    const record = { id: 'REVIEW-' + examinationId + '-' + Date.now(), examinationId, reportId: null, actor: doctor, action: '', comment: opinion || '未填写审核意见。', createdAt: now, isSynthetic: true, decision: action, modificationReason, eyeResults: null }
+    if (action === 'returned') {
+      exam.status = 'awaiting_collection'
+      exam.review = { action, doctor, opinion, modificationReason, updatedAt: now, signedAt: '' }
+      record.action = '退回补采 / 重拍（演示）'
+      db.reviewRecords.push(record)
+      patient.status = '待补全采集'
+      patient.tone = 'warning'
+      onChange(db)
+      return clone(bundle(patient.id, examinationId))
+    }
+    if (!allQualityPassed) throw new Error('当前存在需重拍、不可判读或设备未知的眼别，不能签发；请先补全采集资料。')
+    const draft = db.drafts.find(item => item.examinationId === examinationId)
+    if (action === 'accepted' && !draft) throw new Error('本次本地资料未调用模型，没有可接受的 AI 草稿；请改为医生修改分级后签发。')
+    const eyeResults = clone(draft ? draft.eyeResults : exam.eyes)
+    if (action === 'modified') {
+      if (!modificationReason) throw new Error('修改分级时请填写修改原因')
+      collectedEyes.forEach(eye => {
+        const grade = review.eyeGrades && review.eyeGrades[eye]
+        if (!Number.isInteger(grade) || grade < 0 || grade > 4) throw new Error('请为已采集的' + eye + '填写最终 ICDR 等级')
+        eyeResults[eye].drGrade = grade
+      })
+    }
+    if (!review.sign) {
+      exam.status = 'awaiting_review'
+      exam.review = { action, doctor, opinion, modificationReason, eyeResults, updatedAt: now, signedAt: '' }
+      record.action = action === 'accepted' ? '接受草稿，待签发（演示）' : '修改分级，待签发（演示）'
+      record.eyeResults = clone(eyeResults)
+      db.reviewRecords.push(record)
+      onChange(db)
+      return clone(bundle(patient.id, examinationId))
+    }
+    let reportDraft = draft
+    if (!reportDraft) {
+      reportDraft = { id: 'DRAFT-' + examinationId, examinationId, patientId: patient.id, status: 'manual', modelVersion: '医生人工分级（演示）', createdAt: now, eyeResults: clone(eyeResults), disagreements: [], isSynthetic: true }
+      db.drafts.push(reportDraft)
+    }
+    const existing = db.reports.find(item => item.examinationId === examinationId && item.status === 'signed')
+    const reportId = existing ? existing.id : 'REPORT-' + examinationId + '-' + Date.now()
+    const researchInference = reportDraft.source === 'algorithm7_local_api'
+    const report = { id: reportId, examinationId, patientId: patient.id, draftId: reportDraft.id, status: 'signed', version: existing ? existing.version + 1 : 1, signedBy: doctor, signedAt: now, eyeResults: clone(eyeResults), conclusion: opinion || (researchInference ? '本报告由本机研究模型草稿经人工确认后生成，仅供竞赛演示，不能用于临床诊断或治疗决策。' : '本报告为明确标记的演示签发记录，仅用于展示医生审核与签发流程。'), plan: '请根据医生确认的演示计划进行资料准备与后续联系；DME 保持未评估。', isSynthetic: !researchInference, researchInference }
+    if (existing) Object.assign(existing, report)
+    else db.reports.push(report)
+    exam.status = 'signed'
+    exam.review = { action, doctor, opinion, modificationReason, eyeResults: clone(eyeResults), updatedAt: now, signedAt: now }
+    record.reportId = reportId
+    record.action = action === 'accepted' ? '接受草稿并签发（演示）' : '修改分级并签发（演示）'
+    record.eyeResults = clone(eyeResults)
+    db.reviewRecords.push(record)
+    if (!db.tasks.some(item => item.examinationId === examinationId && item.type === 'followup')) {
+      db.tasks.push({ id: 'TASK-' + examinationId + '-' + Date.now(), key: 'followup', patientId: patient.id, examinationId, reportId, type: 'followup', title: '复查联系与资料准备（演示）', description: '由医生签发演示报告后建立；具体复查安排以医生确认内容为准。', icon: 'el-icon-date', status: 'pending_contact', note: '', dueAt: null, updatedAt: now, isSynthetic: true })
+    }
+    patient.status = '已签发'
+    patient.tone = 'success'
+    patient.rightGrade = eyeResults.OD.drGrade
+    patient.leftGrade = eyeResults.OS.drGrade
+    onChange(db)
+    return clone(bundle(patient.id, examinationId))
+  }
+  return { db, find, context, bundle, portal, region, updatePatient, updateTask, createIntake, attachInference, submitReview, snapshot: () => clone(db) }
 }
 module.exports = { createRepository, assertGraph }

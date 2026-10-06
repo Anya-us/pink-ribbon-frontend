@@ -5,18 +5,19 @@ export function assessmentView(bundle, localSelection = false) {
   const hasCfp = images.some(item => item.modality === 'CFP')
   const hasOct = images.some(item => item.modality === 'OCT')
   const evaluated = !!draft && !localSelection
-  const eyes = ['OD', 'OS'].map(eye => ({ key: eye === 'OD' ? 'right' : 'left', abbr: eye, label: eye === 'OD' ? '右眼' : '左眼', grade: evaluated ? draft.eyeResults[eye].drGrade : null }))
+  const realInference = evaluated && draft.source === 'algorithm7_local_api'
+  const eyes = ['OD', 'OS'].map(eye => ({ key: eye === 'OD' ? 'right' : 'left', abbr: eye, label: eye === 'OD' ? '右眼' : '左眼', grade: evaluated ? draft.eyeResults[eye].drGrade : null, inference: evaluated ? draft.eyeResults[eye].inference || null : null }))
   return {
     eyes,
     stages: [
       { title: '资料汇集', description: hasCfp ? '已有影像资料' : '等待眼底资料', ready: hasCfp },
-      { title: '共识草稿', description: evaluated ? '合成演示草稿' : '尚未推理', ready: evaluated },
-      { title: '医生复核', description: examination.status === 'signed' ? '合成审核记录' : '待医生确认', ready: examination.status === 'signed' },
+      { title: '共识草稿', description: evaluated ? (realInference ? '研究推理草稿' : '合成演示草稿') : '尚未推理', ready: evaluated },
+      { title: '医生复核', description: examination.status === 'signed' ? (realInference ? '研究演示签发记录' : '合成审核记录') : '待医生确认', ready: examination.status === 'signed' },
       { title: '报告与随访', description: examination.status === 'signed' ? '已签发合成示例' : '待签发后安排', ready: examination.status === 'signed' }
     ],
     agents: [
-      { number: '01', name: '影像质量', description: '核对可评估性、眼别与图像质量。', status: evaluated ? '合成记录' : '待质控', tone: evaluated ? 'info' : '', result: evaluated ? '双眼分别记录质控状态' : '尚未评估' },
-      { number: '02', name: '病灶与分级', description: '按左右眼组织 DR 候选分级证据。', status: evaluated ? '演示草稿' : '未评估', tone: evaluated ? 'warning' : '', result: evaluated ? '右眼 ' + grade(eyes[0].grade).short + ' / 左眼 ' + grade(eyes[1].grade).short : '尚未形成候选分级' },
+      { number: '01', name: '影像质量', description: '核对可评估性、眼别与图像质量。', status: evaluated ? (realInference ? '模型技术检查' : '合成记录') : '待质控', tone: evaluated ? 'info' : '', result: evaluated ? '双眼分别记录质控状态' : '尚未评估' },
+      { number: '02', name: 'DR 五级分级', description: '按左右眼组织 DR 候选分级；不生成未具备模型支撑的病灶定位。', status: evaluated ? (realInference ? '研究推理草稿' : '演示草稿') : '未评估', tone: evaluated ? 'warning' : '', result: evaluated ? '右眼 ' + grade(eyes[0].grade).short + ' / 左眼 ' + grade(eyes[1].grade).short : '尚未形成候选分级' },
       { number: '03', name: 'OCT 与黄斑', description: '结合 OCT 单独记录黄斑评估状态。', status: hasOct ? '待判读' : '资料缺失', tone: hasOct ? 'info' : '', result: 'DME 未评估' },
       { number: '04', name: '临床背景', description: '关联糖尿病病程与已提供的病史。', status: '待核对', tone: 'info', result: '病程 ' + (patient.duration == null ? '未填写' : patient.duration + ' 年') + ' · HbA1c ' + (patient.hba1c ? patient.hba1c + '%' : '未提供') },
       { number: '05', name: '纵向对照', description: '核对既往记录与当前证据的可比性。', status: '未评估', tone: '', result: '历史检查独立记录，未自动判断进展' },

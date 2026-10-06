@@ -4,7 +4,7 @@
       <el-button icon="el-icon-printer" @click="printDraft">打印演示草稿</el-button>
       <el-button type="primary" icon="el-icon-connection" @click="$router.push('/screening/consensus')">返回共识评估</el-button>
     </clinical-header>
-    <demo-notice :text="custom ? '本次选择的影像未进行推理，所有候选分级保持未评估。影像仅作原图预览。' : '下方分级为预置演示草稿，未附病例原图，未由医生签发；不能作为实际诊疗报告。'" />
+    <demo-notice :text="realInference ? '下方为本机研究模型返回的五级 DR 草稿与原始影像预览。病灶定位与 DME 未接入模型，必须保持未评估；结果需医生复核。' : custom ? '本次选择的影像未进行推理，所有候选分级保持未评估。影像仅作原图预览。' : '下方分级为预置演示草稿，未附病例原图，未由医生签发；不能作为实际诊疗报告。'" />
     <div class="print-only">糖网诊疗 · 演示草稿 · 未签发 · 不作为实际诊疗报告</div>
     <patient-strip />
     <div class="two-column">
@@ -14,7 +14,7 @@
         <div class="grade-summaries">
           <div v-for="eye in eyes" :key="eye.label" class="grade-summary">
             <div class="grade-eye-heading"><strong>{{ eye.label }}</strong><span class="status-pill" :class="gradeInfo(eye.grade).tone">{{ gradeInfo(eye.grade).short }}</span></div>
-            <dl><div><dt>DR 候选分级</dt><dd>{{ gradeInfo(eye.grade).label }}</dd></div><div><dt>DME</dt><dd>未评估</dd></div><div><dt>证据来源</dt><dd>{{ custom ? '本地选择 · 未推理' : '合成演示草稿' }}</dd></div></dl>
+            <dl><div><dt>DR 候选分级</dt><dd>{{ gradeInfo(eye.grade).label }}</dd></div><div v-if="realInference && eye.inference"><dt>模型置信度</dt><dd>{{ formatPercent(eye.inference.confidence) }}</dd></div><div><dt>DME</dt><dd>未提供 / 未评估</dd></div><div><dt>证据来源</dt><dd>{{ realInference ? '本机研究模型草稿' : custom ? '本地选择 · 未推理' : '合成演示草稿' }}</dd></div></dl>
           </div>
         </div>
         <div class="signature-state"><i class="el-icon-document-checked" /><div><strong>{{ report ? '合成报告已签发' : '医生签发：未完成' }}</strong><p>{{ report ? report.id + ' · ' + report.signedBy : '报告编号、签名与处置建议待医生确认。' }}</p></div></div>
@@ -47,12 +47,13 @@ export default {
   data() { return { grades } },
   computed: {
     patient() { return demoState.patient },
-    custom() { return !!demoState.intake || Object.keys(demoState.files).length > 0 },
+    realInference() { return !!(this.bundle.draft && this.bundle.draft.source === 'algorithm7_local_api') },
+    custom() { return !this.realInference && (!!demoState.intake || Object.keys(demoState.files).length > 0) },
     bundle: currentBundle,
     report() { return this.bundle.reports.find(item => item.status === 'signed') },
-    eyes() { return assessmentView(this.bundle, this.custom).eyes.map(eye => ({ label: eye.label + ' ' + eye.abbr, grade: eye.grade })) }
+    eyes() { return assessmentView(this.bundle, this.custom).eyes.map(eye => ({ label: eye.label + ' ' + eye.abbr, grade: eye.grade, inference: eye.inference })) }
   },
-  methods: { gradeInfo, printDraft() { window.print() } }
+  methods: { gradeInfo, formatPercent(value) { return Number.isFinite(value) ? (value * 100).toFixed(1) + '%' : '未返回' }, printDraft() { window.print() } }
 }
 </script>
 <style scoped>

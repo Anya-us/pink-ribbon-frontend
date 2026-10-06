@@ -1,0 +1,32 @@
+{
+  "version": "temperature-scaling-v2-strict",
+  "method": "single-scalar post-hoc temperature scaling",
+  "model_version": "resnet18-imagenet-aptos-v1",
+  "model_sha256": "5320f51d1ea37cf7f7c78af7302dfd2964b93933ad370df7b64e129245d0207f",
+  "temperature": 0.7561860992968659,
+  "calibration_samples": 150,
+  "test_samples": 150,
+  "ece_bins": 15,
+  "test_evaluation_before": {
+    "accuracy": 0.6866666666666666,
+    "balanced_accuracy": 0.5946385409800043,
+    "quadratic_weighted_kappa": 0.766253533376821,
+    "negative_log_likelihood": 0.802300959271704,
+    "brier_score": 0.41504871890627837,
+    "expected_calibration_error": 0.07938482249342202
+  },
+  "test_evaluation_after": {
+    "accuracy": 0.6866666666666666,
+    "balanced_accuracy": 0.5946385409800043,
+    "quadratic_weighted_kappa": 0.766253533376821,
+    "negative_log_likelihood": 0.7822594562059682,
+    "brier_score": 0.41001231262876797,
+    "expected_calibration_error": 0.08886178103667945
+  },
+  "prediction_argmax_changed": false,
+  "limitations": [
+    "温度只由严格 Calibration 集拟合；Test 只在拟合完成后进行最终内部评估。",
+    "该结果未在外部数据、前瞻性数据或临床工作流中验证。",
+    "校准概率不等同于临床风险、诊断可靠性或治疗建议。"
+  ]
+}

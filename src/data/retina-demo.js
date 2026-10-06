@@ -65,17 +65,28 @@ export function setFile(key, file) {
   const previous = demoState.files[key]
   if (previous && previous.url) URL.revokeObjectURL(previous.url)
   if (!file) { Vue.delete(demoState.files, key); return }
-  Vue.set(demoState.files, key, { name: file.name, size: file.size, type: file.type, url: /\.(jpe?g|png)$/i.test(file.name) ? URL.createObjectURL(file) : '' })
+  Vue.set(demoState.files, key, { name: file.name, size: file.size, type: file.type, url: /\.(jpe?g|png)$/i.test(file.name) ? URL.createObjectURL(file) : '', raw: file })
 }
 export function updatePatient(patch) {
   repository.updatePatient(demoState.patient.id, patch)
   demoState.profileNote = demoState.patient.note
 }
-export function saveIntake(form) {
-  const exam = repository.createIntake(demoState.patient.id, { ...form, note: form.notes || '' }, demoState.files)
+export function saveIntake(form, capture) {
+  const exam = repository.createIntake(demoState.patient.id, { ...form, note: form.notes || '' }, demoState.files, capture)
   demoState.examinationId = exam.id
-  demoState.intake = { ...form, examinationId: exam.id, fileKeys: Object.keys(demoState.files), savedAt: exam.performedAt }
+  demoState.intake = { ...form, ...capture, examinationId: exam.id, fileKeys: Object.keys(demoState.files), savedAt: exam.performedAt }
   rememberContext()
+  return exam
+}
+export function attachInference(eyePredictions) {
+  const bundle = repository.attachInference(demoState.examinationId, eyePredictions)
+  demoState.patient = bundle.patient
+  return bundle
+}
+export function submitReview(review) {
+  const bundle = repository.submitReview(demoState.examinationId, review)
+  demoState.patient = bundle.patient
+  return bundle
 }
 export function setTaskState(key, value) {
   const task = drState.tasks.find(item => item.patientId === demoState.patient.id && item.examinationId === demoState.examinationId && (item.id === key || item.key === key))
