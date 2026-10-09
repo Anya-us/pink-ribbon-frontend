@@ -22,30 +22,41 @@
         <dl class="plan-state">
           <div><dt>报告签发</dt><dd><span class="status-pill" :class="report ? 'success' : 'warning'">{{ report ? '合成示例已签发' : '未完成' }}</span></dd></div>
           <div><dt>处置计划</dt><dd>{{ report ? '合成确认计划' : '待医生确认' }}</dd></div>
-          <div><dt>转诊安排</dt><dd>尚未建立</dd></div>
-          <div><dt>下次复查日期</dt><dd>{{ bundle.tasks.find(item => item.type === 'followup') ? bundle.tasks.find(item => item.type === 'followup').dueAt : '待医生指定' }}</dd></div>
+          <div><dt>转诊 / 复查</dt><dd>{{ followupTask ? planTypeLabel(followupTask.planType) : '待医生签发确认' }}</dd></div>
+          <div><dt>确认日期</dt><dd>{{ followupTask && followupTask.dueAt ? followupTask.dueAt : '待医生指定' }}</dd></div>
           <div><dt>用药与治疗</dt><dd>未生成处方</dd></div>
         </dl>
         <div class="plan-note"><i class="el-icon-info" /><span>AI 草稿不能自动转为已签发报告或已执行任务。</span></div>
       </section>
     </div>
     <section class="panel section-gap">
-      <div class="panel-heading"><div><h2>准备与随访任务</h2><p>记录准备进度；自报完成仍需核实，正式随访日期待医生确认。</p></div><span class="status-pill">流程演示</span></div>
+      <div class="panel-heading"><div><h2>准备与随访任务</h2><p>准备事项、医生已确认计划及患者反馈均关联到当前检查记录。</p></div><span class="status-pill">流程演示</span></div>
       <div class="care-tasks">
         <article v-for="task in tasks" :key="task.id" class="care-task">
           <div class="care-task-icon" :class="task.tone"><i :class="task.icon" /></div>
-          <div class="care-task-content"><div class="care-task-title"><h3>{{ task.title }}</h3><task-status :status="task.status" /></div><p>{{ task.description }}</p><small v-if="taskStatus(task.id)">本次备注：{{ taskStatus(task.id).note || '已记录准备进展' }}</small></div>
+          <div class="care-task-content"><div class="care-task-title"><h3>{{ task.title }}</h3><task-status :status="task.status" /></div><p>{{ task.type === 'followup' ? (task.plan || task.description) : task.description }}</p><small v-if="task.type === 'followup'">确认日期：{{ task.dueAt || '未指定' }} · {{ task.patientConfirmedAt ? '患者已确认收到提醒' : '患者尚未确认提醒' }}</small><small v-if="task.type === 'followup' && task.patientFeedback">患者反馈：{{ task.patientFeedback }}</small><small v-if="taskStatus(task.id)">本次备注：{{ taskStatus(task.id).note || '已记录准备进展' }}</small></div>
           <el-button v-if="task.recordable" size="small" @click="openTask(task)">{{ taskStatus(task.id) ? '更新进展' : '记录进展' }}</el-button>
-          <el-button v-else size="small" disabled>{{ task.button || '已确认计划' }}</el-button>
+          <el-button v-else-if="task.type === 'followup'" size="small" type="primary" plain @click="openTask(task)">管理随访</el-button>
+          <el-button v-else size="small" disabled>{{ task.button || '待医生确认' }}</el-button>
         </article>
       </div>
     </section>
     <div class="care-footer"><i class="el-icon-chat-dot-round" /><span>需要了解页面流程或报告状态？</span><router-link class="text-link" to="/patient/help">打开眼健康助手 <i class="el-icon-right" /></router-link></div>
-    <el-dialog title="记录演示任务进展" :visible.sync="dialogVisible" width="480px" :close-on-click-modal="false">
+    <el-dialog :title="activeTask.type === 'followup' ? '管理转诊与随访任务' : '记录演示任务进展'" :visible.sync="dialogVisible" width="520px" :close-on-click-modal="false">
       <p class="dialog-task-title">{{ activeTask.title }}</p>
-      <p class="muted small-text">记录保存在当前浏览器，状态为“已自报 · 待核实”，不会发送给医院或变更医生计划。</p>
-      <el-input v-model="taskNote" type="textarea" :rows="4" maxlength="300" show-word-limit placeholder="选填：已整理的资料、准备进展或需要核对的信息" aria-label="任务进展备注" />
-      <span slot="footer"><el-button @click="dialogVisible = false">取消</el-button><el-button type="primary" @click="recordTask">保存演示记录</el-button></span>
+      <template v-if="activeTask.type === 'followup'">
+        <p class="muted small-text">仅用于演示的本地流程；状态更新会同步到患者服务页和区域看板。</p>
+        <el-form label-position="top">
+          <el-form-item label="随访状态"><el-select v-model="followupDraft.status" style="width:100%"><el-option v-for="option in followupStatusOptions" :key="option.value" :label="option.label" :value="option.value" /></el-select></el-form-item>
+          <el-form-item label="确认日期"><el-date-picker v-model="followupDraft.dueAt" type="date" value-format="yyyy-MM-dd" placeholder="选择日期" style="width:100%" /></el-form-item>
+          <el-form-item label="机构随访备注"><el-input v-model.trim="followupDraft.note" type="textarea" :rows="3" maxlength="300" show-word-limit placeholder="记录联系、预约或随访核实情况" /></el-form-item>
+        </el-form>
+      </template>
+      <template v-else>
+        <p class="muted small-text">记录保存在当前浏览器，状态为“已自报 · 待核实”，不会发送给医院或变更医生计划。</p>
+        <el-input v-model="taskNote" type="textarea" :rows="4" maxlength="300" show-word-limit placeholder="选填：已整理的资料、准备进展或需要核对的信息" aria-label="任务进展备注" />
+      </template>
+      <span slot="footer"><el-button @click="dialogVisible = false">取消</el-button><el-button type="primary" @click="activeTask.type === 'followup' ? saveFollowup() : recordTask()">{{ activeTask.type === 'followup' ? '保存随访更新' : '保存演示记录' }}</el-button></span>
     </el-dialog>
   </main>
 </template>
@@ -56,20 +67,23 @@ import PatientStrip from '@/components/PatientStrip'
 import { taskViews } from '@/services/dr/selectors'
 import TaskStatus from '@/components/dr/TaskStatus'
 import { demoState, setTaskState, currentBundle } from '@/data/retina-demo'
+import { drService, TASK_STATES } from '@/services/dr'
 export default {
   name: 'Advice',
   components: { ClinicalHeader, DemoNotice, PatientStrip, TaskStatus },
   data() {
     return {
-      dialogVisible: false, activeTask: {}, taskNote: ''
+      dialogVisible: false, activeTask: {}, taskNote: '', followupDraft: { status: '', dueAt: '', note: '' }
     }
   },
-  computed: { patient() { return demoState.patient }, bundle: currentBundle, tasks() { return taskViews(this.bundle) }, report() { return this.bundle.reports.find(item => item.status === 'signed') } },
+  computed: { patient() { return demoState.patient }, bundle: currentBundle, tasks() { return taskViews(this.bundle) }, report() { return this.bundle.reports.find(item => item.status === 'signed') }, followupTask() { return this.bundle.tasks.find(item => item.type === 'followup') || null }, followupStatusOptions() { const current = this.followupDraft.status; const allowed = { pending_contact: ['reminded', 'scheduled', 'overdue', 'lost'], reminded: ['scheduled', 'completed', 'overdue', 'lost'], scheduled: ['reminded', 'completed', 'overdue', 'lost'], overdue: ['reminded', 'scheduled', 'completed', 'lost'], lost: ['reminded', 'scheduled'], completed: [] }; return [current, ...(allowed[current] || [])].filter((value, index, list) => value && list.indexOf(value) === index).map(value => ({ value, label: (TASK_STATES[value] || {}).label || value })) } },
   watch: { patient() { this.dialogVisible = false; this.activeTask = {}; this.taskNote = '' } },
   methods: {
     taskStatus(id) { const task = this.tasks.find(item => item.id === id); return task && task.status === 'self_reported' ? { note: task.note } : null },
-    openTask(task) { this.activeTask = task; this.taskNote = this.taskStatus(task.id) ? this.taskStatus(task.id).note : ''; this.dialogVisible = true },
+    openTask(task) { this.activeTask = task; this.taskNote = this.taskStatus(task.id) ? this.taskStatus(task.id).note : ''; this.followupDraft = { status: task.status, dueAt: task.dueAt || '', note: task.note || '' }; this.dialogVisible = true },
     recordTask() { setTaskState(this.activeTask.id, { note: this.taskNote.trim() }); this.dialogVisible = false; this.$message.success('本次演示进展已记录，等待核实。') },
+    async saveFollowup() { try { await drService.updateTask(this.activeTask.id, { status: this.followupDraft.status, dueAt: this.followupDraft.dueAt || null, note: this.followupDraft.note.trim() }); this.dialogVisible = false; this.$message.success('随访状态已更新，患者页和区域看板已同步。') } catch (error) { this.$message.error(error.message || '随访更新失败。') } },
+    planTypeLabel(value) { return { followup: '复查随访', referral: '转诊', both: '转诊与复查' }[value] || '已确认安排' },
     printPlan() { window.print() }
   }
 }

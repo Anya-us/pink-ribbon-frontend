@@ -50,6 +50,16 @@
 
           <el-form-item label="审核医生" required><el-input v-model.trim="review.doctor" maxlength="30" placeholder="例如：王医生（演示）" /></el-form-item>
 
+          <template v-if="review.action !== 'returned'">
+            <div class="confirmed-plan-box">
+              <strong>已确认的转诊 / 复查安排</strong>
+              <p>只填写医生已确认、可展示给患者的计划；这是流程演示，不生成临床建议。</p>
+              <el-form-item label="安排类型" required><el-select v-model="review.planType" style="width:100%"><el-option label="复查随访" value="followup" /><el-option label="转诊" value="referral" /><el-option label="转诊与复查" value="both" /></el-select></el-form-item>
+              <el-form-item label="计划内容" required><el-input v-model.trim="review.plan" type="textarea" :rows="2" maxlength="300" show-word-limit placeholder="填写已确认的联系、转诊或复查安排" /></el-form-item>
+              <el-form-item label="确认日期（选填）"><el-date-picker v-model="review.dueAt" type="date" value-format="yyyy-MM-dd" placeholder="选择已确认的日期" style="width:100%" /></el-form-item>
+            </div>
+          </template>
+
           <template v-if="review.action === 'modified'">
             <div class="manual-grade-box">
               <strong>人工确认的 ICDR 分级</strong>
@@ -94,7 +104,7 @@ export default {
       eyes: ['OD', 'OS'],
       grades,
       saving: false,
-      review: { action: 'accepted', doctor: '演示眼科医生', opinion: '', modificationReason: '', eyeGrades: { OD: null, OS: null }}
+      review: { action: 'accepted', doctor: '演示眼科医生', opinion: '', modificationReason: '', eyeGrades: { OD: null, OS: null }, planType: 'followup', plan: '', dueAt: '' }
     }
   },
   computed: {
@@ -146,11 +156,15 @@ export default {
         doctor: '演示眼科医生',
         opinion: '',
         modificationReason: '',
-        eyeGrades: { OD: results.OD ? results.OD.drGrade : null, OS: results.OS ? results.OS.drGrade : null }
+        eyeGrades: { OD: results.OD ? results.OD.drGrade : null, OS: results.OS ? results.OS.drGrade : null },
+        planType: 'followup',
+        plan: '',
+        dueAt: ''
       }
     },
     submit(sign) {
       if (!this.canSubmit) return
+      if (sign && this.review.action !== 'returned' && !this.review.plan.trim()) { this.$message.error('请填写医生已确认的转诊 / 复查安排。'); return }
       this.saving = true
       try {
         const result = submitReview({ ...this.review, eyeGrades: { ...this.review.eyeGrades }, sign: sign && this.review.action !== 'returned' })
@@ -196,6 +210,9 @@ export default {
 .review-form /deep/ .el-radio { margin: 0 20px 10px 0; }
 .form-help { margin: 7px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
 .manual-grade-box { padding: 15px 16px 1px; margin: 2px 0 18px; background: var(--page); border: 1px solid var(--border); border-radius: 7px; }
+.confirmed-plan-box { padding: 15px 16px 1px; margin: 2px 0 18px; background: #F4F8F5; border: 1px solid var(--border); border-radius: 7px; }
+.confirmed-plan-box > strong { color: var(--heading); font-size: 13px; }
+.confirmed-plan-box > p { margin: 6px 0 12px; color: var(--muted); font-size: 12px; line-height: 1.6; }
 .manual-grade-box > strong { color: var(--heading); font-size: 13px; }
 .manual-grade-box > p { margin: 6px 0 12px; color: var(--muted); font-size: 12px; }
 .manual-grade-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }

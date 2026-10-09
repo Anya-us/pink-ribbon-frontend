@@ -73,7 +73,7 @@ function createRepository(seed = createFixtures(), onChange = () => {}) {
       const exams = db.examinations.filter(item => item.institutionId === institution.id)
       const examIds = new Set(exams.map(item => item.id))
       const tasks = db.tasks.filter(item => item.type !== 'preparation' && examIds.has(item.examinationId))
-      return { ...institution, patients: db.patients.filter(item => item.institutionId === institution.id).length, examinations: exams.length, qualityPassed: exams.filter(item => EYES.every(eye => item.eyes[eye].quality.status === 'passed')).length, retake: exams.filter(item => EYES.some(eye => ['retake', 'ungradable', 'unknown_device'].includes(item.eyes[eye].quality.status))).length, awaitingReview: exams.filter(item => item.status === 'awaiting_review').length, signedReports: db.reports.filter(item => item.status === 'signed' && examIds.has(item.examinationId)).length, openTasks: tasks.filter(item => item.status !== 'completed').length, completedTasks: tasks.filter(item => item.status === 'completed').length }
+      return { ...institution, patients: db.patients.filter(item => item.institutionId === institution.id).length, examinations: exams.length, qualityPassed: exams.filter(item => EYES.every(eye => item.eyes[eye].quality.status === 'passed')).length, retake: exams.filter(item => EYES.some(eye => ['retake', 'ungradable', 'unknown_device'].includes(item.eyes[eye].quality.status))).length, awaitingReview: exams.filter(item => item.status === 'awaiting_review').length, signedReports: db.reports.filter(item => item.status === 'signed' && examIds.has(item.examinationId)).length, openTasks: tasks.filter(item => item.status !== 'completed').length, completedTasks: tasks.filter(item => item.status === 'completed').length, pendingContact: tasks.filter(item => item.status === 'pending_contact').length, reminded: tasks.filter(item => item.status === 'reminded').length, scheduled: tasks.filter(item => item.status === 'scheduled').length, overdueOrLost: tasks.filter(item => ['overdue', 'lost'].includes(item.status)).length, patientConfirmed: tasks.filter(item => !!item.patientConfirmedAt).length, feedbackReceived: tasks.filter(item => !!item.patientFeedbackAt).length }
     })
   }
   function updatePatient(id, patch) {
@@ -86,7 +86,23 @@ function createRepository(seed = createFixtures(), onChange = () => {}) {
     const task = find('tasks', id)
     if (Object.prototype.hasOwnProperty.call(patch, 'status') && !TASK_STATES[patch.status]) throw new Error('任务状态无效')
     if (task.type === 'preparation' && patch.status && !['preparing', 'self_reported'].includes(patch.status)) throw new Error('准备任务不能替代正式随访')
-    ;['status', 'note'].forEach(key => { if (Object.prototype.hasOwnProperty.call(patch, key)) task[key] = patch[key] })
+    if (task.type !== 'preparation' && patch.status && patch.status !== task.status) {
+      const transitions = {
+        pending_contact: ['reminded', 'scheduled', 'overdue', 'lost'],
+        reminded: ['scheduled', 'completed', 'overdue', 'lost'],
+        scheduled: ['reminded', 'completed', 'overdue', 'lost'],
+        overdue: ['reminded', 'scheduled', 'completed', 'lost'],
+        lost: ['reminded', 'scheduled'],
+        completed: []
+      }
+      if (!(transitions[task.status] || []).includes(patch.status)) throw new Error('该随访状态不能直接这样流转')
+    }
+    if (task.type !== 'preparation' && task.reportId) {
+      const report = find('reports', task.reportId)
+      if (report.status !== 'signed' || report.patientId !== task.patientId || report.examinationId !== task.examinationId) throw new Error('随访任务必须关联同一患者的已签发报告')
+    }
+    ['status', 'note', 'dueAt', 'plan', 'planType', 'patientConfirmedAt', 'patientFeedback', 'patientFeedbackAt'].forEach(key => { if (Object.prototype.hasOwnProperty.call(patch, key)) task[key] = patch[key] })
+    if (Object.prototype.hasOwnProperty.call(patch, 'patientFeedback') && patch.patientFeedback && !Object.prototype.hasOwnProperty.call(patch, 'patientFeedbackAt')) task.patientFeedbackAt = new Date().toISOString()
     task.updatedAt = new Date().toISOString()
     onChange(db)
     return clone(task)
@@ -122,7 +138,7 @@ function createRepository(seed = createFixtures(), onChange = () => {}) {
     const collectedEyes = selectedEyes.filter(eye => exam.eyes[eye].imageIds.length)
     exam.status = collectedEyes.length && collectedEyes.every(eye => exam.eyes[eye].quality.status === 'passed') ? 'awaiting_review' : 'pending_quality'
     db.examinations.push(exam)
-    preparationTemplates.forEach(template => db.tasks.push({ ...template, id: id + '-' + template.key, patientId, examinationId: id, reportId: null, type: 'preparation', status: 'preparing', note: '', dueAt: null, updatedAt: capturedAt, isSynthetic: false }))
+    preparationTemplates.forEach(template => db.tasks.push({ ...template, id: id + '-' + template.key, patientId, examinationId: id, reportId: null, type: 'preparation', status: 'preparing', note: '', dueAt: null, plan: '', planType: '', patientConfirmedAt: '', patientFeedback: '', patientFeedbackAt: '', updatedAt: capturedAt, isSynthetic: false }))
     updatePatient(patientId, form)
     Object.assign(patient, { currentExaminationId: id, rightGrade: null, leftGrade: null, status: '待评估', tone: 'info', date: capturedAt.slice(0, 10), cfp: !!(files.rightCfp || files.leftCfp), oct: !!(files.rightOct || files.leftOct) })
     onChange(db)
@@ -242,6 +258,11 @@ function createRepository(seed = createFixtures(), onChange = () => {}) {
       onChange(db)
       return clone(bundle(patient.id, examinationId))
     }
+    const confirmedPlan = String(review.plan || '').trim()
+    const planType = review.planType || 'followup'
+    if (!confirmedPlan) throw new Error('请填写医生已确认的转诊 / 复查安排后再签发')
+    if (!['followup', 'referral', 'both'].includes(planType)) throw new Error('转诊 / 复查类型无效')
+    const dueAt = String(review.dueAt || '').trim() || null
     let reportDraft = draft
     if (!reportDraft) {
       reportDraft = { id: 'DRAFT-' + examinationId, examinationId, patientId: patient.id, status: 'manual', modelVersion: '医生人工分级（演示）', createdAt: now, eyeResults: clone(eyeResults), disagreements: [], isSynthetic: true }
@@ -250,7 +271,7 @@ function createRepository(seed = createFixtures(), onChange = () => {}) {
     const existing = db.reports.find(item => item.examinationId === examinationId && item.status === 'signed')
     const reportId = existing ? existing.id : 'REPORT-' + examinationId + '-' + Date.now()
     const researchInference = reportDraft.source === 'algorithm7_local_api'
-    const report = { id: reportId, examinationId, patientId: patient.id, draftId: reportDraft.id, status: 'signed', version: existing ? existing.version + 1 : 1, signedBy: doctor, signedAt: now, eyeResults: clone(eyeResults), conclusion: opinion || (researchInference ? '本报告由本机研究模型草稿经人工确认后生成，仅供竞赛演示，不能用于临床诊断或治疗决策。' : '本报告为明确标记的演示签发记录，仅用于展示医生审核与签发流程。'), plan: '请根据医生确认的演示计划进行资料准备与后续联系；DME 保持未评估。', isSynthetic: !researchInference, researchInference }
+    const report = { id: reportId, examinationId, patientId: patient.id, draftId: reportDraft.id, status: 'signed', version: existing ? existing.version + 1 : 1, signedBy: doctor, signedAt: now, eyeResults: clone(eyeResults), conclusion: opinion || (researchInference ? '本报告由本机研究模型草稿经人工确认后生成，仅供竞赛演示，不能用于临床诊断或治疗决策。' : '本报告为明确标记的演示签发记录，仅用于展示医生审核与签发流程。'), plan: confirmedPlan, planType, dueAt, isSynthetic: !researchInference, researchInference }
     if (existing) Object.assign(existing, report)
     else db.reports.push(report)
     exam.status = 'signed'
@@ -259,9 +280,9 @@ function createRepository(seed = createFixtures(), onChange = () => {}) {
     record.action = action === 'accepted' ? '接受草稿并签发（演示）' : '修改分级并签发（演示）'
     record.eyeResults = clone(eyeResults)
     db.reviewRecords.push(record)
-    if (!db.tasks.some(item => item.examinationId === examinationId && item.type === 'followup')) {
-      db.tasks.push({ id: 'TASK-' + examinationId + '-' + Date.now(), key: 'followup', patientId: patient.id, examinationId, reportId, type: 'followup', title: '复查联系与资料准备（演示）', description: '由医生签发演示报告后建立；具体复查安排以医生确认内容为准。', icon: 'el-icon-date', status: 'pending_contact', note: '', dueAt: null, updatedAt: now, isSynthetic: true })
-    }
+    const existingTask = db.tasks.find(item => item.examinationId === examinationId && item.type === 'followup')
+    if (!existingTask) db.tasks.push({ id: 'TASK-' + examinationId + '-' + Date.now(), key: 'followup', patientId: patient.id, examinationId, reportId, type: 'followup', title: planType === 'referral' ? '转诊联系与资料准备（演示）' : planType === 'both' ? '转诊与复查随访（演示）' : '复查联系与资料准备（演示）', description: confirmedPlan, icon: 'el-icon-date', status: 'pending_contact', note: '', dueAt, plan: confirmedPlan, planType, patientConfirmedAt: '', patientFeedback: '', patientFeedbackAt: '', updatedAt: now, isSynthetic: true })
+    else Object.assign(existingTask, { reportId, title: planType === 'referral' ? '转诊联系与资料准备（演示）' : planType === 'both' ? '转诊与复查随访（演示）' : '复查联系与资料准备（演示）', description: confirmedPlan, dueAt, plan: confirmedPlan, planType, updatedAt: now })
     patient.status = '已签发'
     patient.tone = 'success'
     patient.rightGrade = eyeResults.OD.drGrade

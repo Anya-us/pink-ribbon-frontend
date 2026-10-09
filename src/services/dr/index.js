@@ -11,6 +11,13 @@ function initialData() {
     if (raw) {
       const parsed = JSON.parse(raw)
       assertGraph(parsed)
+      parsed.tasks.forEach(task => {
+        if (!Object.prototype.hasOwnProperty.call(task, 'plan')) task.plan = task.description || ''
+        if (!Object.prototype.hasOwnProperty.call(task, 'planType')) task.planType = task.type === 'preparation' ? '' : 'followup'
+        if (!Object.prototype.hasOwnProperty.call(task, 'patientConfirmedAt')) task.patientConfirmedAt = ''
+        if (!Object.prototype.hasOwnProperty.call(task, 'patientFeedback')) task.patientFeedback = ''
+        if (!Object.prototype.hasOwnProperty.call(task, 'patientFeedbackAt')) task.patientFeedbackAt = ''
+      })
       return parsed
     }
   } catch (error) {

@@ -42,7 +42,7 @@ function createFixtures() {
     if (patient.cfp) {
       data.drafts.push({ id: 'DRAFT-' + examinationId, examinationId, patientId: patient.id, status: index === 2 || index === 3 ? 'needs_review' : 'ready', modelVersion: '合成演示，未调用模型', createdAt: exam.performedAt, eyeResults: clone(exam.eyes), disagreements: index === 2 ? ['示例分歧：需医生核对候选等级。'] : [], isSynthetic: true })
     }
-    preparationTemplates.forEach(template => data.tasks.push({ ...template, id: examinationId + '-' + template.key, patientId: patient.id, examinationId, reportId: null, type: 'preparation', status: 'preparing', note: '', dueAt: null, updatedAt: exam.performedAt, isSynthetic: true }))
+    preparationTemplates.forEach(template => data.tasks.push({ ...template, id: examinationId + '-' + template.key, patientId: patient.id, examinationId, reportId: null, type: 'preparation', status: 'preparing', note: '', dueAt: null, plan: '', planType: '', patientConfirmedAt: '', patientFeedback: '', patientFeedbackAt: '', updatedAt: exam.performedAt, isSynthetic: true }))
   })
   const historical = { id: 'EX-202607-001', patientId: data.patients[0].id, institutionId: 'ORG-001', performedAt: '2026-07-01T09:00:00+08:00', sourceType: 'synthetic', status: 'signed', isSynthetic: true, eyes: { OD: { eye: 'OD', imageIds: [], quality: { status: 'passed', reason: '合成历史记录，原图未配置。' }, drGrade: 1, dmeStatus: 'not_assessed' }, OS: { eye: 'OS', imageIds: [], quality: { status: 'passed', reason: '合成历史记录，原图未配置。' }, drGrade: 1, dmeStatus: 'not_assessed' }}}
   data.examinations.push(historical)
@@ -52,7 +52,11 @@ function createFixtures() {
     if (!data.drafts.some(item => item.id === draftId)) data.drafts.push({ id: draftId, examinationId: exam.id, patientId: exam.patientId, status: 'ready', modelVersion: '合成演示，未调用模型', createdAt: exam.performedAt, eyeResults: clone(exam.eyes), disagreements: [], isSynthetic: true })
     data.reports.push({ id, examinationId: exam.id, patientId: exam.patientId, draftId, status: 'signed', version: 1, signedBy: '演示眼科医生', signedAt: exam.performedAt.slice(0, 10) + 'T10:00:00+08:00', eyeResults: clone(exam.eyes), conclusion: '本报告为明确标记的合成签发示例，仅展示报告结构。', plan: '演示计划由模拟签发记录提供，不用于实际诊疗安排。', isSynthetic: true })
     data.reviewRecords.push({ id: 'REVIEW-' + exam.id, examinationId: exam.id, reportId: id, actor: '演示眼科医生', action: '合成签发记录', comment: '模拟人工确认后的记录结构。', createdAt: exam.performedAt.slice(0, 10) + 'T10:00:00+08:00', isSynthetic: true })
-    data.tasks.push({ id: 'TASK-' + exam.id, key: 'followup', patientId: exam.patientId, examinationId: exam.id, reportId: id, type: 'followup', title: '复查联系与资料准备（演示）', description: '展示已确认合成计划的任务状态，具体项目由临床医生决定。', icon: 'el-icon-date', status: index === 0 ? 'completed' : 'pending_contact', note: '', dueAt: index === 0 ? '2026-07-10' : '2026-10-18', updatedAt: exam.performedAt, isSynthetic: true })
+    const demoPlan = '合成演示计划：按医生确认安排联系复查；不构成真实医疗建议。'
+    data.reports[data.reports.length - 1].plan = demoPlan
+    data.reports[data.reports.length - 1].planType = 'followup'
+    data.reports[data.reports.length - 1].dueAt = index === 0 ? '2026-07-10' : '2026-10-18'
+    data.tasks.push({ id: 'TASK-' + exam.id, key: 'followup', patientId: exam.patientId, examinationId: exam.id, reportId: id, type: 'followup', title: '复查联系与资料准备（演示）', description: demoPlan, icon: 'el-icon-date', status: index === 0 ? 'completed' : 'pending_contact', note: '', dueAt: index === 0 ? '2026-07-10' : '2026-10-18', plan: demoPlan, planType: 'followup', patientConfirmedAt: '', patientFeedback: '', patientFeedbackAt: '', updatedAt: exam.performedAt, isSynthetic: true })
   })
   return data
 }
