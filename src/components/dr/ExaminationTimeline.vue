@@ -12,8 +12,8 @@ li { padding: 22px 0; border-bottom: 1px solid var(--border); }
 li:last-child { border: 0; }
 .timeline-header { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
 time { font-weight: 600; color: var(--heading); }
-p { margin: 6px 0 14px; font-size: 12px; color: var(--muted); }
+p { margin: 6px 0 14px; font-size: 14px; color: var(--muted); }
 .timeline-eyes { display: flex; gap: 20px; flex-wrap: wrap; }
-.timeline-eyes > span { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 13px; }
+.timeline-eyes > span { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 15px; }
 .timeline-eyes strong { font-weight: 500; }
 </style>

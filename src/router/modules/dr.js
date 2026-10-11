@@ -13,5 +13,8 @@ export default [
     leaf('index', 'PatientService', '患者服务', 'el-icon-chat-dot-round', () => import('@/views/patient/index')),
     { ...leaf('help', 'Chat', '眼健康助手', 'el-icon-question', () => import('@/views/chat/index')), hidden: true }
   ] },
+  { path: '/consultation', component: Layout, redirect: '/consultation/index', children: [
+    leaf('index', 'SmartConsultation', '智能问诊', 'el-icon-chat-dot-round', () => import('@/views/chat/SmartConsultationExperience'), false)
+  ] },
   { path: '/region', component: Layout, redirect: '/region/index', children: [leaf('index', 'RegionDashboard', '区域看板', 'el-icon-data-analysis', () => import('@/views/region/index'), false)] }
 ]

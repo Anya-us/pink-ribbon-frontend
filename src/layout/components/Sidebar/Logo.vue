@@ -18,6 +18,6 @@ export default {
 .sidebar-logo-link { display: flex !important; align-items: center; gap: 11px; }
 .sidebar-logo { width: 40px; height: 40px; flex-shrink: 0; }
 .sidebar-title { font-size: 21px; font-weight: 650; color: var(--heading); letter-spacing: .06em; }
-.brand-caption { display: block; font-size: 11px; color: var(--muted); margin-top: 1px; white-space: nowrap; }
+.brand-caption { display: block; font-size: 13px; color: var(--muted); margin-top: 1px; white-space: nowrap; }
 .collapse { padding: 32px 12px; }
 </style>

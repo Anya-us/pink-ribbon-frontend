@@ -36,7 +36,7 @@ export default {
 <style scoped>
 .tags-view-container { height: 38px; background: var(--panel); border-bottom: 1px solid var(--border); }
 .tags-view-wrapper { display: flex; align-items: center; gap: 5px; height: 100%; padding: 0 24px; overflow-x: auto; scrollbar-width: thin; }
-.tags-view-item { display: flex; align-items: center; flex-shrink: 0; border-radius: 4px; font-size: 12px; color: var(--muted); }
+.tags-view-item { display: flex; align-items: center; flex-shrink: 0; border-radius: 4px; font-size: 14px; color: var(--muted); }
 .tags-view-item a { padding: 4px 11px; }
 .tags-view-item.active { color: var(--primary-hover); background: var(--primary-soft); font-weight: 500; }
 .tags-view-item:hover { background: #EDF3F0; }

@@ -5,12 +5,33 @@ import { EYES, GRADES, TASK_STATES, QUALITY_STATES, clone } from '@/mock/dr/sche
 
 const STORAGE_KEY = 'retina-dr-demo-v1'
 export const storageState = Vue.observable({ available: true })
+
+function refreshLegacyLabels(value) {
+  if (typeof value === 'string') {
+    const next = value
+      .replace(/[（(]演示[）)]/g, '')
+      .replace(/演示/g, '样本')
+    return { value: next, changed: next !== value }
+  }
+  if (!value || typeof value !== 'object') return { value, changed: false }
+  let changed = false
+  Object.keys(value).forEach(key => {
+    const result = refreshLegacyLabels(value[key])
+    if (result.changed) {
+      value[key] = result.value
+      changed = true
+    }
+  })
+  return { value, changed }
+}
+
 function initialData() {
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY)
     if (raw) {
       const parsed = JSON.parse(raw)
       assertGraph(parsed)
+      const refreshed = refreshLegacyLabels(parsed)
       parsed.tasks.forEach(task => {
         if (!Object.prototype.hasOwnProperty.call(task, 'plan')) task.plan = task.description || ''
         if (!Object.prototype.hasOwnProperty.call(task, 'planType')) task.planType = task.type === 'preparation' ? '' : 'followup'
@@ -18,6 +39,7 @@ function initialData() {
         if (!Object.prototype.hasOwnProperty.call(task, 'patientFeedback')) task.patientFeedback = ''
         if (!Object.prototype.hasOwnProperty.call(task, 'patientFeedbackAt')) task.patientFeedbackAt = ''
       })
+      if (refreshed.changed) window.localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed))
       return parsed
     }
   } catch (error) {

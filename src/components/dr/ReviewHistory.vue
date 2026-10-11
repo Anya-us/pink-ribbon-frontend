@@ -11,5 +11,5 @@ li:last-child { border: 0; }
 li > div { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
 strong { color: var(--heading); font-size: 14px; }
 p { margin: 6px 0; }
-time, small { color: var(--muted); font-size: 12px; }
+time, small { color: var(--muted); font-size: 14px; }
 </style>

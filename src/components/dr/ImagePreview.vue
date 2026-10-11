@@ -33,16 +33,16 @@ export default {
 <style scoped>
 .viewer-toolbar { display: flex; justify-content: space-between; gap: 10px; padding: 12px 18px; background: #F6F9F7; }
 .viewer-tabs { display: flex; gap: 3px; }
-.viewer-tabs button { border: 0; border-radius: 5px; padding: 7px 10px; background: transparent; color: var(--muted); cursor: pointer; font-size: 12px; }
+.viewer-tabs button { border: 0; border-radius: 5px; padding: 8px 12px; background: transparent; color: var(--muted); cursor: pointer; font-size: 14px; }
 .viewer-tabs button.active { background: var(--primary-soft); color: var(--primary-hover); }
 .image-canvas { height: 340px; background: var(--viewer); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
 .image-canvas > img { width: 100%; height: 100%; object-fit: contain; }
 .canvas-placeholder { text-align: center; color: #D9E6DF; padding: 25px 16px; max-width: 90%; overflow-wrap: anywhere; }
 .canvas-placeholder i { display: block; font-size: 40px; margin-bottom: 15px; }
-.canvas-placeholder p { font-size: 12px; color: #BCCEC6; }
-.canvas-caption { position: absolute; top: 15px; left: 18px; color: #D9E6DF; font-size: 12px; background: #283B36; padding: 3px 9px; border-radius: 5px; }
+.canvas-placeholder p { font-size: 14px; color: #BCCEC6; }
+.canvas-caption { position: absolute; top: 15px; left: 18px; color: #D9E6DF; font-size: 14px; background: #283B36; padding: 3px 9px; border-radius: 5px; }
 .preview-source { padding: 12px 18px 0; }
-.viewer-footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 12px 18px; font-size: 12px; color: var(--muted); }
+.viewer-footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 12px 18px; font-size: 14px; color: var(--muted); }
 .zoom-controls { display: flex; align-items: center; gap: 7px; }
 .zoom-controls button { width: 28px; height: 28px; border: 1px solid var(--border); background: var(--panel); color: var(--primary); border-radius: 5px; cursor: pointer; }
 .zoom-controls button:disabled { color: var(--input-border); cursor: default; }

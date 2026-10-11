@@ -1,7 +1,7 @@
 <template>
   <div class="two-column">
     <section class="panel">
-      <div class="panel-heading"><h2>基础信息与糖尿病史</h2><el-button v-if="!editing" type="text" icon="el-icon-edit" @click="startEdit">编辑演示档案</el-button><span v-else class="status-pill info">编辑中</span></div>
+      <div class="panel-heading"><h2>基础信息与糖尿病史</h2><el-button v-if="!editing" type="text" icon="el-icon-edit" @click="startEdit">编辑档案</el-button><span v-else class="status-pill info">编辑中</span></div>
       <div class="panel-body">
         <el-form v-if="editing" ref="form" :model="draft" :rules="rules" label-position="top">
           <div class="form-grid">
@@ -25,7 +25,7 @@
             <div><dt>血压</dt><dd>{{ patient.bp ? patient.bp + ' mmHg' : '未提供' }}</dd></div>
           </dl>
           <div class="history-note"><h3>病史备注</h3><p>{{ savedNote || '眼科既往史、糖尿病用药与近期症状尚待核对。' }}</p></div>
-          <div class="record-source"><i class="el-icon-document" aria-hidden="true" />来源：{{ custom ? '本次采集表单' : '演示档案' }} · 仅用于页面流程展示</div>
+          <div class="record-source"><i class="el-icon-document" aria-hidden="true" />来源：{{ custom ? '本次采集表单' : '样本档案' }} · 仅用于页面流程展示</div>
         </div>
       </div>
     </section>
@@ -81,11 +81,11 @@ export default {
 .history-note { margin-top: 28px; border-top: 1px solid var(--border); padding-top: 20px; }
 .history-note h3 { margin: 0 0 8px; font-size: 14px; }
 .history-note p { margin: 0; color: var(--muted); white-space: pre-wrap; overflow-wrap: anywhere; }
-.record-source { margin-top: 28px; padding: 10px 12px; background: var(--page); border-radius: 5px; font-size: 12px; color: var(--muted); }
+.record-source { margin-top: 28px; padding: 10px 12px; background: var(--page); border-radius: 5px; font-size: 14px; color: var(--muted); }
 .record-source i { margin-right: 6px; }
 .completeness-list { padding: 4px 24px; }
-.completeness-list > div { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 17px 0; border-bottom: 1px solid #E7EEEB; font-size: 13px; }
+.completeness-list > div { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 17px 0; border-bottom: 1px solid #E7EEEB; font-size: 15px; }
 .completeness-list i { margin-right: 9px; color: var(--input-border); font-size: 17px; }
-.completeness-note { margin: 12px 24px 22px; color: var(--muted); font-size: 13px; }
+.completeness-note { margin: 12px 24px 22px; color: var(--muted); font-size: 15px; }
 @media (max-width: 1100px) { .detail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>

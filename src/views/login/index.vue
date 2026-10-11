@@ -22,7 +22,7 @@
           <el-input v-model="loginForm.password" label="密码" name="password" type="password" autocomplete="current-password" placeholder="请输入密码" prefix-icon="el-icon-lock" show-password />
         </el-form-item>
         <el-button class="login-submit" type="primary" native-type="submit" :loading="loading">{{ loading ? '正在登录…' : '进入工作空间' }}<i class="el-icon-right" /></el-button>
-        <div class="login-demo"><i class="el-icon-info" aria-hidden="true" /><div><strong>演示账户</strong><p>用户名 admin 或 editor，密码 111111。<br>当前使用演示登录与示例病例。</p></div></div>
+        <div class="login-demo"><i class="el-icon-info" aria-hidden="true" /><div><strong>体验账户</strong><p>用户名 admin 或 editor，密码 111111。<br>当前使用本地登录与样本病例。</p></div></div>
       </el-form>
     </section>
   </main>

@@ -1,10 +1,6 @@
 <template>
-  <header class="page-header">
-    <div>
-      <h1>{{ title }}</h1>
-      <p>{{ description }}</p>
-    </div>
-    <div v-if="$slots.default" class="page-actions"><slot /></div>
+  <header v-if="$slots.default" class="page-header">
+    <div class="page-actions"><slot /></div>
   </header>
 </template>
 <script>

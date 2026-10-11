@@ -9,7 +9,7 @@ function responseError(error) {
   const detail = error && error.response && error.response.data && error.response.data.detail
   if (detail) return new Error(detail)
   if (error && error.code === 'ECONNABORTED') return new Error('模型推理超时，请确认后端仍在运行。')
-  return new Error('无法连接本机推理服务。请先运行“启动演示.cmd”，并保持推理服务窗口开启。')
+  return new Error('无法连接本机推理服务。请先启动本机推理服务，并保持服务窗口开启。')
 }
 
 export async function predictFundusImage(file) {

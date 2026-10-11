@@ -1,5 +1,5 @@
 <template>
-  <div class="distribution-chart" role="img" :aria-label="'演示病例流程分布：' + summary">
+  <div class="distribution-chart" role="img" :aria-label="'病例流程分布：' + summary">
     <div ref="chart" class="screening-chart" />
     <div class="distribution-total"><strong class="number">{{ total }}</strong><span>病例总数</span></div>
   </div>
@@ -53,5 +53,5 @@ export default {
 .screening-chart { height: 100%; width: 100%; }
 .distribution-total { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
 .distribution-total strong { font-size: 34px; line-height: 1.3; font-weight: 650; color: var(--heading); }
-.distribution-total span { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.distribution-total span { font-size: 14px; color: var(--muted); margin-top: 4px; }
 </style>

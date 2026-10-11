@@ -8,7 +8,7 @@ export default { name: 'DrEyeSwitcher', props: { value: { type: String, default:
 </script>
 <style scoped>
 .dr-eye-switcher { display: inline-flex; gap: 3px; }
-button { border: 0; border-radius: 5px; padding: 7px 10px; background: transparent; color: var(--muted); cursor: pointer; font-size: 12px; }
+button { border: 0; border-radius: 5px; padding: 8px 12px; background: transparent; color: var(--muted); cursor: pointer; font-size: 14px; }
 button:hover { background: var(--primary-soft); }
 button.active { background: var(--primary-soft); color: var(--primary-hover); font-weight: 600; }
 </style>

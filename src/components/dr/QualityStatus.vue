@@ -24,6 +24,6 @@ export default {
 </script>
 <style scoped>
 .dr-quality { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 6px; }
-.quality-reason { color: var(--muted); font-size: 12px; line-height: 1.7; }
-.quality-next { color: var(--heading); font-size: 12px; line-height: 1.7; }
+.quality-reason { color: var(--muted); font-size: 14px; line-height: 1.7; }
+.quality-next { color: var(--heading); font-size: 14px; line-height: 1.7; }
 </style>

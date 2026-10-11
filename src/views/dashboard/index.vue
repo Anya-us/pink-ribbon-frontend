@@ -1,9 +1,5 @@
 <template>
   <main class="clinical-page dashboard-page">
-    <clinical-header title="诊疗工作台" description="糖尿病视网膜病变多模态筛查与管理">
-      <span class="dashboard-date"><i class="el-icon-date" aria-hidden="true" />{{ today }}</span>
-    </clinical-header>
-
     <section class="welcome-panel" aria-label="筛查工作入口">
       <div class="welcome-grid" aria-hidden="true" />
       <div class="welcome-copy">
@@ -15,9 +11,9 @@
       <div class="welcome-orbit" aria-hidden="true" />
       <img :src="doctorImage" class="welcome-doctor" alt="" aria-hidden="true" width="1024" height="1536">
     </section>
-    <demo-notice class="dashboard-demo-note" :text="'当前 ' + patients.length + ' 例为演示病例，图表由示例记录汇总；尚未连接真实诊疗服务。'" />
+    <demo-notice class="dashboard-demo-note" :text="'当前 ' + patients.length + ' 例为样本病例，图表由病例记录汇总。'" />
 
-    <section class="metric-grid" aria-label="演示队列概况">
+    <section class="metric-grid" aria-label="病例队列概况">
       <button v-for="metric in metrics" :key="metric.label" type="button" class="metric-card" :class="[metric.tone, { 'is-selected': status && status === metric.filter }]" :aria-pressed="String(status === metric.filter)" @click="showQueue(metric.filter)">
         <div class="metric-top"><span>{{ metric.label }}</span><span class="metric-share">{{ metric.share }}</span></div>
         <div class="metric-main"><div class="metric-value number">{{ metric.value }}<span>例</span></div><span class="metric-symbol"><i :class="metric.icon" aria-hidden="true" /></span></div>
@@ -69,7 +65,7 @@
       <section class="panel tasks-panel">
         <div class="panel-heading"><div><h2>下一步工作</h2><p>衔接采集、复核与随访</p></div><i class="el-icon-finished muted" aria-hidden="true" /></div>
         <div class="next-task-list">
-          <button type="button" @click="openPriority"><span class="task-symbol danger"><i class="el-icon-view" /></span><span><strong>优先复核影像证据</strong><small>{{ priorityCount }} 例需优先关注 · 演示</small></span><i class="el-icon-arrow-right" /></button>
+          <button type="button" @click="openPriority"><span class="task-symbol danger"><i class="el-icon-view" /></span><span><strong>优先复核影像证据</strong><small>{{ priorityCount }} 例需优先关注</small></span><i class="el-icon-arrow-right" /></button>
           <button type="button" @click="$router.push('/screening/intake')"><span class="task-symbol info"><i class="el-icon-upload2" /></span><span><strong>补全多模态资料</strong><small>左右眼独立采集与核对</small></span><i class="el-icon-arrow-right" /></button>
           <button type="button" @click="$router.push('/followup/index')"><span class="task-symbol primary"><i class="el-icon-date" /></span><span><strong>查看处置与随访任务</strong><small>由医生确认后进入执行</small></span><i class="el-icon-arrow-right" /></button>
         </div>
@@ -81,19 +77,17 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import ClinicalHeader from '@/components/ClinicalHeader'
 import DemoNotice from '@/components/DemoNotice'
 import ScreeningChart from '@/components/ScreeningChart'
 import CaseIntakeChart from '@/components/CaseIntakeChart'
 import { patients, selectPatient } from '@/data/retina-demo'
 export default {
   name: 'Dashboard',
-  components: { ClinicalHeader, DemoNotice, ScreeningChart, CaseIntakeChart },
+  components: { DemoNotice, ScreeningChart, CaseIntakeChart },
   data() {
     return {
       patients, search: '', status: '',
       doctorImage: process.env.BASE_URL + 'images/clinic-doctor.png',
-      today: new Date().toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' }),
       statuses: [{ label: '待采集', value: '待采集' }, { label: '待复核（含优先）', value: 'review' }, { label: '优先复核', value: '优先复核' }, { label: '随访准备', value: '随访准备' }]
     }
   },
@@ -112,7 +106,7 @@ export default {
       const collection = this.patients.filter(item => !item.cfp).length
       const followup = this.patients.filter(item => item.status === '随访准备').length
       return [
-        { label: '病例总数', value: count, share: '演示', hint: '查看当前全部病例', icon: 'el-icon-folder-opened', tone: 'teal', filter: '' },
+        { label: '病例总数', value: count, share: '当前', hint: '查看当前全部病例', icon: 'el-icon-folder-opened', tone: 'teal', filter: '' },
         { label: '待医生复核', value: review, share: share(review), hint: '含优先复核 ' + this.priorityCount + ' 例', icon: 'el-icon-view', tone: 'rose', filter: 'review' },
         { label: '待补全采集', value: collection, share: share(collection), hint: '补全所需影像资料', icon: 'el-icon-upload2', tone: 'amber', filter: '待采集' },
         { label: '随访准备', value: followup, share: share(followup), hint: '待医生确认安排', icon: 'el-icon-date', tone: 'blue', filter: '随访准备' }
@@ -151,71 +145,69 @@ export default {
 }
 </script>
 <style scoped>
-.dashboard-date { color: var(--muted); font-size: 13px; white-space: nowrap; }
-.dashboard-date i { margin-right: 7px; }
-.welcome-panel { position: relative; isolation: isolate; background: var(--primary); border-radius: 20px; padding: 34px 38px; min-height: 248px; margin-top: 24px; }
+.welcome-panel { position: relative; isolation: isolate; background: var(--primary); border-radius: 20px; padding: 34px 38px; min-height: 248px; margin-top: 0; }
 .welcome-grid { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; z-index: -1; background-image: linear-gradient(rgba(254,254,254,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(254,254,254,.035) 1px, transparent 1px); background-size: 28px 28px; mask-image: linear-gradient(90deg, transparent, #263238); }
 .welcome-copy { position: relative; width: calc(100% - 280px); z-index: 2; }
 .welcome-copy h2 { color: #FEFEFE; font-size: 30px; font-weight: 600; margin: 0 0 10px; }
 .welcome-copy p { color: #FEFEFE; font-size: 16px; margin: 0 0 5px; }
-.welcome-modalities { display: block; font-size: 13px; color: #FEFEFE; }
+.welcome-modalities { display: block; font-size: 15px; color: #FEFEFE; }
 .welcome-button { margin-top: 24px; color: var(--primary-hover); border: 1px solid #FEFEFE; background: #FEFEFE; padding: 12px 20px; border-radius: 8px; font-weight: 500; }
 .welcome-button:hover, .welcome-button:focus { color: var(--primary-hover); background: #E9F4F1; border-color: #E9F4F1; }
 .welcome-doctor { position: absolute; height: 292px; width: 280px; object-fit: cover; object-position: center top; right: 32px; bottom: 0; z-index: 1; pointer-events: none; }
 .welcome-orbit { position: absolute; right: 35px; bottom: 0; width: 264px; height: 238px; border-radius: 130px 130px 0 0; background: rgba(254,254,254,.045); z-index: -1; }
-.dashboard-demo-note { background: transparent; border: 0; padding: 0 2px; margin: 15px 0 18px; font-size: 12px; }
+.dashboard-demo-note { background: transparent; border: 0; padding: 0 2px; margin: 15px 0 18px; font-size: 14px; }
 .metric-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
 .metric-card { --metric-color: var(--primary); --metric-soft: var(--primary-soft); display: block; text-align: left; background: var(--panel); border: 1px solid var(--border); border-bottom: 3px solid var(--metric-color); border-radius: 12px; padding: 18px 20px 16px; cursor: pointer; min-width: 0; color: var(--text); transition: box-shadow .18s, border-color .18s; }
 .metric-card.rose { --metric-color: var(--rose); --metric-soft: var(--rose-soft); }
 .metric-card.amber { --metric-color: var(--amber); --metric-soft: var(--amber-soft); }
 .metric-card.blue { --metric-color: var(--blue); --metric-soft: var(--blue-soft); }
 .metric-card:hover, .metric-card.is-selected { border-color: var(--metric-color); box-shadow: 0 4px 16px rgba(38,50,56,.05); }
-.metric-top { display: flex; justify-content: space-between; align-items: center; gap: 5px; font-size: 14px; color: var(--heading); }
-.metric-share { background: var(--metric-soft); color: var(--text); font-size: 10px; padding: 2px 6px; border-radius: 12px; white-space: nowrap; }
+.metric-top { display: flex; justify-content: space-between; align-items: center; gap: 5px; font-size: 15px; color: var(--heading); }
+.metric-share { background: var(--metric-soft); color: var(--text); font-size: 12px; padding: 2px 7px; border-radius: 12px; white-space: nowrap; }
 .metric-main { display: flex; align-items: center; justify-content: space-between; margin: 14px 0 10px; }
 .metric-value { font-size: 32px; font-weight: 650; color: var(--metric-color); line-height: 1.2; }
-.metric-value span { font-size: 12px; margin-left: 7px; font-weight: 400; color: var(--muted); }
+.metric-value span { font-size: 14px; margin-left: 7px; font-weight: 400; color: var(--muted); }
 .metric-symbol { width: 38px; height: 38px; border-radius: 8px; display: grid; place-items: center; background: var(--metric-soft); color: var(--metric-color); font-size: 20px; }
-.metric-hint { font-size: 11px; color: var(--muted); display: flex; align-items: center; justify-content: space-between; gap: 4px; }
+.metric-hint { font-size: 13px; color: var(--muted); display: flex; align-items: center; justify-content: space-between; gap: 4px; }
 .overview-grid { display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(280px, 1fr); gap: 20px; }
 .chart-panel .panel-heading { border-bottom: 0; padding: 20px 24px 8px; }
-.chart-panel .panel-heading p { font-size: 12px; }
-.chart-legend { display: flex; gap: 22px; font-size: 12px; color: var(--muted); padding: 8px 24px 0; }
+.chart-panel .panel-heading p { font-size: 14px; }
+.chart-legend { display: flex; gap: 22px; font-size: 14px; color: var(--muted); padding: 8px 24px 0; }
 .chart-legend span, .distribution-legend span { display: flex; align-items: center; gap: 7px; }
 .legend-dot { width: 8px; height: 8px; border-radius: 3px; display: inline-block; flex-shrink: 0; }
 .primary-dot { background: var(--primary); }
 .blue-dot { background: var(--blue); }
 .trend-chart-body { padding: 0 20px; }
-.chart-caption { padding: 0 24px 18px; margin: 0; color: var(--muted); font-size: 12px; }
-.distribution-legend { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 12px 20px 20px; gap: 8px; font-size: 11px; color: var(--muted); }
+.chart-caption { padding: 0 24px 18px; margin: 0; color: var(--muted); font-size: 14px; }
+.distribution-legend { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 12px 20px 20px; gap: 8px; font-size: 13px; color: var(--muted); }
 .distribution-legend > div { display: flex; flex-direction: column; gap: 7px; align-items: center; }
 .distribution-legend strong { font-size: 18px; color: var(--heading); font-weight: 600; }
-.distribution-legend small { font-size: 11px; color: var(--muted); font-weight: 400; }
+.distribution-legend small { font-size: 13px; color: var(--muted); font-weight: 400; }
 .queue-filters { padding: 16px 20px; display: flex; gap: 12px; }
 .queue-filters .el-input { width: 100%; max-width: 280px; }
 .queue-filters .el-select { width: 180px; flex-shrink: 0; }
 .queue-patient { display: flex; align-items: center; gap: 10px; }
-.queue-monogram { width: 32px; height: 32px; border-radius: 50%; color: var(--primary); background: var(--primary-soft); display: grid; place-items: center; font-size: 12px; flex-shrink: 0; font-weight: 500; }
+.queue-monogram { width: 32px; height: 32px; border-radius: 50%; color: var(--primary); background: var(--primary-soft); display: grid; place-items: center; font-size: 14px; flex-shrink: 0; font-weight: 500; }
 .image-tags { display: flex; gap: 5px; }
-.image-tags span { color: var(--muted); background: #EDF1F0; font-size: 11px; padding: 2px 6px; border-radius: 4px; }
+.image-tags span { color: var(--muted); background: #EDF1F0; font-size: 13px; padding: 2px 7px; border-radius: 4px; }
 .image-tags .available { color: var(--primary-hover); background: var(--primary-soft); }
 .queue-panel .clinical-table th, .queue-panel .clinical-table td { padding: 13px 20px; }
-.queue-footer { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid var(--border); padding: 13px 20px; font-size: 12px; color: var(--muted); }
+.queue-footer { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid var(--border); padding: 13px 20px; font-size: 14px; color: var(--muted); }
 .empty-queue { text-align: center; color: var(--muted); white-space: normal !important; }
 .next-task-list { padding: 4px 20px; }
 .next-task-list button { width: 100%; border: 0; border-bottom: 1px solid var(--border); background: transparent; text-align: left; padding: 19px 0; display: flex; align-items: center; gap: 12px; cursor: pointer; color: var(--text); }
 .next-task-list button:last-child { border-bottom: 0; }
 .next-task-list button:hover strong { color: var(--primary); }
-.next-task-list strong { font-weight: 500; font-size: 14px; display: block; }
-.next-task-list small { font-size: 12px; color: var(--muted); display: block; margin-top: 3px; }
+.next-task-list strong { font-weight: 500; font-size: 16px; display: block; }
+.next-task-list small { font-size: 14px; color: var(--muted); display: block; margin-top: 3px; }
 .next-task-list button > .el-icon-arrow-right { margin-left: auto; color: var(--muted); }
 .task-symbol { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; flex-shrink: 0; font-size: 18px; }
 .task-symbol.danger { background: var(--danger-soft); color: var(--danger); }
 .task-symbol.info { background: var(--blue-soft); color: var(--blue); }
 .task-symbol.primary { background: var(--primary-soft); color: var(--primary); }
-.workspace-note { margin: 4px 20px 20px; padding: 15px; border-radius: 10px; display: flex; gap: 12px; align-items: center; background: var(--primary-soft); color: var(--primary-hover); font-size: 12px; line-height: 1.8; }
+.workspace-note { margin: 4px 20px 20px; padding: 15px; border-radius: 10px; display: flex; gap: 12px; align-items: center; background: var(--primary-soft); color: var(--primary-hover); font-size: 14px; line-height: 1.8; }
 .workspace-note i { font-size: 23px; }
-.dashboard-footer { text-align: center; font-size: 12px; margin: 25px 0 0; color: var(--muted); }
+.dashboard-footer { text-align: center; font-size: 14px; margin: 25px 0 0; color: var(--muted); }
 .dashboard-footer span { margin: 0 13px; color: var(--input-border); }
 @media (max-width: 1250px) { .metric-card { padding: 17px 15px; } .metric-top { font-size: 13px; } .metric-grid { gap: 14px; } .dashboard-page .two-column { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 1050px) { .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .overview-grid { grid-template-columns: minmax(0, 1fr); } .welcome-copy h2 { font-size: 26px; } .welcome-panel { padding: 30px; } .welcome-doctor { right: 12px; width: 245px; } .welcome-copy { width: calc(100% - 230px); } }

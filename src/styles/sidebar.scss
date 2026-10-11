@@ -1,6 +1,7 @@
 #app {
   .main-container { min-height: 100%; transition: margin-left .2s; margin-left: $sideBarWidth; position: relative; }
-  .sidebar-container { transition: width .2s; width: $sideBarWidth !important; background: $menuBg; height: 100%; position: fixed; top: 0; bottom: 0; left: 0; z-index: 1001; overflow: hidden; border-right: 1px solid #E6EBEE; }
+  .sidebar-container { transition: width .2s; width: $sideBarWidth !important; background: $menuBg; height: 100%; position: fixed; top: 0; bottom: 0; left: 0; z-index: 1001; overflow: visible; border-right: 1px solid #E6EBEE; }
+  .sidebar-container:hover .sidebar-edge-toggle, .sidebar-edge-toggle:focus-visible { opacity: 1; transform: translate(0, -50%); }
   .sidebar-container {
     .scrollbar-wrapper { overflow-x: hidden !important; }
     .el-scrollbar { height: calc(100% - 252px); }
@@ -14,7 +15,7 @@
     .el-menu-item:hover, .el-submenu__title:hover { background: $menuHover !important; }
     .el-menu-item.is-active { color: $menuActiveText !important; background: $menuActiveBg !important; font-weight: 500; }
     .el-submenu.is-active > .el-submenu__title { color: $menuActiveText !important; background: $menuActiveBg !important; font-weight: 500; }
-    .el-submenu .el-menu-item { min-width: 0 !important; height: 44px; line-height: 44px; padding-left: 46px !important; font-size: 13px; }
+    .el-submenu .el-menu-item { min-width: 0 !important; height: 44px; line-height: 44px; padding-left: 46px !important; font-size: 15px; }
     .el-submenu .el-menu-item.is-active { color: $subMenuActiveText !important; background: $subMenuActiveBg !important; }
     .el-menu-item.is-active i, .el-submenu.is-active > .el-submenu__title i { color: inherit; }
   }

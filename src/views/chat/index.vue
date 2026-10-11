@@ -1,8 +1,5 @@
 <template>
   <main class="clinical-page assistant-page">
-    <clinical-header title="眼健康助手" description="了解采集、共识评估与随访流程，整理准备向医生确认的问题。">
-      <span class="status-pill primary"><i class="el-icon-chat-dot-round" />流程问答演示</span>
-    </clinical-header>
     <demo-notice text="当前使用本地预置流程问答，未连接在线大模型或医生咨询服务；对话只在本次会话内保留。" />
     <div class="assistant-layout">
       <section class="panel conversation-panel">
@@ -10,7 +7,7 @@
         <div ref="messages" class="conversation-messages" role="log" aria-live="polite" aria-label="对话记录">
           <article v-for="message in messages" :key="message.id" class="message-row" :class="message.role">
             <span class="message-avatar"><i :class="message.role === 'user' ? 'el-icon-user' : 'el-icon-view'" aria-hidden="true" /></span>
-            <div class="message-content"><span class="message-author">{{ message.role === 'user' ? '你' : '眼健康助手 · 演示' }}</span><div class="message-bubble">{{ message.text }}</div></div>
+            <div class="message-content"><span class="message-author">{{ message.role === 'user' ? '你' : '眼健康助手' }}</span><div class="message-bubble">{{ message.text }}</div></div>
           </article>
         </div>
         <div class="conversation-compose">
@@ -19,7 +16,7 @@
             <el-input v-model="input" label="输入流程问题" type="textarea" :rows="2" resize="none" maxlength="500" placeholder="输入流程问题，Enter 发送，Shift + Enter 换行" aria-label="输入流程问题" @keydown.enter.native.exact="handleEnter" />
             <el-button type="primary" native-type="submit" :disabled="!input.trim()" aria-label="发送消息"><i class="el-icon-position" /><span>发送</span></el-button>
           </form>
-          <p>演示问答不会读取影像或生成诊断；可向医生确认的事项可记录到随访准备清单。</p>
+          <p>问答不会读取影像或生成诊断；可向医生确认的事项可记录到随访准备清单。</p>
         </div>
       </section>
       <div>
@@ -38,14 +35,13 @@
   </main>
 </template>
 <script>
-import ClinicalHeader from '@/components/ClinicalHeader'
 import DemoNotice from '@/components/DemoNotice'
 
 import { questions } from '@/mock/dr/content'
 
 export default {
   name: 'Chat',
-  components: { ClinicalHeader, DemoNotice },
+  components: { DemoNotice },
   data() {
     return {
       questions,
@@ -69,7 +65,7 @@ export default {
       this.append(text, 'user')
       this.input = ''
       const match = questions.find(question => question.pattern.test(text))
-      this.append(match ? match.answer : '当前演示助手可以解释资料采集、DME 未评估、共识草稿、报告签发与随访流程。\n关于个人影像、具体诊断、药物或治疗选择，请在医生复核时确认；这里没有读取影像或调用诊疗模型。你可以将这个问题记录到“处置与随访”的准备清单。', 'assistant')
+      this.append(match ? match.answer : '当前助手可以解释资料采集、DME 未评估、共识草稿、报告签发与随访流程。\n关于个人影像、具体诊断、药物或治疗选择，请在医生复核时确认；这里没有读取影像或调用诊疗模型。你可以将这个问题记录到“处置与随访”的准备清单。', 'assistant')
     }
   }
 }

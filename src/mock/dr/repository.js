@@ -114,9 +114,9 @@ function createRepository(seed = createFixtures(), onChange = () => {}) {
     const selectedEyes = EYES.filter(eye => (capture.eyes || []).includes(eye))
     const qualityScenario = capture.deviceId ? (capture.qualityScenario || 'pending') : 'unknown_device'
     const qualityInfo = {
-      passed: { status: 'passed', reason: '演示质控通过：图像与采集信息满足进入人工复核的基础条件。' },
-      retake: { status: 'retake', reason: '演示质控提示：视野或清晰度不足，建议改善对焦后重新采集。' },
-      ungradable: { status: 'ungradable', reason: '演示质控提示：图像严重不可判读，本次不进入候选分级。' },
+      passed: { status: 'passed', reason: '质控通过：图像与采集信息满足进入人工复核的基础条件。' },
+      retake: { status: 'retake', reason: '质控提示：视野或清晰度不足，建议改善对焦后重新采集。' },
+      ungradable: { status: 'ungradable', reason: '质控提示：图像严重不可判读，本次不进入候选分级。' },
       unknown_device: { status: 'unknown_device', reason: '未登记采集设备，需补录设备信息后再进入医生复核。' },
       pending: { status: 'pending', reason: '已提交本地影像，等待模型技术检查。' }
     }[qualityScenario] || { status: 'pending', reason: '本地资料已选择，等待质控。' }
@@ -158,7 +158,7 @@ function createRepository(seed = createFixtures(), onChange = () => {}) {
       const modelQuality = technical.status === 'pass' ? 'passed' : 'retake'
       const priorQuality = exam.eyes[eye].quality
       let status = modelQuality
-      let reason = (technical.message || '模型技术检查未返回说明。') + '（研究演示，非临床质量认证）'
+      let reason = (technical.message || '模型技术检查未返回说明。') + '（研究样本，非临床质量认证）'
       if (!exam.deviceId) {
         status = 'unknown_device'
         reason = '设备未登记；' + reason
@@ -230,7 +230,7 @@ function createRepository(seed = createFixtures(), onChange = () => {}) {
     if (action === 'returned') {
       exam.status = 'awaiting_collection'
       exam.review = { action, doctor, opinion, modificationReason, updatedAt: now, signedAt: '' }
-      record.action = '退回补采 / 重拍（演示）'
+      record.action = '退回补采 / 重拍（样本）'
       db.reviewRecords.push(record)
       patient.status = '待补全采集'
       patient.tone = 'warning'
@@ -252,7 +252,7 @@ function createRepository(seed = createFixtures(), onChange = () => {}) {
     if (!review.sign) {
       exam.status = 'awaiting_review'
       exam.review = { action, doctor, opinion, modificationReason, eyeResults, updatedAt: now, signedAt: '' }
-      record.action = action === 'accepted' ? '接受草稿，待签发（演示）' : '修改分级，待签发（演示）'
+      record.action = action === 'accepted' ? '接受草稿，待签发（样本）' : '修改分级，待签发（样本）'
       record.eyeResults = clone(eyeResults)
       db.reviewRecords.push(record)
       onChange(db)
@@ -265,24 +265,24 @@ function createRepository(seed = createFixtures(), onChange = () => {}) {
     const dueAt = String(review.dueAt || '').trim() || null
     let reportDraft = draft
     if (!reportDraft) {
-      reportDraft = { id: 'DRAFT-' + examinationId, examinationId, patientId: patient.id, status: 'manual', modelVersion: '医生人工分级（演示）', createdAt: now, eyeResults: clone(eyeResults), disagreements: [], isSynthetic: true }
+      reportDraft = { id: 'DRAFT-' + examinationId, examinationId, patientId: patient.id, status: 'manual', modelVersion: '医生人工分级（样本）', createdAt: now, eyeResults: clone(eyeResults), disagreements: [], isSynthetic: true }
       db.drafts.push(reportDraft)
     }
     const existing = db.reports.find(item => item.examinationId === examinationId && item.status === 'signed')
     const reportId = existing ? existing.id : 'REPORT-' + examinationId + '-' + Date.now()
     const researchInference = reportDraft.source === 'algorithm7_local_api'
-    const report = { id: reportId, examinationId, patientId: patient.id, draftId: reportDraft.id, status: 'signed', version: existing ? existing.version + 1 : 1, signedBy: doctor, signedAt: now, eyeResults: clone(eyeResults), conclusion: opinion || (researchInference ? '本报告由本机研究模型草稿经人工确认后生成，仅供竞赛演示，不能用于临床诊断或治疗决策。' : '本报告为明确标记的演示签发记录，仅用于展示医生审核与签发流程。'), plan: confirmedPlan, planType, dueAt, isSynthetic: !researchInference, researchInference }
+    const report = { id: reportId, examinationId, patientId: patient.id, draftId: reportDraft.id, status: 'signed', version: existing ? existing.version + 1 : 1, signedBy: doctor, signedAt: now, eyeResults: clone(eyeResults), conclusion: opinion || (researchInference ? '本报告由本机研究模型草稿经人工确认后生成，供研究流程参考，不用于临床诊断或治疗决策。' : '本报告为明确标记的样本签发记录，用于呈现医生审核与签发流程。'), plan: confirmedPlan, planType, dueAt, isSynthetic: !researchInference, researchInference }
     if (existing) Object.assign(existing, report)
     else db.reports.push(report)
     exam.status = 'signed'
     exam.review = { action, doctor, opinion, modificationReason, eyeResults: clone(eyeResults), updatedAt: now, signedAt: now }
     record.reportId = reportId
-    record.action = action === 'accepted' ? '接受草稿并签发（演示）' : '修改分级并签发（演示）'
+    record.action = action === 'accepted' ? '接受草稿并签发（样本）' : '修改分级并签发（样本）'
     record.eyeResults = clone(eyeResults)
     db.reviewRecords.push(record)
     const existingTask = db.tasks.find(item => item.examinationId === examinationId && item.type === 'followup')
-    if (!existingTask) db.tasks.push({ id: 'TASK-' + examinationId + '-' + Date.now(), key: 'followup', patientId: patient.id, examinationId, reportId, type: 'followup', title: planType === 'referral' ? '转诊联系与资料准备（演示）' : planType === 'both' ? '转诊与复查随访（演示）' : '复查联系与资料准备（演示）', description: confirmedPlan, icon: 'el-icon-date', status: 'pending_contact', note: '', dueAt, plan: confirmedPlan, planType, patientConfirmedAt: '', patientFeedback: '', patientFeedbackAt: '', updatedAt: now, isSynthetic: true })
-    else Object.assign(existingTask, { reportId, title: planType === 'referral' ? '转诊联系与资料准备（演示）' : planType === 'both' ? '转诊与复查随访（演示）' : '复查联系与资料准备（演示）', description: confirmedPlan, dueAt, plan: confirmedPlan, planType, updatedAt: now })
+    if (!existingTask) db.tasks.push({ id: 'TASK-' + examinationId + '-' + Date.now(), key: 'followup', patientId: patient.id, examinationId, reportId, type: 'followup', title: planType === 'referral' ? '转诊联系与资料准备（样本）' : planType === 'both' ? '转诊与复查随访（样本）' : '复查联系与资料准备（样本）', description: confirmedPlan, icon: 'el-icon-date', status: 'pending_contact', note: '', dueAt, plan: confirmedPlan, planType, patientConfirmedAt: '', patientFeedback: '', patientFeedbackAt: '', updatedAt: now, isSynthetic: true })
+    else Object.assign(existingTask, { reportId, title: planType === 'referral' ? '转诊联系与资料准备（样本）' : planType === 'both' ? '转诊与复查随访（样本）' : '复查联系与资料准备（样本）', description: confirmedPlan, dueAt, plan: confirmedPlan, planType, updatedAt: now })
     patient.status = '已签发'
     patient.tone = 'success'
     patient.rightGrade = eyeResults.OD.drGrade

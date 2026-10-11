@@ -1,9 +1,6 @@
 <template>
   <main class="clinical-page intake-page">
-    <clinical-header title="影像与数据采集" description="按左右眼核对资料，为后续共识评估建立清晰的输入。">
-      <router-link class="text-link" to="/patients/index">查看患者档案 <i class="el-icon-right" /></router-link>
-    </clinical-header>
-    <patient-strip />
+    <patient-strip><template slot="tools"><router-link class="text-link" to="/patients/index">查看患者档案 <i class="el-icon-right" /></router-link></template></patient-strip>
     <demo-notice text="文件只在当前浏览器会话中选择与预览，尚未上传至服务器或调用模型；影像内容不保存，刷新后请重新选择；已确认的合成检查信息会保留。" />
     <section class="panel">
       <div class="intake-steps">
@@ -16,13 +13,13 @@
       <div v-show="step === 0" class="intake-content">
         <div class="form-section-title"><h2>确认患者与基础信息</h2><p>先确认本次检查对象；带 * 的项目为必填，其余资料可后续补全。</p></div>
         <div class="patient-confirm-box">
-          <div><span>当前演示患者</span><strong>{{ patient.name }} · {{ patient.id }}</strong><small>{{ patient.institutionId === 'ORG-002' ? '眼科门诊（演示）' : '城南社区筛查点（演示）' }}</small></div>
-          <el-select v-model="selectedPatientId" size="small" aria-label="选择演示患者" @change="changePatient"><el-option v-for="item in patients" :key="item.id" :label="item.name + ' · ' + item.id" :value="item.id" /></el-select>
+          <div><span>当前患者</span><strong>{{ patient.name }} · {{ patient.id }}</strong><small>{{ patient.institutionId === 'ORG-002' ? '眼科门诊（样本）' : '城南社区筛查点（样本）' }}</small></div>
+          <el-select v-model="selectedPatientId" size="small" aria-label="选择患者" @change="changePatient"><el-option v-for="item in patients" :key="item.id" :label="item.name + ' · ' + item.id" :value="item.id" /></el-select>
           <el-button size="small" type="primary" :plain="patientConfirmed" @click="confirmPatient">{{ patientConfirmed ? '患者已确认' : '确认患者' }}</el-button>
         </div>
         <el-form ref="intakeForm" :model="form" :rules="rules" label-position="top">
           <div class="form-grid">
-            <el-form-item label="姓名 / 脱敏称呼" prop="name"><el-input v-model.trim="form.name" label="姓名或脱敏称呼" maxlength="24" placeholder="请输入演示患者称呼" /></el-form-item>
+            <el-form-item label="姓名 / 脱敏称呼" prop="name"><el-input v-model.trim="form.name" label="姓名或脱敏称呼" maxlength="24" placeholder="请输入患者称呼" /></el-form-item>
             <el-form-item label="年龄" prop="age"><el-input-number v-model="form.age" label="年龄" :min="1" :max="120" :precision="0" controls-position="right" /></el-form-item>
             <el-form-item label="性别" prop="sex" for="intake-sex"><el-select id="intake-sex" v-model="form.sex" placeholder="请选择"><el-option label="男" value="男" /><el-option label="女" value="女" /><el-option label="未填写" value="未填写" /></el-select></el-form-item>
             <el-form-item label="糖尿病病程（年）"><el-input-number v-model="form.duration" label="糖尿病病程（年）" :min="0" :max="100" :precision="0" controls-position="right" /></el-form-item>
@@ -39,7 +36,7 @@
             <el-form-item label="本次采集眼别" required class="field-wide"><el-checkbox-group v-model="capture.eyes"><el-checkbox label="OD">右眼 OD</el-checkbox><el-checkbox label="OS">左眼 OS</el-checkbox></el-checkbox-group></el-form-item>
             <el-form-item label="采集时间" required><el-date-picker v-model="capture.capturedAt" type="datetime" value-format="yyyy-MM-ddTHH:mm:ss" placeholder="选择采集时间" style="width:100%" /></el-form-item>
             <el-form-item label="采集来源"><el-radio-group v-model="capture.source"><el-radio label="现场采集">现场采集</el-radio><el-radio label="导入影像">导入影像</el-radio></el-radio-group></el-form-item>
-            <el-form-item label="采集设备" required><el-select v-model="capture.deviceId" placeholder="请选择；未知时选未登记" style="width:100%"><el-option label="眼底相机 A（演示）" value="DEV-CFP-001" /><el-option label="未登记 / 设备未知" value="" /></el-select></el-form-item>
+            <el-form-item label="采集设备" required><el-select v-model="capture.deviceId" placeholder="请选择；未知时选未登记" style="width:100%"><el-option label="眼底相机 A（样本）" value="DEV-CFP-001" /><el-option label="未登记 / 设备未知" value="" /></el-select></el-form-item>
           </el-form>
           <p class="registration-note"><i class="el-icon-info" />设备未知会在质控结果中明确标为“设备未知”，并阻止进入签发流程。</p>
         </div>
@@ -69,7 +66,7 @@
           <div><dt>糖尿病病程</dt><dd>{{ form.duration == null ? '未提供' : form.duration + ' 年' }}</dd></div>
           <div><dt>确认眼别</dt><dd>{{ capture.eyes.join('、') || '未确认' }}</dd></div>
           <div><dt>采集时间</dt><dd>{{ capture.capturedAt || '未登记' }}</dd></div>
-          <div><dt>采集设备</dt><dd>{{ capture.deviceId ? '眼底相机 A（演示）' : '未登记 / 设备未知' }}</dd></div>
+          <div><dt>采集设备</dt><dd>{{ capture.deviceId ? '眼底相机 A（样本）' : '未登记 / 设备未知' }}</dd></div>
           <div><dt>已选择影像</dt><dd>{{ fileCount }} 份</dd></div>
         </dl>
         <div class="table-scroll review-table">
@@ -89,7 +86,6 @@
   </main>
 </template>
 <script>
-import ClinicalHeader from '@/components/ClinicalHeader'
 import DemoNotice from '@/components/DemoNotice'
 import PatientStrip from '@/components/PatientStrip'
 import { demoState, patients, selectPatient, setFile, saveIntake, attachInference } from '@/data/retina-demo'
@@ -98,7 +94,7 @@ import { predictFundusEyes } from '@/services/dr/inference'
 const slot = (key, label, oct = false) => ({ key, label, oct, accept: oct ? '.jpg,.jpeg,.png,.dcm' : '.jpg,.jpeg,.png', hint: oct ? 'JPG / PNG / DICOM · ≤ 50 MB' : 'JPG / PNG · ≤ 20 MB' })
 export default {
   name: 'Input',
-  components: { ClinicalHeader, DemoNotice, PatientStrip },
+  components: { DemoNotice, PatientStrip },
   data() {
     return {
       step: 0,
@@ -216,47 +212,47 @@ export default {
 .intake-content { padding: 26px 32px; }
 .form-section-title { margin-bottom: 22px; }
 .form-section-title h2 { margin: 0 0 6px; font-size: 19px; }
-.form-section-title p { margin: 0; font-size: 13px; color: var(--muted); }
+.form-section-title p { margin: 0; font-size: 15px; color: var(--muted); }
 .patient-confirm-box { display: grid; grid-template-columns: minmax(180px, 1fr) minmax(190px, 250px) auto; gap: 14px; align-items: center; padding: 16px 18px; margin-bottom: 22px; background: var(--primary-soft); border: 1px solid #CFE4E6; border-radius: 8px; }
-.patient-confirm-box span, .patient-confirm-box small { display: block; color: var(--muted); font-size: 12px; }
+.patient-confirm-box span, .patient-confirm-box small { display: block; color: var(--muted); font-size: 14px; }
 .patient-confirm-box strong { display: block; margin: 4px 0; color: var(--heading); font-size: 15px; }
 .capture-registration { padding: 18px 20px 10px; margin-bottom: 20px; background: var(--page); border: 1px solid var(--border); border-radius: 8px; }
 .capture-registration /deep/ .el-form-item { margin-bottom: 16px; }
-.registration-note { margin: 2px 0 8px; color: var(--muted); font-size: 12px; }
+.registration-note { margin: 2px 0 8px; color: var(--muted); font-size: 14px; }
 .registration-note i { color: var(--blue); margin-right: 5px; }
 .quality-demo-form { max-width: 470px; margin-top: 22px; padding: 16px 18px 2px; background: var(--page); border: 1px solid var(--border); border-radius: 6px; }
-.quality-demo-form p { margin: 8px 0 0; color: var(--muted); font-size: 12px; line-height: 1.7; }
+.quality-demo-form p { margin: 8px 0 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
 .eye-upload-panel { border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
 .eye-heading { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
 .eye-marker { display: grid; place-items: center; height: 40px; width: 40px; background: var(--primary-soft); color: var(--primary); border-radius: 7px; font-weight: 600; }
 .eye-heading h3 { margin: 0; font-size: 16px; }
 .upload-slot { border: 1px dashed var(--input-border); border-radius: 6px; padding: 14px; margin-top: 12px; background: #F8FBF9; }
 .upload-label { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.upload-label strong { font-size: 13px; font-weight: 500; color: var(--heading); }
+.upload-label strong { font-size: 15px; font-weight: 500; color: var(--heading); }
 .upload-placeholder { text-align: center; padding: 18px 0 13px; color: var(--muted); }
 .upload-placeholder i { font-size: 25px; color: var(--primary); }
-.upload-placeholder p { margin: 7px 0 0; font-size: 12px; }
+.upload-placeholder p { margin: 7px 0 0; font-size: 14px; }
 .upload-bottom { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-.upload-bottom > span { font-size: 11px; color: var(--muted); }
+.upload-bottom > span { font-size: 13px; color: var(--muted); }
 .file-input { display: none; }
 .selected-file { display: flex; align-items: center; gap: 12px; padding: 18px 0; min-height: 96px; }
 .selected-file img { width: 70px; height: 58px; object-fit: contain; background: var(--viewer); border-radius: 4px; }
 .file-symbol { width: 58px; height: 58px; display: grid; place-items: center; border-radius: 4px; background: var(--blue-soft); color: var(--blue); font-size: 26px; flex-shrink: 0; }
 .file-info { min-width: 0; }
-.file-info strong { display: block; font-size: 13px; font-weight: 500; overflow-wrap: anywhere; }
-.file-info span { display: block; font-size: 11px; color: var(--muted); margin-top: 4px; }
+.file-info strong { display: block; font-size: 15px; font-weight: 500; overflow-wrap: anywhere; }
+.file-info span { display: block; font-size: 13px; color: var(--muted); margin-top: 4px; }
 .remove-file { background: transparent; border: 0; padding: 6px; cursor: pointer; color: var(--muted); margin-left: auto; flex-shrink: 0; }
-.upload-error { color: var(--danger); background: var(--danger-soft); margin-top: 18px; padding: 12px 16px; border-radius: 5px; font-size: 13px; }
+.upload-error { color: var(--danger); background: var(--danger-soft); margin-top: 18px; padding: 12px 16px; border-radius: 5px; font-size: 15px; }
 .upload-error i { margin-right: 8px; }
 .intake-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 20px 32px; border-top: 1px solid var(--border); }
 .confirmation-summary { background: var(--page); padding: 20px; border-radius: 6px; }
 .review-table { margin-top: 24px; border: 1px solid var(--border); border-radius: 6px; }
 .review-filename { max-width: 280px; white-space: normal !important; overflow-wrap: anywhere; }
-.confirmation-note { display: flex; gap: 10px; align-items: baseline; background: var(--blue-soft); padding: 14px 18px; color: var(--blue); font-size: 13px; margin-top: 20px; border-radius: 6px; }
+.confirmation-note { display: flex; gap: 10px; align-items: baseline; background: var(--blue-soft); padding: 14px 18px; color: var(--blue); font-size: 15px; margin-top: 20px; border-radius: 6px; }
 @media (max-width: 767px) {
   .intake-content { padding: 20px 18px; }
   .intake-steps { padding: 20px 10px; }
-  .intake-steps /deep/ .el-step__title { font-size: 12px; line-height: 1.5; margin-top: 8px; }
+  .intake-steps /deep/ .el-step__title { font-size: 14px; line-height: 1.5; margin-top: 8px; }
   .eye-upload-panel { padding: 16px; }
   .patient-confirm-box { grid-template-columns: 1fr; }
   .upload-bottom { flex-wrap: wrap; }

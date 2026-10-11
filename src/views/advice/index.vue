@@ -1,12 +1,8 @@
 <template>
   <main class="clinical-page">
-    <clinical-header title="转诊与随访" description="从复核后的报告出发，逐项落实处置安排与持续随访。">
-      <el-button icon="el-icon-printer" @click="printPlan">打印演示清单</el-button>
-      <el-button type="primary" icon="el-icon-document" @click="$router.push('/screening/evidence')">查看分级证据</el-button>
-    </clinical-header>
-    <demo-notice :text="report ? '当前显示已签发合成报告与关联任务，仅用于流程演示。' : '当前检查尚未签发报告，下方为准备事项，不构成正式诊疗安排。'" />
-    <div class="print-only">糖网诊疗 · 转诊与随访演示清单 · {{ report ? '合成签发示例' : '报告未签发，安排待确认' }}</div>
-    <patient-strip />
+    <patient-strip><template slot="tools"><el-button icon="el-icon-printer" @click="printPlan">打印清单</el-button><el-button type="primary" icon="el-icon-document" @click="$router.push('/screening/evidence')">查看分级证据</el-button></template></patient-strip>
+    <demo-notice :text="report ? '当前显示已签发合成报告与关联任务。' : '当前检查尚未签发报告，下方为准备事项。'" />
+    <div class="print-only">糖网诊疗 · 转诊与随访清单 · {{ report ? '合成签发样本' : '报告未签发，安排待确认' }}</div>
     <div class="two-column">
       <section class="panel">
         <div class="panel-heading"><h2>处置前的确认事项</h2><span class="status-pill" :class="report ? 'success' : 'warning'">{{ report ? '合成确认记录' : '等待医生复核' }}</span></div>
@@ -26,11 +22,10 @@
           <div><dt>确认日期</dt><dd>{{ followupTask && followupTask.dueAt ? followupTask.dueAt : '待医生指定' }}</dd></div>
           <div><dt>用药与治疗</dt><dd>未生成处方</dd></div>
         </dl>
-        <div class="plan-note"><i class="el-icon-info" /><span>AI 草稿不能自动转为已签发报告或已执行任务。</span></div>
       </section>
     </div>
     <section class="panel section-gap">
-      <div class="panel-heading"><div><h2>准备与随访任务</h2><p>准备事项、医生已确认计划及患者反馈均关联到当前检查记录。</p></div><span class="status-pill">流程演示</span></div>
+      <div class="panel-heading"><div><h2>准备与随访任务</h2><p>准备事项、医生已确认计划及患者反馈均关联到当前检查记录。</p></div><span class="status-pill">流程记录</span></div>
       <div class="care-tasks">
         <article v-for="task in tasks" :key="task.id" class="care-task">
           <div class="care-task-icon" :class="task.tone"><i :class="task.icon" /></div>
@@ -42,10 +37,10 @@
       </div>
     </section>
     <div class="care-footer"><i class="el-icon-chat-dot-round" /><span>需要了解页面流程或报告状态？</span><router-link class="text-link" to="/patient/help">打开眼健康助手 <i class="el-icon-right" /></router-link></div>
-    <el-dialog :title="activeTask.type === 'followup' ? '管理转诊与随访任务' : '记录演示任务进展'" :visible.sync="dialogVisible" width="520px" :close-on-click-modal="false">
+    <el-dialog :title="activeTask.type === 'followup' ? '管理转诊与随访任务' : '记录任务进展'" :visible.sync="dialogVisible" width="520px" :close-on-click-modal="false">
       <p class="dialog-task-title">{{ activeTask.title }}</p>
       <template v-if="activeTask.type === 'followup'">
-        <p class="muted small-text">仅用于演示的本地流程；状态更新会同步到患者服务页和区域看板。</p>
+        <p class="muted small-text">状态更新会同步到患者服务页和区域看板。</p>
         <el-form label-position="top">
           <el-form-item label="随访状态"><el-select v-model="followupDraft.status" style="width:100%"><el-option v-for="option in followupStatusOptions" :key="option.value" :label="option.label" :value="option.value" /></el-select></el-form-item>
           <el-form-item label="确认日期"><el-date-picker v-model="followupDraft.dueAt" type="date" value-format="yyyy-MM-dd" placeholder="选择日期" style="width:100%" /></el-form-item>
@@ -56,12 +51,11 @@
         <p class="muted small-text">记录保存在当前浏览器，状态为“已自报 · 待核实”，不会发送给医院或变更医生计划。</p>
         <el-input v-model="taskNote" type="textarea" :rows="4" maxlength="300" show-word-limit placeholder="选填：已整理的资料、准备进展或需要核对的信息" aria-label="任务进展备注" />
       </template>
-      <span slot="footer"><el-button @click="dialogVisible = false">取消</el-button><el-button type="primary" @click="activeTask.type === 'followup' ? saveFollowup() : recordTask()">{{ activeTask.type === 'followup' ? '保存随访更新' : '保存演示记录' }}</el-button></span>
+      <span slot="footer"><el-button @click="dialogVisible = false">取消</el-button><el-button type="primary" @click="activeTask.type === 'followup' ? saveFollowup() : recordTask()">{{ activeTask.type === 'followup' ? '保存随访更新' : '保存记录' }}</el-button></span>
     </el-dialog>
   </main>
 </template>
 <script>
-import ClinicalHeader from '@/components/ClinicalHeader'
 import DemoNotice from '@/components/DemoNotice'
 import PatientStrip from '@/components/PatientStrip'
 import { taskViews } from '@/services/dr/selectors'
@@ -70,7 +64,7 @@ import { demoState, setTaskState, currentBundle } from '@/data/retina-demo'
 import { drService, TASK_STATES } from '@/services/dr'
 export default {
   name: 'Advice',
-  components: { ClinicalHeader, DemoNotice, PatientStrip, TaskStatus },
+  components: { DemoNotice, PatientStrip, TaskStatus },
   data() {
     return {
       dialogVisible: false, activeTask: {}, taskNote: '', followupDraft: { status: '', dueAt: '', note: '' }
@@ -81,7 +75,7 @@ export default {
   methods: {
     taskStatus(id) { const task = this.tasks.find(item => item.id === id); return task && task.status === 'self_reported' ? { note: task.note } : null },
     openTask(task) { this.activeTask = task; this.taskNote = this.taskStatus(task.id) ? this.taskStatus(task.id).note : ''; this.followupDraft = { status: task.status, dueAt: task.dueAt || '', note: task.note || '' }; this.dialogVisible = true },
-    recordTask() { setTaskState(this.activeTask.id, { note: this.taskNote.trim() }); this.dialogVisible = false; this.$message.success('本次演示进展已记录，等待核实。') },
+    recordTask() { setTaskState(this.activeTask.id, { note: this.taskNote.trim() }); this.dialogVisible = false; this.$message.success('本次进展已记录，等待核实。') },
     async saveFollowup() { try { await drService.updateTask(this.activeTask.id, { status: this.followupDraft.status, dueAt: this.followupDraft.dueAt || null, note: this.followupDraft.note.trim() }); this.dialogVisible = false; this.$message.success('随访状态已更新，患者页和区域看板已同步。') } catch (error) { this.$message.error(error.message || '随访更新失败。') } },
     planTypeLabel(value) { return { followup: '复查随访', referral: '转诊', both: '转诊与复查' }[value] || '已确认安排' },
     printPlan() { window.print() }
@@ -92,20 +86,20 @@ export default {
 .care-summary { padding: 24px; display: flex; align-items: flex-start; gap: 16px; background: #F4F8F5; }
 .care-summary-icon { flex-shrink: 0; width: 44px; height: 44px; display: grid; place-items: center; background: var(--primary-soft); color: var(--primary); border-radius: 8px; font-size: 24px; }
 .care-summary h3 { margin: 0 0 7px; font-size: 18px; font-weight: 600; }
-.care-summary p { margin: 0; font-size: 13px; color: var(--muted); }
+.care-summary p { margin: 0; font-size: 15px; color: var(--muted); }
 .care-checklist { padding: 0 24px; }
 .care-checklist > div { display: flex; gap: 14px; align-items: flex-start; padding: 21px 0; border-bottom: 1px solid var(--border); }
 .care-checklist > div:last-child { border-bottom: 0; }
-.check-index { color: var(--input-border); font-size: 12px; margin-top: 3px; }
+.check-index { color: var(--input-border); font-size: 14px; margin-top: 3px; }
 .care-checklist strong { font-size: 14px; color: var(--heading); font-weight: 500; }
-.care-checklist p { color: var(--muted); font-size: 12px; margin: 5px 0 0; }
-.care-checklist .text-link, .care-checklist .status-pill { margin-left: auto; flex-shrink: 0; font-size: 12px; margin-top: 2px; }
-.plan-state { padding: 6px 24px; margin: 0; font-size: 13px; }
+.care-checklist p { color: var(--muted); font-size: 14px; margin: 5px 0 0; }
+.care-checklist .text-link, .care-checklist .status-pill { margin-left: auto; flex-shrink: 0; font-size: 14px; margin-top: 2px; }
+.plan-state { padding: 6px 24px; margin: 0; font-size: 15px; }
 .plan-state > div { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 15px 0; border-bottom: 1px solid #E7EEEB; }
 .plan-state > div:last-child { border-bottom: 0; }
 .plan-state dt { color: var(--muted); }
 .plan-state dd { margin: 0; color: var(--heading); }
-.plan-note { display: flex; gap: 9px; padding: 14px 18px; margin: 5px 24px 24px; background: var(--blue-soft); border-radius: 5px; color: var(--blue); font-size: 12px; }
+.plan-note { display: flex; gap: 9px; padding: 14px 18px; margin: 5px 24px 24px; background: var(--blue-soft); border-radius: 5px; color: var(--blue); font-size: 14px; }
 .care-tasks { padding: 0 24px; }
 .care-task { display: flex; gap: 16px; align-items: center; padding: 23px 0; border-bottom: 1px solid var(--border); }
 .care-task:last-child { border-bottom: 0; }
@@ -115,9 +109,9 @@ export default {
 .care-task-content { flex: 1; min-width: 0; }
 .care-task-title { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .care-task-title h3 { margin: 0; font-size: 15px; font-weight: 500; }
-.care-task-content p { margin: 5px 0 0; font-size: 13px; color: var(--muted); }
-.care-task-content small { display: block; color: var(--blue); margin-top: 8px; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; }
-.care-footer { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding: 22px 0 0; font-size: 13px; color: var(--muted); }
+.care-task-content p { margin: 5px 0 0; font-size: 15px; color: var(--muted); }
+.care-task-content small { display: block; color: var(--blue); margin-top: 8px; font-size: 14px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.care-footer { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding: 22px 0 0; font-size: 15px; color: var(--muted); }
 .care-footer > i { font-size: 20px; color: var(--primary); }
 .dialog-task-title { color: var(--heading); font-weight: 500; margin: 0 0 8px; }
 @media (max-width: 767px) {
